@@ -1,35 +1,13 @@
 # Motivation
 
-<!-- Every `##` becomes one slide. One idea each. -->
-
 ## Why it matters for agentic development
 
-> The case, made concretely. What does this tool, technique, or notion let an
-> agentic system do that is hard or impossible without it?
->
-> Tie it to agentic development specifically — not to software in general. If the
-> answer would read the same for any programming topic, you have not made the
-> case yet.
-
-Replace this paragraph.
+LLM-driven evolutionary search matters for agentic development because it forms a closed loop around generation, evaluation, and selection that an agentic system can run repeatedly without human intervention. The generator is the LLM, the evaluator is the harness, and the selection rule is a fitness function that decides which candidates survive. In the capstone setting, this is the method that fuses prior threads: generated code, objective scoring, sandboxed execution, and search orchestration into one working pattern.
 
 ## What goes wrong without it
 
-> The failure it prevents, shown rather than asserted. A concrete situation that
-> goes badly, and how it goes badly.
->
-> This is the paragraph that makes the tutorial worth reading. A reader who has
-> felt the failure will follow you through the mechanics; one who has not will
-> skim. Use a real case if you have one.
-
-Replace this paragraph.
+Without a well-designed fitness loop, an agentic system can produce plausible-looking code that never actually improves the real task. A candidate may exploit the visible evaluator, fit the scoring shortcut, or optimize for a traceable artifact rather than a robust objective. The failure is not merely that the search is slow. It is that a weak selective pressure turns the entire system into an optimizer of the wrong thing.
 
 ## When to reach for it
 
-> The bounds, stated by you rather than discovered by a frustrated reader. What
-> it is good for, and — just as important — when it is the wrong tool.
->
-> A technique with honestly stated limits is more usable than one presented as
-> universal, because the reader can tell whether their situation is in scope.
-
-Replace this paragraph.
+Reach for LLM-driven evolutionary search when the task is program synthesis, symbolic regression, or algorithm improvement and an objective can be evaluated automatically. It is a good fit when the search space is too large for exhaustive enumeration and a reasonable numeric or test-based fitness function can be scored. It is the wrong tool when evaluation is subjective, expensive, low signal, or not separable from the agent’s own behavior, because then the loop cannot reliably tell whether it is improving the right target.

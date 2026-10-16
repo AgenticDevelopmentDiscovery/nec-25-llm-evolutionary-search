@@ -1,82 +1,49 @@
 # Topic
 
-<!-- THE PROPOSAL. Never rendered into the document, the slides, or the site —
-     but every reviewer reads it, and the panel judges the tutorial against what
-     you promise here. Write it before you write a section.
-
-     This is the document-level counterpart to a section's `.concepts.md`: the
-     same job of holding intent separately from what ships, one level up.
-
-     Keep it short. A page is plenty. Delete these comments and the guidance
-     blockquotes as you fill it in. -->
-
 ## In one sentence
 
-> The topic, named and bounded, in a single sentence a stranger could repeat
-> back. If it takes two, the topic is probably two topics.
-
-Replace this line.
+LLM-driven evolutionary search uses language models as smart mutation operators inside a generate → evaluate → select loop to evolve programs under a carefully designed fitness function.
 
 ## What it is
 
-> A paragraph of plain description. What is the tool, technique, or notion —
-> defined by what it does, not by what it is built from or why it is good.
->
-> This seeds `01-context`. If you cannot write it without arguing for the topic,
-> the argument is doing work the definition should be doing.
-
-Replace this paragraph.
+LLM-driven evolutionary search keeps the evolutionary skeleton of a population or archive of candidate programs, but replaces the random mutation and crossover operator of classic genetic programming with a language model. The language model reads one or more high-scoring parent programs and proposes a revised program that is more likely to improve the score than a random subtree edit. In practice, the loop is generate → evaluate → select → mutate, and the mutation prompt carries parent code, scores, and constraints that guide the model toward a better candidate. A strong fitness function is the selective pressure; if it rewards the wrong things the search can optimize artifacts of the evaluator rather than the intended objective.
 
 ## Why it belongs in this course
 
-> The case for spending a reader's time on it: what it lets an agentic system do
-> that is hard or impossible otherwise, and what goes wrong without it.
->
-> This seeds `02-motivation`. Be specific to agentic development — if the reason
-> would read the same for any programming topic, keep going.
-
-Replace this paragraph.
+This topic belongs in the course because it fuses the course’s central agentic development threads: generation, evaluation, orchestration, and sandboxed code execution. It is the clearest case in which an evaluation harness is not a side tool but the engine of selection. Students can see that the search loop depends on both the agentic model and the measurement design, and that a weak or gameable fitness function can produce plausible-looking but untrustworthy solutions.
 
 ## What the reader will be able to do
 
-> The capability the tutorial delivers, as a short list of actions the reader can
-> take afterwards that they could not take before. Not topics covered — things
-> done.
->
-> This is the promise `04-conclusion` has to keep, and the standard the panel
-> holds the whole tutorial to. Vague entries here buy vague review, the same way
-> a vague `audience` does.
-
-- (capability)
-- (capability)
+- Design a minimal generate → evaluate → select → mutate loop using an LLM as a mutation operator.
+- Explain how fitness design, diversity maintenance, and held-out checks shape an evolutionary search.
+- Distinguish LLM-guided search from random genetic programming and identify when evaluation hacking is likely.
 
 ## Scope
 
-> What the tutorial covers and, explicitly, what it does not. Adjacent topics a
-> reader might expect and will not get belong here with one clause of reason —
-> naming them stops a reviewer reporting them as gaps and stops the team drifting
-> back into them.
-
 **In scope**
 
-- (in)
+- LLM-as-mutation operator for evolving code or equations.
+- Generate → evaluate → select → mutate as the shared loop.
+- Fitness design, diversity maintenance, and eval hacking.
+- A minimal symbolic-regression demo and held-out evaluation.
 
 **Out of scope**
 
-- (out, and why)
+- Full production deployment of OpenEvolve or AlphaEvolve.
+- Deep formal treatment of genetic programming theory.
+- A complete implementation of every diversity scheme in the literature.
 
 ## Shape
 
-> How the four sections divide the material, if you already know. Which one
-> carries the weight, what the worked example in `03-content` will be, whether
-> the arc needs changing for this subject.
->
-> Leave it thin on the first pass. It is here so the reason for a structural
-> choice is written down before the rounds start arguing about it.
-
-- (note)
+- The tutorial keeps the default four-part arc: context, motivation, content, conclusion.
+- The content section carries the longest explanation and frames the worked example as a symbolic-regression loop.
+- The worked example in the content section is intentionally small: a five-generation loop that demonstrates the best-score curve, parent feedback, and one eval-hacking candidate.
 
 ## Open questions
+
+- How should a student team balance the overhead of model calls against the number of useful evolutionary evaluations?
+- What makes a fitness function robust enough to resist eval hacking in a classroom setting?
+- Which diversity mechanism—archive, islands, MAP-Elites, or novelty search—is most natural for the shared task?
 
 > What the team has not settled: an unresolved framing, an example you are not
 > sure earns its place, a claim you cannot yet support.

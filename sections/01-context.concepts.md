@@ -1,43 +1,26 @@
 # Context — spine
 
-> The register that does not ship. This file is never rendered into the document,
-> the slides, or the site — but the reviewers read it, and they judge whether what
-> it promises is turning into prose.
->
-> Keep it in note form. Prose here is a sign you wrote in the wrong file.
-
 ## Purpose
 
-Say WHAT the topic is and where it came from, so the reader can hold it in mind
-before being told why it matters or how to use it.
+Say WHAT the topic is and where it came from, so the reader can hold it in mind before being told why it matters or how to use it.
 
 ## Claims
 
-> The load-bearing assertions of this section, one line each. In a tutorial these
-> are usually definitional: what the thing is, what it is not, what it replaced.
-> If a claim is not here, the reviewers will treat its appearance in the prose as
-> unplanned.
-
-- (claim)
-- (claim)
+- LLM-driven evolutionary search replaces random GP mutation with a language model that reads parents and proposes improved code.
+- The original idea is a search loop: generate candidates, evaluate them, select survivors, and feed them back as parents.
+- The method grew from GP, FunSearch, AlphaEvolve, and OpenEvolve, but the tutorial treats the workflow rather than a full research history.
 
 ## Decisions
 
-> Why the section reads the way it does. The definition you chose and the one you
-> rejected, how much history you kept and why. This is what stops the team
-> relitigating the same choice every round.
-
-- (decision — and what it was chosen over)
+- The context section gives the definition first and then the historical lineage, rather than opening with a literature survey.
+- The prose mentions FunSearch and AlphaEvolve only as anchor points and keeps the origin short to explain the design.
 
 ## Open questions
 
-> What you do not know yet. Naming it here is cheap; discovering it in review is not.
-
-- (question)
+- How much parent context should an LLM mutation prompt include before the model becomes noisy rather than helpful?
+- Should every student demo include a real evaluator, a symbolic-regression benchmark, and a deliberately gameable scoring example?
 
 ## Not doing
 
-> Scope you have deliberately excluded, so a reviewer does not report it as missing
-> and you do not drift back into it.
-
-- (excluded, and why)
+- We are not surveying all LLM-guided search systems or every evolutionary algorithm variant.
+- We are not distinguishing GP formal syntax trees from the code-as-text setting in depth.

@@ -1,33 +1,13 @@
 # Conclusion
 
-<!-- Every `##` becomes one slide. One idea each. -->
-
 ## What you can do now
 
-> The recap, stated as capability rather than as summary. Not "we covered X" —
-> rather, what the reader can now do that they could not before.
->
-> Keep it to what the tutorial actually delivered. This paragraph and
-> § What this tutorial covers must agree exactly; the panel will check.
-
-Replace this paragraph.
+After this tutorial, the reader should be able to design a minimal LLM-guided evolutionary search loop, explain the role of the evaluation harness as the selective pressure, and reason about diversity and fitness design as levers on the search. The reader can also recognize a gameable fitness function and ask for held-out or validation checks before treating a candidate as credible.
 
 ## Where to go next
 
-> The next thing to learn, and why it is the next one. Name the specific
-> resource, tool, or topic and say what it adds.
->
-> Order matters more than length. Three pointers in a sensible sequence beat a
-> list of ten a reader has to triage themselves.
-
-Replace this paragraph.
+The next step is to read the FunSearch paper and compare it with the open OpenEvolve workflow, because they show the same architecture in two different levels of complexity. After that, the useful next topic is a more complete treatment of fitness design and response to reward hacking, since that is the design choice that determines whether the search discovers a solution or a scorer shortcut.
 
 ## Open edges
 
-> What is still unsettled — where the tool is changing, where practice has not
-> converged, where you would not yet give firm advice.
->
-> End on the opening you leave, not on a restatement. A tutorial that admits its
-> edges is more trustworthy than one that implies the topic is finished.
-
-Replace this paragraph.
+The field is still rapidly changing. There is not yet one best way to structure parent prompts, maintain diversity, or choose a sampling budget. The right design remains contextual: the task, the evaluator, the code environment, and the way the model is allowed to propose edits all shape what it is reasonable to recommend.

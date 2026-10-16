@@ -1,40 +1,13 @@
 # Context
 
-<!-- SHIPPED PROSE. This file is rendered into all three outputs.
-     Every `##` below becomes one slide — keep each to one idea.
-     Delete these comments and the guidance blockquotes as you write. -->
-
 ## What this is
 
-> Name the topic and say plainly what it is, in one paragraph, before any
-> argument about why it matters. A reader who stops here should be able to
-> describe the thing correctly to someone else, even if coarsely.
->
-> Define it in terms of what it *does*, not what it is built from. Resist the
-> urge to justify it — that is the next section's job, and mixing the two is the
-> most common way a tutorial loses its opening.
-
-Replace this paragraph.
+LLM-driven evolutionary search keeps the evolutionary skeleton of search — a population or archive of candidate programs, a fitness function, and a selection mechanism — but replaces the random mutation or crossover operator of classic genetic programming with an LLM. Instead of editing code at random, the model reads one or more high-scoring parents and proposes a new program variant that is more likely to improve the objective. The result is an evolutionary loop in which the language model behaves like a learned mutation operator over code.
 
 ## Where it came from
 
-> The short history: what problem it was invented to solve, by whom or in what
-> setting, and what people did before it existed.
->
-> This is not a literature survey and not a timeline. Two or three sentences of
-> origin earn their place because they explain the design — most of what looks
-> arbitrary about a tool is a fossil of the problem it was built for. Cut any
-> history that does not explain something the reader will meet later.
-
-Replace this paragraph.
+The idea grew out of the long tradition of genetic programming, where mutation and crossover are usually random edits over symbolic trees or strings. FunSearch, introduced by Romera-Paredes et al. in Nature in 2023, showed that an LLM could act as a program mutation operator and discover improved solutions by iterating search and scoring. AlphaEvolve generalized the pattern to richer codebases and more complex objectives, and OpenEvolve now provides an open-source reimplementation that is easier to run and study.
 
 ## What this tutorial covers
 
-> The scope and the roadmap. Name each section and what the reader gets from it,
-> and say what the reader will be able to *do* by the end — a capability, not a
-> list of topics.
->
-> Say what is out of scope here too. This is the promise the rest of the tutorial
-> must keep, and the panel will check it against what you actually delivered.
-
-Replace this paragraph.
+This tutorial introduces the conceptual loop, the role of the fitness function, and the methods used to keep search from collapsing into a single narrow solution. The motivation section explains why this method matters for agentic development. The content section turns the abstraction into a worked symbolic-regression example with an LLM proposing equations, an evaluator scoring them, and held-out checks revealing eval hacking. The conclusion then states the capabilities the reader can carry forward: designing a small generate → evaluate → select → mutate workflow and reasoning about the fitness function that shapes it.
