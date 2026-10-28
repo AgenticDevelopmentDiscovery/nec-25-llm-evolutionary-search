@@ -1,0 +1,5 @@
+{
+  "initial_temperature": 2.0,
+  "final_temperature": 0.01,
+  "polish": true
+}

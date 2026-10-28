@@ -1,0 +1,26 @@
+{
+  "source_run": "ac4eabb65fcd4a95b2a6c41dbddcf6b0",
+  "mode": "live",
+  "model": "protected.gpt-5.6-luna",
+  "source_events_sha256": "c60320fc57e9840064d49af959bb95362bc0f7256c99bb8b7c000062cc330967",
+  "best_events": [
+    [
+      0.17528318701079115,
+      58.0
+    ],
+    [
+      0.34934846102260053,
+      60.0
+    ],
+    [
+      0.8475481140194461,
+      66.0
+    ],
+    [
+      5.12186685699271,
+      68.0
+    ]
+  ],
+  "original_seconds": 6.5546190880122595,
+  "figure": "figures/luna-trace.svg"
+}

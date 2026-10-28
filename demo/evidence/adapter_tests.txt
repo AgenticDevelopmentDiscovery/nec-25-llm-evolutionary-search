@@ -1,0 +1,9 @@
+test_actual_worker_cli_and_output_verification (test_backend.ClassroomTests.test_actual_worker_cli_and_output_verification) ... ok
+test_numeric_score_is_recomputed_not_supplied (test_backend.ClassroomTests.test_numeric_score_is_recomputed_not_supplied) ... ok
+test_reject_invalid_labels_and_unbounded_program (test_backend.ClassroomTests.test_reject_invalid_labels_and_unbounded_program) ... ok
+test_seeded_parent_child_and_retention (test_backend.ClassroomTests.test_seeded_parent_child_and_retention) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.304s
+
+OK

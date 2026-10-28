@@ -1,0 +1,592 @@
+{
+  "date_utc": "2026-10-27T03:30:40.021397+00:00",
+  "run_id": "529482638cac4e17bca87f8587bc4cf7",
+  "mode": "live",
+  "status": "failed",
+  "scenario": "contrast_informed",
+  "initial_solvers": [
+    "tabu",
+    "bls",
+    "bm"
+  ],
+  "population_protocol": "shared_raw",
+  "seed": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "wall_seconds": 66.5886709850165,
+  "model_calls": 2,
+  "time_to_first_real_proposal": 10.845495279994793,
+  "time_to_reference_match": null,
+  "best_cut": 1060.0,
+  "baseline_construction": [],
+  "candidates": [
+    {
+      "id": "55d784ea6bf6ff0e552746f4539e6ba03ef8f473d15476235d7786c8ee8b7e36",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Tabu Search solver",
+      "diff": "",
+      "complete": true,
+      "median": 975.0,
+      "minimum": 964.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 980.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 980.0,
+              "runtime_seconds": 0.32661066798027605,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.3512065600370988
+        },
+        {
+          "seed": 4,
+          "cut": 975.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 975.0,
+              "runtime_seconds": 0.3397860040422529,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.36635692103300244
+        },
+        {
+          "seed": 5,
+          "cut": 964.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 964.0,
+              "runtime_seconds": 0.40364246000535786,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.43659136904170737
+        }
+      ]
+    },
+    {
+      "id": "e11e30cce2b9ed6ceb9420bdf1fd49c228d5bd911dba29cc0acbbc735ec3bd02",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 700,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Breakout Local Search solver",
+      "diff": "",
+      "complete": true,
+      "median": 992.0,
+      "minimum": 966.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 966.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 966.0,
+              "runtime_seconds": 0.6477414469700307,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 221,
+                "directed_single": 109,
+                "directed_pair": 112,
+                "random": 1,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.680293181037996
+        },
+        {
+          "seed": 4,
+          "cut": 992.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 992.0,
+              "runtime_seconds": 0.5289721920271404,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 184,
+                "directed_single": 87,
+                "directed_pair": 97,
+                "random": 0,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5586141279782169
+        },
+        {
+          "seed": 5,
+          "cut": 995.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 995.0,
+              "runtime_seconds": 0.6338276250171475,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 197,
+                "directed_single": 106,
+                "directed_pair": 91,
+                "random": 1,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.6675395909696817
+        }
+      ]
+    },
+    {
+      "id": "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial rank-two Burer\u2013Monteiro solver",
+      "diff": "",
+      "complete": true,
+      "median": 1012.0,
+      "minimum": 1007.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1012.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1012.0,
+              "runtime_seconds": 0.22816760698333383,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.2582340099615976
+        },
+        {
+          "seed": 4,
+          "cut": 1012.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1012.0,
+              "runtime_seconds": 0.24906492797890678,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.2805317469756119
+        },
+        {
+          "seed": 5,
+          "cut": 1007.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1007.0,
+              "runtime_seconds": 0.23988003400154412,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.27053061802871525
+        }
+      ]
+    },
+    {
+      "id": "5b171c878c6c2212909153b78dc3dbb6c366a6f8c05f78ac3ed8d11b3276d0c0",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 60,
+              "rounding_count": 16
+            },
+            "max_work": 1,
+            "fresh": false
+          },
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 5000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8",
+        "e11e30cce2b9ed6ceb9420bdf1fd49c228d5bd911dba29cc0acbbc735ec3bd02"
+      ],
+      "hypothesis": "A longer BM solve should provide stronger shared labels, while retained BLS can exploit them; compare moderate versus extended BLS budgets without exceeding the 8-second trial cap.",
+      "diff": "--- parent\n+++ child\n@@ -1 +1,2 @@\n-1. bm(max_sweeps=20, rounding_count=8); work<=1; start=retained\n+1. bm(max_sweeps=60, rounding_count=16); work<=1; start=retained\n+2. bls(jump=1, p_min=0.8, q=0.5, stagnation=1000, tenure_max=10, tenure_min=3); work<=5000; start=retained",
+      "complete": false,
+      "median": null,
+      "minimum": null,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1035.0,
+          "complete": false,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1024.0,
+              "runtime_seconds": 0.6138762320042588,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 1035.0,
+              "runtime_seconds": 7.374990045034792,
+              "work_counters": {
+                "flips": 4385,
+                "attractors": 2393,
+                "directed_single": 1180,
+                "directed_pair": 1181,
+                "random": 424,
+                "strong_random": 1
+              },
+              "execution_status": "time_limit"
+            }
+          ],
+          "seconds": 8.034129675012082
+        },
+        {
+          "seed": 4,
+          "cut": 1049.0,
+          "complete": false,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1036.0,
+              "runtime_seconds": 0.6380909340223297,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 1049.0,
+              "runtime_seconds": 7.350571315037087,
+              "work_counters": {
+                "flips": 4386,
+                "attractors": 2326,
+                "directed_single": 1129,
+                "directed_pair": 1172,
+                "random": 450,
+                "strong_random": 1
+              },
+              "execution_status": "time_limit"
+            }
+          ],
+          "seconds": 8.036563360015862
+        },
+        {
+          "seed": 5,
+          "cut": 1060.0,
+          "complete": false,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1042.0,
+              "runtime_seconds": 0.6388267090078443,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 1060.0,
+              "runtime_seconds": 7.349431355018169,
+              "work_counters": {
+                "flips": 4854,
+                "attractors": 2585,
+                "directed_single": 1314,
+                "directed_pair": 1251,
+                "random": 514,
+                "strong_random": 1
+              },
+              "execution_status": "time_limit"
+            }
+          ],
+          "seconds": 8.031014645996038
+        }
+      ]
+    },
+    {
+      "id": "a5486b1a7f72ccb6512ec257fda44e9742c6bc050c8b75e08d2fb303ab551adf",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 60,
+              "rounding_count": 16
+            },
+            "max_work": 1,
+            "fresh": false
+          },
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 7000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8",
+        "e11e30cce2b9ed6ceb9420bdf1fd49c228d5bd911dba29cc0acbbc735ec3bd02"
+      ],
+      "hypothesis": "A longer BM solve should provide stronger shared labels, while retained BLS can exploit them; compare moderate versus extended BLS budgets without exceeding the 8-second trial cap.",
+      "diff": "--- parent\n+++ child\n@@ -1 +1,2 @@\n-1. bm(max_sweeps=20, rounding_count=8); work<=1; start=retained\n+1. bm(max_sweeps=60, rounding_count=16); work<=1; start=retained\n+2. bls(jump=1, p_min=0.8, q=0.5, stagnation=1000, tenure_max=10, tenure_min=3); work<=7000; start=retained",
+      "complete": false,
+      "median": null,
+      "minimum": null,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1035.0,
+          "complete": false,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1024.0,
+              "runtime_seconds": 0.6296816690010019,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 1035.0,
+              "runtime_seconds": 7.358931158029009,
+              "work_counters": {
+                "flips": 4535,
+                "attractors": 2477,
+                "directed_single": 1225,
+                "directed_pair": 1220,
+                "random": 437,
+                "strong_random": 1
+              },
+              "execution_status": "time_limit"
+            }
+          ],
+          "seconds": 8.034477462992072
+        },
+        {
+          "seed": 4,
+          "cut": 1050.0,
+          "complete": false,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1036.0,
+              "runtime_seconds": 0.5601571769802831,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 1050.0,
+              "runtime_seconds": 7.429272574023344,
+              "work_counters": {
+                "flips": 4775,
+                "attractors": 2559,
+                "directed_single": 1242,
+                "directed_pair": 1289,
+                "random": 470,
+                "strong_random": 1
+              },
+              "execution_status": "time_limit"
+            }
+          ],
+          "seconds": 8.031011163024232
+        },
+        {
+          "seed": 5,
+          "cut": 1060.0,
+          "complete": false,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1042.0,
+              "runtime_seconds": 0.560498884995468,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 1060.0,
+              "runtime_seconds": 7.4291688009980135,
+              "work_counters": {
+                "flips": 4455,
+                "attractors": 2364,
+                "directed_single": 1198,
+                "directed_pair": 1146,
+                "random": 478,
+                "strong_random": 1
+              },
+              "execution_status": "time_limit"
+            }
+          ],
+          "seconds": 8.03947519598296
+        }
+      ]
+    }
+  ],
+  "terminal_reason": "unknown or repeated parent IDs",
+  "raw_records": "demo/runs/529482638cac4e17bca87f8587bc4cf7/",
+  "replay_eligible": false,
+  "caps": {
+    "total_seconds": 240,
+    "stop_and_save_by_seconds": 250,
+    "max_model_calls": 2,
+    "max_rounds": 2,
+    "children_per_round": 2
+  },
+  "human_aloud_presentation_rehearsal": false,
+  "metrics": {
+    "reference": 1098.0,
+    "initial_best_median": 1012.0,
+    "best_median": 1012.0,
+    "best_cut": 1060.0,
+    "median_reference": null,
+    "all_trials_reference": null,
+    "witness_reference": null,
+    "numerical_seconds": 52.07656962808687,
+    "model_calls": 2
+  }
+}

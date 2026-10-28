@@ -1,0 +1,440 @@
+{
+  "instance": "torus_pm_10_s11.txt",
+  "nodes": 100,
+  "edges": 200,
+  "reference": 68.0,
+  "scope": "Numerical-only selection benchmark, no LLM calls; each child receives the same weak parent.",
+  "total_wall_seconds": 1.6456903530051932,
+  "rows": [
+    {
+      "seed": 0,
+      "initial_cut": -4.0,
+      "parent_cut": 64.0,
+      "backend": "tabu",
+      "config": {
+        "tenure": 11,
+        "restart_after": 300
+      },
+      "max_work": 3000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.04747698799474165,
+      "status": "completed"
+    },
+    {
+      "seed": 0,
+      "initial_cut": -4.0,
+      "parent_cut": 64.0,
+      "backend": "annealing",
+      "config": {
+        "initial_temperature": 2.0,
+        "final_temperature": 0.01,
+        "polish": true
+      },
+      "max_work": 30000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.08429305901518092,
+      "status": "completed"
+    },
+    {
+      "seed": 0,
+      "initial_cut": -4.0,
+      "parent_cut": 64.0,
+      "backend": "bm",
+      "config": {
+        "max_sweeps": 60,
+        "rounding_count": 16
+      },
+      "max_work": 1,
+      "cut": 64.0,
+      "elapsed_seconds": 0.03556078503606841,
+      "status": "completed"
+    },
+    {
+      "seed": 1,
+      "initial_cut": 0.0,
+      "parent_cut": 62.0,
+      "backend": "tabu",
+      "config": {
+        "tenure": 11,
+        "restart_after": 300
+      },
+      "max_work": 3000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.048123689950443804,
+      "status": "completed"
+    },
+    {
+      "seed": 1,
+      "initial_cut": 0.0,
+      "parent_cut": 62.0,
+      "backend": "annealing",
+      "config": {
+        "initial_temperature": 2.0,
+        "final_temperature": 0.01,
+        "polish": true
+      },
+      "max_work": 30000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.08452195301651955,
+      "status": "completed"
+    },
+    {
+      "seed": 1,
+      "initial_cut": 0.0,
+      "parent_cut": 62.0,
+      "backend": "bm",
+      "config": {
+        "max_sweeps": 60,
+        "rounding_count": 16
+      },
+      "max_work": 1,
+      "cut": 68.0,
+      "elapsed_seconds": 0.026868506043683738,
+      "status": "completed"
+    },
+    {
+      "seed": 2,
+      "initial_cut": -2.0,
+      "parent_cut": 64.0,
+      "backend": "tabu",
+      "config": {
+        "tenure": 11,
+        "restart_after": 300
+      },
+      "max_work": 3000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.04780742397997528,
+      "status": "completed"
+    },
+    {
+      "seed": 2,
+      "initial_cut": -2.0,
+      "parent_cut": 64.0,
+      "backend": "annealing",
+      "config": {
+        "initial_temperature": 2.0,
+        "final_temperature": 0.01,
+        "polish": true
+      },
+      "max_work": 30000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.08419146900996566,
+      "status": "completed"
+    },
+    {
+      "seed": 2,
+      "initial_cut": -2.0,
+      "parent_cut": 64.0,
+      "backend": "bm",
+      "config": {
+        "max_sweeps": 60,
+        "rounding_count": 16
+      },
+      "max_work": 1,
+      "cut": 68.0,
+      "elapsed_seconds": 0.02652556198881939,
+      "status": "completed"
+    },
+    {
+      "seed": 3,
+      "initial_cut": 0.0,
+      "parent_cut": 58.0,
+      "backend": "tabu",
+      "config": {
+        "tenure": 11,
+        "restart_after": 300
+      },
+      "max_work": 3000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.04766670399112627,
+      "status": "completed"
+    },
+    {
+      "seed": 3,
+      "initial_cut": 0.0,
+      "parent_cut": 58.0,
+      "backend": "annealing",
+      "config": {
+        "initial_temperature": 2.0,
+        "final_temperature": 0.01,
+        "polish": true
+      },
+      "max_work": 30000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.08444819104624912,
+      "status": "completed"
+    },
+    {
+      "seed": 3,
+      "initial_cut": 0.0,
+      "parent_cut": 58.0,
+      "backend": "bm",
+      "config": {
+        "max_sweeps": 60,
+        "rounding_count": 16
+      },
+      "max_work": 1,
+      "cut": 68.0,
+      "elapsed_seconds": 0.026616607967298478,
+      "status": "completed"
+    },
+    {
+      "seed": 4,
+      "initial_cut": -4.0,
+      "parent_cut": 60.0,
+      "backend": "tabu",
+      "config": {
+        "tenure": 11,
+        "restart_after": 300
+      },
+      "max_work": 3000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.04774816602002829,
+      "status": "completed"
+    },
+    {
+      "seed": 4,
+      "initial_cut": -4.0,
+      "parent_cut": 60.0,
+      "backend": "annealing",
+      "config": {
+        "initial_temperature": 2.0,
+        "final_temperature": 0.01,
+        "polish": true
+      },
+      "max_work": 30000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.0843073739670217,
+      "status": "completed"
+    },
+    {
+      "seed": 4,
+      "initial_cut": -4.0,
+      "parent_cut": 60.0,
+      "backend": "bm",
+      "config": {
+        "max_sweeps": 60,
+        "rounding_count": 16
+      },
+      "max_work": 1,
+      "cut": 66.0,
+      "elapsed_seconds": 0.026610065018758178,
+      "status": "completed"
+    },
+    {
+      "seed": 5,
+      "initial_cut": 8.0,
+      "parent_cut": 60.0,
+      "backend": "tabu",
+      "config": {
+        "tenure": 11,
+        "restart_after": 300
+      },
+      "max_work": 3000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.04766642994945869,
+      "status": "completed"
+    },
+    {
+      "seed": 5,
+      "initial_cut": 8.0,
+      "parent_cut": 60.0,
+      "backend": "annealing",
+      "config": {
+        "initial_temperature": 2.0,
+        "final_temperature": 0.01,
+        "polish": true
+      },
+      "max_work": 30000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.08441828598733991,
+      "status": "completed"
+    },
+    {
+      "seed": 5,
+      "initial_cut": 8.0,
+      "parent_cut": 60.0,
+      "backend": "bm",
+      "config": {
+        "max_sweeps": 60,
+        "rounding_count": 16
+      },
+      "max_work": 1,
+      "cut": 64.0,
+      "elapsed_seconds": 0.026822573971003294,
+      "status": "completed"
+    },
+    {
+      "seed": 6,
+      "initial_cut": 8.0,
+      "parent_cut": 66.0,
+      "backend": "tabu",
+      "config": {
+        "tenure": 11,
+        "restart_after": 300
+      },
+      "max_work": 3000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.04857265396276489,
+      "status": "completed"
+    },
+    {
+      "seed": 6,
+      "initial_cut": 8.0,
+      "parent_cut": 66.0,
+      "backend": "annealing",
+      "config": {
+        "initial_temperature": 2.0,
+        "final_temperature": 0.01,
+        "polish": true
+      },
+      "max_work": 30000,
+      "cut": 66.0,
+      "elapsed_seconds": 0.08494992298074067,
+      "status": "completed"
+    },
+    {
+      "seed": 6,
+      "initial_cut": 8.0,
+      "parent_cut": 66.0,
+      "backend": "bm",
+      "config": {
+        "max_sweeps": 60,
+        "rounding_count": 16
+      },
+      "max_work": 1,
+      "cut": 68.0,
+      "elapsed_seconds": 0.026794512988999486,
+      "status": "completed"
+    },
+    {
+      "seed": 7,
+      "initial_cut": 2.0,
+      "parent_cut": 66.0,
+      "backend": "tabu",
+      "config": {
+        "tenure": 11,
+        "restart_after": 300
+      },
+      "max_work": 3000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.04809375596232712,
+      "status": "completed"
+    },
+    {
+      "seed": 7,
+      "initial_cut": 2.0,
+      "parent_cut": 66.0,
+      "backend": "annealing",
+      "config": {
+        "initial_temperature": 2.0,
+        "final_temperature": 0.01,
+        "polish": true
+      },
+      "max_work": 30000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.08495882496936247,
+      "status": "completed"
+    },
+    {
+      "seed": 7,
+      "initial_cut": 2.0,
+      "parent_cut": 66.0,
+      "backend": "bm",
+      "config": {
+        "max_sweeps": 60,
+        "rounding_count": 16
+      },
+      "max_work": 1,
+      "cut": 68.0,
+      "elapsed_seconds": 0.02675542898941785,
+      "status": "completed"
+    },
+    {
+      "seed": 8,
+      "initial_cut": 4.0,
+      "parent_cut": 64.0,
+      "backend": "tabu",
+      "config": {
+        "tenure": 11,
+        "restart_after": 300
+      },
+      "max_work": 3000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.048168355016969144,
+      "status": "completed"
+    },
+    {
+      "seed": 8,
+      "initial_cut": 4.0,
+      "parent_cut": 64.0,
+      "backend": "annealing",
+      "config": {
+        "initial_temperature": 2.0,
+        "final_temperature": 0.01,
+        "polish": true
+      },
+      "max_work": 30000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.0841481180395931,
+      "status": "completed"
+    },
+    {
+      "seed": 8,
+      "initial_cut": 4.0,
+      "parent_cut": 64.0,
+      "backend": "bm",
+      "config": {
+        "max_sweeps": 60,
+        "rounding_count": 16
+      },
+      "max_work": 1,
+      "cut": 66.0,
+      "elapsed_seconds": 0.027042073023039848,
+      "status": "completed"
+    },
+    {
+      "seed": 9,
+      "initial_cut": 6.0,
+      "parent_cut": 64.0,
+      "backend": "tabu",
+      "config": {
+        "tenure": 11,
+        "restart_after": 300
+      },
+      "max_work": 3000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.047917451011016965,
+      "status": "completed"
+    },
+    {
+      "seed": 9,
+      "initial_cut": 6.0,
+      "parent_cut": 64.0,
+      "backend": "annealing",
+      "config": {
+        "initial_temperature": 2.0,
+        "final_temperature": 0.01,
+        "polish": true
+      },
+      "max_work": 30000,
+      "cut": 68.0,
+      "elapsed_seconds": 0.08426765800686553,
+      "status": "completed"
+    },
+    {
+      "seed": 9,
+      "initial_cut": 6.0,
+      "parent_cut": 64.0,
+      "backend": "bm",
+      "config": {
+        "max_sweeps": 60,
+        "rounding_count": 16
+      },
+      "max_work": 1,
+      "cut": 66.0,
+      "elapsed_seconds": 0.02668979502050206,
+      "status": "completed"
+    }
+  ]
+}

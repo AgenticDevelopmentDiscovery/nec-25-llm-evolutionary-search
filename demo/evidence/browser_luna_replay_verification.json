@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-26",
+  "playback_run": "ac6290b1a01443468d5914258d88e135",
+  "source_run": "ac4eabb65fcd4a95b2a6c41dbddcf6b0",
+  "source_model": "protected.gpt-5.6-luna",
+  "status": "finished",
+  "new_model_calls": 0,
+  "persistent_mode": true,
+  "playback_speed": 4,
+  "original_seconds": 6.5546190880122595,
+  "playback_seconds": 1.6752981099998578,
+  "best_cut": 68.0,
+  "source_id_and_model_visible": true,
+  "original_timestamps_visible": true,
+  "screenshot": "output/demo-luna-replay.jpg"
+}

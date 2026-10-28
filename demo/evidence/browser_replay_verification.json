@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-26",
+  "playback_run": "d00f24d968614216a405ccd30f353557",
+  "source_run": "68c13029005c4430a520123e3d10fc51",
+  "source_model": "protected.gpt-5.6-sol",
+  "current_live_model": "protected.gpt-5.6-luna",
+  "status": "finished",
+  "new_model_calls": 0,
+  "persistent_mode": true,
+  "original_elapsed_shown": true,
+  "speed": 4,
+  "best_cut": 68.0,
+  "source_sha256": "38a18dfa30a304dc3777044b63cbfd695459ddfdef53371892a23f9a868117c8",
+  "source_id_and_model_visible": true,
+  "browser_refresh_does_not_generate": true,
+  "projector_viewport": [
+    1280,
+    800
+  ],
+  "screenshot": "output/demo-replay-sol-luna-config.jpg"
+}

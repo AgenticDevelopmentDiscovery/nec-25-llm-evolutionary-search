@@ -1,0 +1,20 @@
+{
+  "instance": "rand_pm_1000_s23.txt",
+  "sha256": "ebb1ee5df894bb2159cd29b2a65d237fa72c9d1fdc2080b2cc7cdb16f25a0503",
+  "source": "User-specified public instance collection: instances/public/rand_pm_1000_s23.txt",
+  "nodes": 1000,
+  "edges": 5043,
+  "reference": {
+    "ref": 1098.0,
+    "exact": false,
+    "source": "simulated annealing, best of 4 x 30 s",
+    "runs": [
+      1098.0,
+      1097.0,
+      1097.0,
+      1097.0
+    ]
+  },
+  "selection": "Latest user requested more pronounced solver differences. Same initial programs and raw seeds 3/4/5 produce distinct medians 921, 975, 992, 1012. Replaces the ceiling-prone 100-node torus for initialization comparisons. Reference matching is not guaranteed. Dense case is a separate high-density real-weight stress case, not a claimed difficulty ordering.",
+  "copied": "Public graph input and scalar public reference metadata only; no assignments, campaign logs or credentials"
+}

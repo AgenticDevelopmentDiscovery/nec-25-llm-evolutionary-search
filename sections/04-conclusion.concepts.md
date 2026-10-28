@@ -1,28 +1,13 @@
-# Conclusion — spine
-
-> Note form only; never rendered. See `01-context.concepts.md` for what each
-> heading is for.
-
-## Purpose
-
-Say what the reader can now do, point at what comes next, and name what is still
-open.
-
-## Claims
-
-- (claim)
-
-## Decisions
-
-- (decision — and what it was chosen over)
-
-## Open questions
-
-> Overlaps with § Open edges in the prose — but this list is for the team, and
-> that section is for the reader. Not everything here is ready to ship there.
-
-- (question)
-
-## Not doing
-
-- (excluded, and why)
+# Claims
+- Chapter 10's artifact, fitness, mutation, selection and initial-population tuple maps to the implemented components.
+- Negative median aligns cut maximization with the chapter's minimization convention.
+- History-conditioned stochastic multi-child mutation makes operational context and budget explicit.
+- Complete evaluation and declared tie-breaks supplement the primary scalar fitness.
+# Decisions
+- Define the framework rigorously after all three demos and interpretation.
+- Distinguish initial-population design from artifact-space design.
+- End the main presentation with the evaluator and research-transfer question; optional architecture/API appendix follows only on request.
+# Open questions
+- Diversity policy, unseen-instance validation and equal-cost search-policy comparisons remain extensions.
+# Not doing
+- Global convergence or broad LLM superiority claims.

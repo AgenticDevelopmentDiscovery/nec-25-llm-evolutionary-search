@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-26",
+  "presentation": {
+    "frames": 22,
+    "overlay_slides": 85,
+    "prepared_seconds": 1455,
+    "reserve_seconds": 45,
+    "browser_states_checked": 85,
+    "overflow_or_overlap": 0,
+    "minimum_text_contrast_ratio": 7.68,
+    "css_sha256": "c0c216f7eabba222ad3ffe3e64b038fd87475e887fa441cfcb1b36632026c68b",
+    "source_sha256": "cbba778f97c659c7e22d1506696ec0d1b37e659d677e8ea715fee5f54c4389b1"
+  },
+  "demo_tests": {
+    "passed": 29,
+    "model_calls": 0
+  },
+  "preserved_solver_tests": {
+    "passed": 14
+  },
+  "vendor_hashes_verified": 133,
+  "replacement_graph": {
+    "name": "rand_pm_1000_s23.txt",
+    "sha256": "ebb1ee5df894bb2159cd29b2a65d237fa72c9d1fdc2080b2cc7cdb16f25a0503",
+    "nodes": 1000,
+    "edges": 5043,
+    "reference": 1098,
+    "proof_status": "unproven",
+    "normalized_initial_medians": {
+      "annealing": 921,
+      "tabu": 975,
+      "bls": 992,
+      "bm": 1012
+    }
+  },
+  "live_sources": [
+    {
+      "id": "674ece0b370441dd9e68c7b53b35eb2d",
+      "scenario": "contrast_limited",
+      "status": "finished",
+      "calls": 2,
+      "seconds": 24.003409281023778,
+      "initial_best_median": 975,
+      "best_eligible_median": 1008,
+      "best_witness": 1031,
+      "reference_reached": false
+    },
+    {
+      "id": "529482638cac4e17bca87f8587bc4cf7",
+      "scenario": "contrast_informed",
+      "status": "failed",
+      "calls": 2,
+      "seconds": 66.5886709850165,
+      "initial_best_median": 1012,
+      "best_eligible_median": 1012,
+      "best_witness": 1060,
+      "reference_reached": false,
+      "reason": "unknown or repeated parent IDs"
+    },
+    {
+      "id": "166aa16ae7c84e309fbed5af73b03b25",
+      "scenario": "harder",
+      "status": "finished",
+      "calls": 3,
+      "seconds": 56.601932892983314,
+      "best_eligible_median": 402.5209,
+      "reference_reached": true
+    }
+  ],
+  "additional_authorization": {
+    "limit": 6,
+    "attempts_used": 6,
+    "dns_failures_before_provider_contact": 2,
+    "actual_provider_calls": 4,
+    "remaining": 0
+  },
+  "modes": [
+    "LIVE LLM",
+    "NUMERICAL ONLY",
+    "RECORDED LLM REPLAY"
+  ],
+  "failed_sources_retain_failure_status": true,
+  "human_aloud_rehearsal": "not independently completed; presenter action",
+  "narration": {
+    "script": "complete; private and gitignored",
+    "words": 2496,
+    "segments": 85,
+    "planned_seconds": 1455,
+    "voice_video": "deferred by user",
+    "openai_speech_calls": 0,
+    "script_page_verified": true,
+    "script_page_minimum_contrast": 13.33,
+    "script_reveals": 85
+  },
+  "preserved": [
+    "old critique rounds",
+    "all vendor files",
+    "earlier recordings"
+  ],
+  "commit_push_deploy": false,
+  "public_scan": {
+    "prospective_files": 293,
+    "commits": 2,
+    "findings": 0
+  },
+  "http_verification": {
+    "teaching_routes_passed": 8,
+    "default_graph_nodes": 1000,
+    "failed_source_reason_verified": true
+  }
+}

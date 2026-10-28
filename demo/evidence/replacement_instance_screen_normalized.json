@@ -1,0 +1,1112 @@
+{
+  "mode": "NUMERICAL ONLY",
+  "model_calls": 0,
+  "protocol": "same disclosed initial programs, raw starts for seeds 3/4/5, 8 numerical seconds each; defaults normalized through the classroom interpreter; independently rescored original edges",
+  "results": [
+    {
+      "instance": "rand_pm_100_s13.txt",
+      "nodes": 100,
+      "edges": 497,
+      "sha256": "7d0088ca1afb458f89833b1c69de99ff3dc8ff290df0f34030376d68cbd827a2",
+      "reference": {
+        "ref": 119.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          119.0,
+          119.0,
+          119.0,
+          119.0
+        ]
+      },
+      "algorithm": "Tabu Search",
+      "backend": "tabu",
+      "program": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 116.0,
+          "complete": true,
+          "seconds": 0.02208125201286748
+        },
+        {
+          "seed": 4,
+          "cut": 119.0,
+          "complete": true,
+          "seconds": 0.02254921104758978
+        },
+        {
+          "seed": 5,
+          "cut": 115.0,
+          "complete": true,
+          "seconds": 0.020904178963974118
+        }
+      ],
+      "median": 116.0
+    },
+    {
+      "instance": "rand_pm_100_s13.txt",
+      "nodes": 100,
+      "edges": 497,
+      "sha256": "7d0088ca1afb458f89833b1c69de99ff3dc8ff290df0f34030376d68cbd827a2",
+      "reference": {
+        "ref": 119.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          119.0,
+          119.0,
+          119.0,
+          119.0
+        ]
+      },
+      "algorithm": "Simulated Annealing",
+      "backend": "annealing",
+      "program": {
+        "stages": [
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 106.0,
+          "complete": true,
+          "seconds": 0.026883911981713027
+        },
+        {
+          "seed": 4,
+          "cut": 114.0,
+          "complete": true,
+          "seconds": 0.02916456200182438
+        },
+        {
+          "seed": 5,
+          "cut": 113.0,
+          "complete": true,
+          "seconds": 0.027866183023434132
+        }
+      ],
+      "median": 113.0
+    },
+    {
+      "instance": "rand_pm_100_s13.txt",
+      "nodes": 100,
+      "edges": 497,
+      "sha256": "7d0088ca1afb458f89833b1c69de99ff3dc8ff290df0f34030376d68cbd827a2",
+      "reference": {
+        "ref": 119.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          119.0,
+          119.0,
+          119.0,
+          119.0
+        ]
+      },
+      "algorithm": "Breakout Local Search",
+      "backend": "bls",
+      "program": {
+        "stages": [
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 700,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 116.0,
+          "complete": true,
+          "seconds": 0.09956183697795495
+        },
+        {
+          "seed": 4,
+          "cut": 114.0,
+          "complete": true,
+          "seconds": 0.0910544139915146
+        },
+        {
+          "seed": 5,
+          "cut": 114.0,
+          "complete": true,
+          "seconds": 0.09912288503255695
+        }
+      ],
+      "median": 114.0
+    },
+    {
+      "instance": "rand_pm_100_s13.txt",
+      "nodes": 100,
+      "edges": 497,
+      "sha256": "7d0088ca1afb458f89833b1c69de99ff3dc8ff290df0f34030376d68cbd827a2",
+      "reference": {
+        "ref": 119.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          119.0,
+          119.0,
+          119.0,
+          119.0
+        ]
+      },
+      "algorithm": "rank-two Burer\u2013Monteiro",
+      "backend": "bm",
+      "program": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 111.0,
+          "complete": true,
+          "seconds": 0.02103394496953115
+        },
+        {
+          "seed": 4,
+          "cut": 113.0,
+          "complete": true,
+          "seconds": 0.020711853983812034
+        },
+        {
+          "seed": 5,
+          "cut": 113.0,
+          "complete": true,
+          "seconds": 0.020662154944147915
+        }
+      ],
+      "median": 113.0
+    },
+    {
+      "instance": "rand_pos_100_s12.txt",
+      "nodes": 100,
+      "edges": 475,
+      "sha256": "64f4ae9468aad4769d1d14310d1226e288887fac72ebef0c6e8410b3163109d5",
+      "reference": {
+        "ref": 347.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          347.0,
+          347.0,
+          347.0,
+          347.0
+        ]
+      },
+      "algorithm": "Tabu Search",
+      "backend": "tabu",
+      "program": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 347.0,
+          "complete": true,
+          "seconds": 0.019955845025833696
+        },
+        {
+          "seed": 4,
+          "cut": 347.0,
+          "complete": true,
+          "seconds": 0.01906548999249935
+        },
+        {
+          "seed": 5,
+          "cut": 347.0,
+          "complete": true,
+          "seconds": 0.019011029973626137
+        }
+      ],
+      "median": 347.0
+    },
+    {
+      "instance": "rand_pos_100_s12.txt",
+      "nodes": 100,
+      "edges": 475,
+      "sha256": "64f4ae9468aad4769d1d14310d1226e288887fac72ebef0c6e8410b3163109d5",
+      "reference": {
+        "ref": 347.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          347.0,
+          347.0,
+          347.0,
+          347.0
+        ]
+      },
+      "algorithm": "Simulated Annealing",
+      "backend": "annealing",
+      "program": {
+        "stages": [
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 343.0,
+          "complete": true,
+          "seconds": 0.024183489964343607
+        },
+        {
+          "seed": 4,
+          "cut": 347.0,
+          "complete": true,
+          "seconds": 0.024508680042345077
+        },
+        {
+          "seed": 5,
+          "cut": 339.0,
+          "complete": true,
+          "seconds": 0.02475229895208031
+        }
+      ],
+      "median": 343.0
+    },
+    {
+      "instance": "rand_pos_100_s12.txt",
+      "nodes": 100,
+      "edges": 475,
+      "sha256": "64f4ae9468aad4769d1d14310d1226e288887fac72ebef0c6e8410b3163109d5",
+      "reference": {
+        "ref": 347.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          347.0,
+          347.0,
+          347.0,
+          347.0
+        ]
+      },
+      "algorithm": "Breakout Local Search",
+      "backend": "bls",
+      "program": {
+        "stages": [
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 700,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 342.0,
+          "complete": true,
+          "seconds": 0.09010668902192265
+        },
+        {
+          "seed": 4,
+          "cut": 347.0,
+          "complete": true,
+          "seconds": 0.08818456099834293
+        },
+        {
+          "seed": 5,
+          "cut": 347.0,
+          "complete": true,
+          "seconds": 0.11514666100265458
+        }
+      ],
+      "median": 347.0
+    },
+    {
+      "instance": "rand_pos_100_s12.txt",
+      "nodes": 100,
+      "edges": 475,
+      "sha256": "64f4ae9468aad4769d1d14310d1226e288887fac72ebef0c6e8410b3163109d5",
+      "reference": {
+        "ref": 347.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          347.0,
+          347.0,
+          347.0,
+          347.0
+        ]
+      },
+      "algorithm": "rank-two Burer\u2013Monteiro",
+      "backend": "bm",
+      "program": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 334.0,
+          "complete": true,
+          "seconds": 0.03482608497142792
+        },
+        {
+          "seed": 4,
+          "cut": 342.0,
+          "complete": true,
+          "seconds": 0.037805322965141386
+        },
+        {
+          "seed": 5,
+          "cut": 338.0,
+          "complete": true,
+          "seconds": 0.03821030998369679
+        }
+      ],
+      "median": 338.0
+    },
+    {
+      "instance": "rand_pm_1000_s23.txt",
+      "nodes": 1000,
+      "edges": 5043,
+      "sha256": "ebb1ee5df894bb2159cd29b2a65d237fa72c9d1fdc2080b2cc7cdb16f25a0503",
+      "reference": {
+        "ref": 1098.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          1098.0,
+          1097.0,
+          1097.0,
+          1097.0
+        ]
+      },
+      "algorithm": "Tabu Search",
+      "backend": "tabu",
+      "program": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 980.0,
+          "complete": true,
+          "seconds": 0.40363824501400813
+        },
+        {
+          "seed": 4,
+          "cut": 975.0,
+          "complete": true,
+          "seconds": 0.3580718460143544
+        },
+        {
+          "seed": 5,
+          "cut": 964.0,
+          "complete": true,
+          "seconds": 0.3508112850249745
+        }
+      ],
+      "median": 975.0
+    },
+    {
+      "instance": "rand_pm_1000_s23.txt",
+      "nodes": 1000,
+      "edges": 5043,
+      "sha256": "ebb1ee5df894bb2159cd29b2a65d237fa72c9d1fdc2080b2cc7cdb16f25a0503",
+      "reference": {
+        "ref": 1098.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          1098.0,
+          1097.0,
+          1097.0,
+          1097.0
+        ]
+      },
+      "algorithm": "Simulated Annealing",
+      "backend": "annealing",
+      "program": {
+        "stages": [
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 912.0,
+          "complete": true,
+          "seconds": 0.3566659340285696
+        },
+        {
+          "seed": 4,
+          "cut": 948.0,
+          "complete": true,
+          "seconds": 0.3929386099916883
+        },
+        {
+          "seed": 5,
+          "cut": 921.0,
+          "complete": true,
+          "seconds": 0.37465905904537067
+        }
+      ],
+      "median": 921.0
+    },
+    {
+      "instance": "rand_pm_1000_s23.txt",
+      "nodes": 1000,
+      "edges": 5043,
+      "sha256": "ebb1ee5df894bb2159cd29b2a65d237fa72c9d1fdc2080b2cc7cdb16f25a0503",
+      "reference": {
+        "ref": 1098.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          1098.0,
+          1097.0,
+          1097.0,
+          1097.0
+        ]
+      },
+      "algorithm": "Breakout Local Search",
+      "backend": "bls",
+      "program": {
+        "stages": [
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 700,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 966.0,
+          "complete": true,
+          "seconds": 0.529989454022143
+        },
+        {
+          "seed": 4,
+          "cut": 992.0,
+          "complete": true,
+          "seconds": 0.4553940139594488
+        },
+        {
+          "seed": 5,
+          "cut": 995.0,
+          "complete": true,
+          "seconds": 0.49569002498174086
+        }
+      ],
+      "median": 992.0
+    },
+    {
+      "instance": "rand_pm_1000_s23.txt",
+      "nodes": 1000,
+      "edges": 5043,
+      "sha256": "ebb1ee5df894bb2159cd29b2a65d237fa72c9d1fdc2080b2cc7cdb16f25a0503",
+      "reference": {
+        "ref": 1098.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          1098.0,
+          1097.0,
+          1097.0,
+          1097.0
+        ]
+      },
+      "algorithm": "rank-two Burer\u2013Monteiro",
+      "backend": "bm",
+      "program": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1012.0,
+          "complete": true,
+          "seconds": 0.21356295101577416
+        },
+        {
+          "seed": 4,
+          "cut": 1012.0,
+          "complete": true,
+          "seconds": 0.21858136903028935
+        },
+        {
+          "seed": 5,
+          "cut": 1007.0,
+          "complete": true,
+          "seconds": 0.2392962509766221
+        }
+      ],
+      "median": 1012.0
+    },
+    {
+      "instance": "rand_pos_1000_s22.txt",
+      "nodes": 1000,
+      "edges": 5043,
+      "sha256": "5db17f236028b9fd7d3fddb13fceb419133064f1824bc7ddbf87ab2cc9e826a4",
+      "reference": {
+        "ref": 3687.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          3687.0,
+          3686.0,
+          3687.0,
+          3687.0
+        ]
+      },
+      "algorithm": "Tabu Search",
+      "backend": "tabu",
+      "program": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 3561.0,
+          "complete": true,
+          "seconds": 0.41581297101220116
+        },
+        {
+          "seed": 4,
+          "cut": 3608.0,
+          "complete": true,
+          "seconds": 0.39426930499030277
+        },
+        {
+          "seed": 5,
+          "cut": 3606.0,
+          "complete": true,
+          "seconds": 0.3574678110308014
+        }
+      ],
+      "median": 3606.0
+    },
+    {
+      "instance": "rand_pos_1000_s22.txt",
+      "nodes": 1000,
+      "edges": 5043,
+      "sha256": "5db17f236028b9fd7d3fddb13fceb419133064f1824bc7ddbf87ab2cc9e826a4",
+      "reference": {
+        "ref": 3687.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          3687.0,
+          3686.0,
+          3687.0,
+          3687.0
+        ]
+      },
+      "algorithm": "Simulated Annealing",
+      "backend": "annealing",
+      "program": {
+        "stages": [
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 3516.0,
+          "complete": true,
+          "seconds": 0.4963582549826242
+        },
+        {
+          "seed": 4,
+          "cut": 3525.0,
+          "complete": true,
+          "seconds": 0.47062760998960584
+        },
+        {
+          "seed": 5,
+          "cut": 3547.0,
+          "complete": true,
+          "seconds": 0.5094114340026863
+        }
+      ],
+      "median": 3525.0
+    },
+    {
+      "instance": "rand_pos_1000_s22.txt",
+      "nodes": 1000,
+      "edges": 5043,
+      "sha256": "5db17f236028b9fd7d3fddb13fceb419133064f1824bc7ddbf87ab2cc9e826a4",
+      "reference": {
+        "ref": 3687.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          3687.0,
+          3686.0,
+          3687.0,
+          3687.0
+        ]
+      },
+      "algorithm": "Breakout Local Search",
+      "backend": "bls",
+      "program": {
+        "stages": [
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 700,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 3580.0,
+          "complete": true,
+          "seconds": 0.6170051230001263
+        },
+        {
+          "seed": 4,
+          "cut": 3618.0,
+          "complete": true,
+          "seconds": 0.5679805619874969
+        },
+        {
+          "seed": 5,
+          "cut": 3613.0,
+          "complete": true,
+          "seconds": 0.6125379340373911
+        }
+      ],
+      "median": 3613.0
+    },
+    {
+      "instance": "rand_pos_1000_s22.txt",
+      "nodes": 1000,
+      "edges": 5043,
+      "sha256": "5db17f236028b9fd7d3fddb13fceb419133064f1824bc7ddbf87ab2cc9e826a4",
+      "reference": {
+        "ref": 3687.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          3687.0,
+          3686.0,
+          3687.0,
+          3687.0
+        ]
+      },
+      "algorithm": "rank-two Burer\u2013Monteiro",
+      "backend": "bm",
+      "program": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 3617.0,
+          "complete": true,
+          "seconds": 0.24543127400102094
+        },
+        {
+          "seed": 4,
+          "cut": 3612.0,
+          "complete": true,
+          "seconds": 0.2504047569818795
+        },
+        {
+          "seed": 5,
+          "cut": 3620.0,
+          "complete": true,
+          "seconds": 0.2558930439990945
+        }
+      ],
+      "median": 3617.0
+    },
+    {
+      "instance": "torus_pm_32_s21.txt",
+      "nodes": 1024,
+      "edges": 2048,
+      "sha256": "ea42679eaa6bd18d03210f817f24cd3490c5f599dcaa64f31b4fc56f40ca92c7",
+      "reference": {
+        "ref": 732.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          732.0,
+          732.0,
+          730.0,
+          730.0
+        ]
+      },
+      "algorithm": "Tabu Search",
+      "backend": "tabu",
+      "program": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 652.0,
+          "complete": true,
+          "seconds": 0.1437880879966542
+        },
+        {
+          "seed": 4,
+          "cut": 656.0,
+          "complete": true,
+          "seconds": 0.138578555022832
+        },
+        {
+          "seed": 5,
+          "cut": 662.0,
+          "complete": true,
+          "seconds": 0.152394101023674
+        }
+      ],
+      "median": 656.0
+    },
+    {
+      "instance": "torus_pm_32_s21.txt",
+      "nodes": 1024,
+      "edges": 2048,
+      "sha256": "ea42679eaa6bd18d03210f817f24cd3490c5f599dcaa64f31b4fc56f40ca92c7",
+      "reference": {
+        "ref": 732.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          732.0,
+          732.0,
+          730.0,
+          730.0
+        ]
+      },
+      "algorithm": "Simulated Annealing",
+      "backend": "annealing",
+      "program": {
+        "stages": [
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 656.0,
+          "complete": true,
+          "seconds": 0.15042619599262252
+        },
+        {
+          "seed": 4,
+          "cut": 632.0,
+          "complete": true,
+          "seconds": 0.150415932002943
+        },
+        {
+          "seed": 5,
+          "cut": 646.0,
+          "complete": true,
+          "seconds": 0.14358059701044112
+        }
+      ],
+      "median": 646.0
+    },
+    {
+      "instance": "torus_pm_32_s21.txt",
+      "nodes": 1024,
+      "edges": 2048,
+      "sha256": "ea42679eaa6bd18d03210f817f24cd3490c5f599dcaa64f31b4fc56f40ca92c7",
+      "reference": {
+        "ref": 732.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          732.0,
+          732.0,
+          730.0,
+          730.0
+        ]
+      },
+      "algorithm": "Breakout Local Search",
+      "backend": "bls",
+      "program": {
+        "stages": [
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 700,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 652.0,
+          "complete": true,
+          "seconds": 0.39339515496976674
+        },
+        {
+          "seed": 4,
+          "cut": 662.0,
+          "complete": true,
+          "seconds": 0.3621144720236771
+        },
+        {
+          "seed": 5,
+          "cut": 650.0,
+          "complete": true,
+          "seconds": 0.3698107519885525
+        }
+      ],
+      "median": 652.0
+    },
+    {
+      "instance": "torus_pm_32_s21.txt",
+      "nodes": 1024,
+      "edges": 2048,
+      "sha256": "ea42679eaa6bd18d03210f817f24cd3490c5f599dcaa64f31b4fc56f40ca92c7",
+      "reference": {
+        "ref": 732.0,
+        "exact": false,
+        "source": "simulated annealing, best of 4 x 30 s",
+        "runs": [
+          732.0,
+          732.0,
+          730.0,
+          730.0
+        ]
+      },
+      "algorithm": "rank-two Burer\u2013Monteiro",
+      "backend": "bm",
+      "program": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          }
+        ]
+      },
+      "seconds_per_trial": 8,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 676.0,
+          "complete": true,
+          "seconds": 0.11203185998601839
+        },
+        {
+          "seed": 4,
+          "cut": 676.0,
+          "complete": true,
+          "seconds": 0.1224549559992738
+        },
+        {
+          "seed": 5,
+          "cut": 674.0,
+          "complete": true,
+          "seconds": 0.12573332496685907
+        }
+      ],
+      "median": 676.0
+    }
+  ]
+}

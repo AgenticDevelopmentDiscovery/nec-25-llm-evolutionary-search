@@ -1,0 +1,43 @@
+{
+  "mode": "read_only_score_audit_and_isolated_zero_call_browser_checks",
+  "new_model_calls": 0,
+  "runs_audited": 13,
+  "partitions_independently_rescored": 236,
+  "trial_results_audited": 159,
+  "score_mismatches": 0,
+  "method": "Direct math.fsum of original graph edge weights crossing each stored partition; compared with recorded cut within absolute tolerance 1e-8.",
+  "reported_1042": {
+    "program": "Breakout Local Search \u2192 Burer\u2013Monteiro",
+    "round": 3,
+    "trial": 3,
+    "seed": 5,
+    "cuts": [
+      1032,
+      1052,
+      1042
+    ],
+    "trial_complete": [
+      true,
+      false,
+      true
+    ],
+    "program_eligible": false,
+    "reason": "Second trial had a time-limited Breakout Local Search stage."
+  },
+  "display_changes": [
+    "Identify initial partition versus solver trial versus retained best witness.",
+    "Show solver, trial, seed and incomplete-program status.",
+    "Locate and highlight source program in scrollable table.",
+    "Correct trial columns across uint32 seed wraparound."
+  ],
+  "demo2_selection": "Three highest pilot medians: Burer\u2013Monteiro 1012, Breakout Local Search 992, Tabu Search 975; excluded Simulated Annealing 921.",
+  "selection_scope": "Chosen on the same graph and three seeds; initial suite sizes differ; no independent generalization or efficiency claim.",
+  "browser_checks": {
+    "initial_partition_identified": true,
+    "uint32_seed_wrap_trials_populated": true,
+    "source_row_navigation": true,
+    "genuine_replay_1042_correctly_attributed": true,
+    "incomplete_program_exclusion_visible": true,
+    "new_model_calls": 0
+  }
+}

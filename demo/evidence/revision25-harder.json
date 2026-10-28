@@ -1,0 +1,943 @@
+{
+  "date_utc": "2026-10-27T03:02:02.313696+00:00",
+  "run_id": "166aa16ae7c84e309fbed5af73b03b25",
+  "mode": "live",
+  "status": "finished",
+  "scenario": "harder",
+  "initial_solvers": [
+    "tabu",
+    "annealing",
+    "bls",
+    "bm"
+  ],
+  "population_protocol": "shared_raw",
+  "seed": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "wall_seconds": 56.601932892983314,
+  "model_calls": 3,
+  "time_to_first_real_proposal": 11.308394203952048,
+  "time_to_reference_match": 13.00370419997489,
+  "best_cut": 402.5209000000001,
+  "baseline_construction": [],
+  "candidates": [
+    {
+      "id": "55d784ea6bf6ff0e552746f4539e6ba03ef8f473d15476235d7786c8ee8b7e36",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Tabu Search solver",
+      "diff": "",
+      "complete": true,
+      "median": 395.03560000000004,
+      "minimum": 361.5479,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 395.03560000000004,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 395.03560000000004,
+              "runtime_seconds": 0.07371282897656783,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 3
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.0969467670074664
+        },
+        {
+          "seed": 4,
+          "cut": 401.0616,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 401.0616,
+              "runtime_seconds": 0.09710521099623293,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.12305668200133368
+        },
+        {
+          "seed": 5,
+          "cut": 361.5479,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 361.5479,
+              "runtime_seconds": 0.07779804698657244,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.10233549901749939
+        }
+      ]
+    },
+    {
+      "id": "726b4485501a91404ffbcbc122272784185a7ee32987389698f85e56bbee03bc",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Simulated Annealing solver",
+      "diff": "",
+      "complete": true,
+      "median": 378.0887,
+      "minimum": 377.78560000000004,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 378.0887,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 378.0887,
+              "runtime_seconds": 0.08383960695937276,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 154,
+                "accepted_worsening": 41,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.10856030398281291
+        },
+        {
+          "seed": 4,
+          "cut": 394.10960000000006,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 394.10960000000006,
+              "runtime_seconds": 0.0709536710055545,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 123,
+                "accepted_worsening": 40,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.09478596301050857
+        },
+        {
+          "seed": 5,
+          "cut": 377.78560000000004,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 377.78560000000004,
+              "runtime_seconds": 0.08859427797142416,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 172,
+                "accepted_worsening": 63,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.11532107199309394
+        }
+      ]
+    },
+    {
+      "id": "e11e30cce2b9ed6ceb9420bdf1fd49c228d5bd911dba29cc0acbbc735ec3bd02",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 700,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Breakout Local Search solver",
+      "diff": "",
+      "complete": true,
+      "median": 401.0616,
+      "minimum": 368.66290000000004,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 401.0616,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 401.0616,
+              "runtime_seconds": 0.5007332620443776,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 154,
+                "directed_single": 118,
+                "directed_pair": 123,
+                "random": 3,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5230618190253153
+        },
+        {
+          "seed": 4,
+          "cut": 401.0616,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 401.0616,
+              "runtime_seconds": 0.550667230039835,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 137,
+                "directed_single": 96,
+                "directed_pair": 126,
+                "random": 15,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5788428370142356
+        },
+        {
+          "seed": 5,
+          "cut": 368.66290000000004,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 368.66290000000004,
+              "runtime_seconds": 0.5266053960076533,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 135,
+                "directed_single": 131,
+                "directed_pair": 114,
+                "random": 5,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5519982799887657
+        }
+      ]
+    },
+    {
+      "id": "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial rank-two Burer\u2013Monteiro solver",
+      "diff": "",
+      "complete": true,
+      "median": 402.3824,
+      "minimum": 399.6734,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 399.6734,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 399.6734,
+              "runtime_seconds": 0.17943676200229675,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.20509038702584803
+        },
+        {
+          "seed": 4,
+          "cut": 402.39320000000004,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 402.39320000000004,
+              "runtime_seconds": 0.17896632401971146,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.2051381979836151
+        },
+        {
+          "seed": 5,
+          "cut": 402.3824,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 402.3824,
+              "runtime_seconds": 0.17498945799889043,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.19983924803091213
+        }
+      ]
+    },
+    {
+      "id": "4a150a18b14f532e5c6dab812f6d19699a07465345b12c3157dc646366239306",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 60,
+              "rounding_count": 16
+            },
+            "max_work": 1,
+            "fresh": false
+          },
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 20,
+              "restart_after": 0
+            },
+            "max_work": 20000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8"
+      ],
+      "hypothesis": "A higher-budget BM initialization followed by retained-label tabu polishing may improve the strong BM cuts while preserving its robustness across seeds.",
+      "diff": "--- parent\n+++ child\n@@ -1 +1,2 @@\n-1. bm(max_sweeps=20, rounding_count=8); work<=1; start=retained\n+1. bm(max_sweeps=60, rounding_count=16); work<=1; start=retained\n+2. tabu(restart_after=0, tenure=20); work<=20000; start=retained",
+      "complete": true,
+      "median": 402.5209000000001,
+      "minimum": 402.5209000000001,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 402.5209000000001,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 401.0616,
+              "runtime_seconds": 0.4979905770160258,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 402.5209000000001,
+              "runtime_seconds": 0.9536765799857676,
+              "work_counters": {
+                "iterations": 20000,
+                "flips": 20000,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 2
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 1.4947722909855656
+        },
+        {
+          "seed": 4,
+          "cut": 402.5209000000001,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 394.49210000000005,
+              "runtime_seconds": 0.4082565529970452,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 402.5209000000001,
+              "runtime_seconds": 0.7741649160161614,
+              "work_counters": {
+                "iterations": 20000,
+                "flips": 20000,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 1.21760313102277
+        },
+        {
+          "seed": 5,
+          "cut": 402.5209000000001,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 402.39320000000004,
+              "runtime_seconds": 0.4758712740149349,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 402.5209000000001,
+              "runtime_seconds": 0.937874989991542,
+              "work_counters": {
+                "iterations": 20000,
+                "flips": 20000,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 1.4558111859951168
+        }
+      ]
+    },
+    {
+      "id": "b9b4172f35279d5b7e6405979c83e3de195259c73ec3b8d90fd82a1550d4fd1a",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 60,
+              "rounding_count": 16
+            },
+            "max_work": 1,
+            "fresh": false
+          },
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 8000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8"
+      ],
+      "hypothesis": "A higher-budget BM initialization followed by retained-label tabu polishing may improve the strong BM cuts while preserving its robustness across seeds.",
+      "diff": "--- parent\n+++ child\n@@ -1 +1,2 @@\n-1. bm(max_sweeps=20, rounding_count=8); work<=1; start=retained\n+1. bm(max_sweeps=60, rounding_count=16); work<=1; start=retained\n+2. bls(jump=1, p_min=0.8, q=0.5, stagnation=1000, tenure_max=10, tenure_min=3); work<=8000; start=retained",
+      "complete": true,
+      "median": 401.0616,
+      "minimum": 401.0616,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 401.0616,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 401.0616,
+              "runtime_seconds": 0.4517822859925218,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 401.0616,
+              "runtime_seconds": 5.493161007005256,
+              "work_counters": {
+                "flips": 8000,
+                "attractors": 1665,
+                "directed_single": 1297,
+                "directed_pair": 1348,
+                "random": 529,
+                "strong_random": 5
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 5.9807933869888075
+        },
+        {
+          "seed": 4,
+          "cut": 401.0616,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 394.49210000000005,
+              "runtime_seconds": 0.4674131289939396,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 401.0616,
+              "runtime_seconds": 6.3608472890337,
+              "work_counters": {
+                "flips": 8000,
+                "attractors": 1680,
+                "directed_single": 1410,
+                "directed_pair": 1322,
+                "random": 496,
+                "strong_random": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 6.867827539972495
+        },
+        {
+          "seed": 5,
+          "cut": 402.5209000000001,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 402.39320000000004,
+              "runtime_seconds": 0.45670213794801384,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 402.5209000000001,
+              "runtime_seconds": 6.51383948099101,
+              "work_counters": {
+                "flips": 8000,
+                "attractors": 1735,
+                "directed_single": 1401,
+                "directed_pair": 1328,
+                "random": 610,
+                "strong_random": 4
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 7.007961752999108
+        }
+      ]
+    },
+    {
+      "id": "a49a03d465cd92623da26dcecadc0c4d9d04d9118b2d95b6de5e315fa9b4c093",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 60,
+              "rounding_count": 16
+            },
+            "max_work": 1,
+            "fresh": false
+          },
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 40,
+              "restart_after": 1000
+            },
+            "max_work": 20000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "4a150a18b14f532e5c6dab812f6d19699a07465345b12c3157dc646366239306"
+      ],
+      "hypothesis": "Test whether increasing tabu tenure and enabling a bounded restart threshold improves on the 402.5209 plateau while retaining the strong BM seed.",
+      "diff": "--- parent\n+++ child\n@@ -1,2 +1,2 @@\n 1. bm(max_sweeps=60, rounding_count=16); work<=1; start=retained\n-2. tabu(restart_after=0, tenure=20); work<=20000; start=retained\n+2. tabu(restart_after=1000, tenure=40); work<=20000; start=retained",
+      "complete": true,
+      "median": 402.5209000000001,
+      "minimum": 402.39320000000004,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 402.39320000000004,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 401.0616,
+              "runtime_seconds": 0.48373396799433976,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 402.39320000000004,
+              "runtime_seconds": 0.9623219860368408,
+              "work_counters": {
+                "iterations": 20000,
+                "flips": 20000,
+                "waits": 0,
+                "restarts": 19,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 1.4863681310089305
+        },
+        {
+          "seed": 4,
+          "cut": 402.5209000000001,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 394.49210000000005,
+              "runtime_seconds": 0.41347925196168944,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 402.5209000000001,
+              "runtime_seconds": 0.8911526239826344,
+              "work_counters": {
+                "iterations": 20000,
+                "flips": 20000,
+                "waits": 0,
+                "restarts": 19,
+                "aspiration_moves": 6
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 1.3399681790033355
+        },
+        {
+          "seed": 5,
+          "cut": 402.5209000000001,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 402.39320000000004,
+              "runtime_seconds": 0.4590195029741153,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 402.5209000000001,
+              "runtime_seconds": 0.920377786969766,
+              "work_counters": {
+                "iterations": 20000,
+                "flips": 20000,
+                "waits": 0,
+                "restarts": 19,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 1.419283203955274
+        }
+      ]
+    },
+    {
+      "id": "f4e49a2fb6cd7ef73aa3b80b667a91451f90018cbd09c191e0bf4a2c37d6d6d9",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 60,
+              "rounding_count": 16
+            },
+            "max_work": 1,
+            "fresh": false
+          },
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 10,
+              "restart_after": 500
+            },
+            "max_work": 20000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "4a150a18b14f532e5c6dab812f6d19699a07465345b12c3157dc646366239306"
+      ],
+      "hypothesis": "Test whether increasing tabu tenure and enabling a bounded restart threshold improves on the 402.5209 plateau while retaining the strong BM seed.",
+      "diff": "--- parent\n+++ child\n@@ -1,2 +1,2 @@\n 1. bm(max_sweeps=60, rounding_count=16); work<=1; start=retained\n-2. tabu(restart_after=0, tenure=20); work<=20000; start=retained\n+2. tabu(restart_after=500, tenure=10); work<=20000; start=retained",
+      "complete": true,
+      "median": 402.5209000000001,
+      "minimum": 402.5209000000001,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 402.5209000000001,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 401.0616,
+              "runtime_seconds": 0.4681320359813981,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 402.5209000000001,
+              "runtime_seconds": 1.0554039920098148,
+              "work_counters": {
+                "iterations": 20000,
+                "flips": 20000,
+                "waits": 0,
+                "restarts": 38,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 1.56578756502131
+        },
+        {
+          "seed": 4,
+          "cut": 402.5209000000001,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 394.49210000000005,
+              "runtime_seconds": 0.4597086089779623,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 402.5209000000001,
+              "runtime_seconds": 0.9798612840240821,
+              "work_counters": {
+                "iterations": 20000,
+                "flips": 20000,
+                "waits": 0,
+                "restarts": 38,
+                "aspiration_moves": 4
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 1.479130215011537
+        },
+        {
+          "seed": 5,
+          "cut": 402.5209000000001,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 402.39320000000004,
+              "runtime_seconds": 0.4839536369545385,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 402.5209000000001,
+              "runtime_seconds": 0.9996292159776203,
+              "work_counters": {
+                "iterations": 20000,
+                "flips": 20000,
+                "waits": 0,
+                "restarts": 39,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 1.5237368569942191
+        }
+      ]
+    }
+  ],
+  "terminal_reason": "bounded experiment completed",
+  "raw_records": "demo/runs/166aa16ae7c84e309fbed5af73b03b25/",
+  "replay_eligible": true,
+  "caps": {
+    "total_seconds": 240,
+    "stop_and_save_by_seconds": 250,
+    "max_model_calls": 3,
+    "max_rounds": 3,
+    "children_per_round": 2
+  },
+  "human_aloud_presentation_rehearsal": false,
+  "metrics": {
+    "reference": 402.5209000000002,
+    "initial_best_median": 402.3824,
+    "best_median": 402.5209000000001,
+    "best_cut": 402.5209000000001,
+    "median_reference": {
+      "seconds": 16.090985908987932,
+      "calls": 1
+    },
+    "all_trials_reference": {
+      "seconds": 16.090985908987932,
+      "calls": 1
+    },
+    "witness_reference": {
+      "seconds": 13.00370419997489,
+      "calls": 1
+    },
+    "numerical_seconds": 35.74402049503988,
+    "model_calls": 3
+  }
+}

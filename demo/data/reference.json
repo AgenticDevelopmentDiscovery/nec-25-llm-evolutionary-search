@@ -1,0 +1,46 @@
+{
+  "torus_pm_10_s11.txt": {
+    "ref": 68.0,
+    "exact": false,
+    "source": "simulated annealing, best of 4 x 30 s",
+    "runs": [
+      68.0,
+      68.0,
+      68.0,
+      68.0
+    ]
+  },
+  "torus_pm_32_s21.txt": {
+    "ref": 732.0,
+    "exact": false,
+    "source": "Provided public reference: simulated annealing, best of 4 x 30 s",
+    "runs": [
+      732,
+      732,
+      730,
+      730
+    ]
+  },
+  "dense_gauss_100_s14.txt": {
+    "ref": 402.5209000000002,
+    "exact": false,
+    "source": "simulated annealing, best of 4 x 30 s",
+    "runs": [
+      402.5209000000002,
+      402.5209000000002,
+      402.5209000000002,
+      402.5209000000002
+    ]
+  },
+  "rand_pm_1000_s23.txt": {
+    "ref": 1098.0,
+    "exact": false,
+    "source": "simulated annealing, best of 4 x 30 s",
+    "runs": [
+      1098.0,
+      1097.0,
+      1097.0,
+      1097.0
+    ]
+  }
+}

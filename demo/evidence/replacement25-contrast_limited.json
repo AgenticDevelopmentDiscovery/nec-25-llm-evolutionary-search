@@ -1,0 +1,226 @@
+{
+  "date_utc": "2026-10-27T03:28:20.564691+00:00",
+  "run_id": "50bb9844a36847118c896358be573a62",
+  "mode": "live",
+  "status": "failed",
+  "scenario": "contrast_limited",
+  "initial_solvers": [
+    "tabu",
+    "annealing"
+  ],
+  "population_protocol": "shared_raw",
+  "seed": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "wall_seconds": 4.348010263987817,
+  "model_calls": 1,
+  "time_to_first_real_proposal": null,
+  "time_to_reference_match": null,
+  "best_cut": 980.0,
+  "baseline_construction": [],
+  "candidates": [
+    {
+      "id": "55d784ea6bf6ff0e552746f4539e6ba03ef8f473d15476235d7786c8ee8b7e36",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Tabu Search solver",
+      "diff": "",
+      "complete": true,
+      "median": 975.0,
+      "minimum": 964.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 980.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 980.0,
+              "runtime_seconds": 0.41103201400255784,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.4414609119994566
+        },
+        {
+          "seed": 4,
+          "cut": 975.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 975.0,
+              "runtime_seconds": 0.3544909890042618,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.3836276659858413
+        },
+        {
+          "seed": 5,
+          "cut": 964.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 964.0,
+              "runtime_seconds": 0.385183687962126,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.41992385900812224
+        }
+      ]
+    },
+    {
+      "id": "726b4485501a91404ffbcbc122272784185a7ee32987389698f85e56bbee03bc",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Simulated Annealing solver",
+      "diff": "",
+      "complete": true,
+      "median": 921.0,
+      "minimum": 912.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 912.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 912.0,
+              "runtime_seconds": 0.458547696005553,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 1146,
+                "accepted_worsening": 140,
+                "polish_flips": 8
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.49285775097087026
+        },
+        {
+          "seed": 4,
+          "cut": 948.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 948.0,
+              "runtime_seconds": 0.4553424749756232,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 1173,
+                "accepted_worsening": 130,
+                "polish_flips": 16
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.48041202302556485
+        },
+        {
+          "seed": 5,
+          "cut": 921.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 921.0,
+              "runtime_seconds": 0.4397691590129398,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 1142,
+                "accepted_worsening": 137,
+                "polish_flips": 22
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.4702232609852217
+        }
+      ]
+    }
+  ],
+  "terminal_reason": "owned process failed: HTTPSConnectionPool(host='chat-api.tamu.ai', port=443): Max retries exceeded with url: /api/chat/completions (Caused by NameResolutionError(\"HTTPSConnection(host='chat-api.tamu.ai', port=443): Failed to resolve 'chat-api.tamu.ai' ([Errno -2] Name or service not known)\"))\n",
+  "raw_records": "demo/runs/50bb9844a36847118c896358be573a62/",
+  "replay_eligible": false,
+  "caps": {
+    "total_seconds": 240,
+    "stop_and_save_by_seconds": 250,
+    "max_model_calls": 3,
+    "max_rounds": 3,
+    "children_per_round": 2
+  },
+  "human_aloud_presentation_rehearsal": false,
+  "metrics": {
+    "reference": 1098.0,
+    "initial_best_median": 975.0,
+    "best_median": 975.0,
+    "best_cut": 980.0,
+    "median_reference": null,
+    "all_trials_reference": null,
+    "witness_reference": null,
+    "numerical_seconds": 2.688505471975077,
+    "model_calls": 1
+  }
+}

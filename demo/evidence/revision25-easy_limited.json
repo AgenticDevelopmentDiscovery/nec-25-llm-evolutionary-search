@@ -1,0 +1,725 @@
+{
+  "date_utc": "2026-10-27T03:00:33.213199+00:00",
+  "run_id": "b44509726ea3453595046b5613252af2",
+  "mode": "live",
+  "status": "finished",
+  "scenario": "easy_limited",
+  "initial_solvers": [
+    "bm"
+  ],
+  "population_protocol": "shared_raw",
+  "seed": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "wall_seconds": 23.244931092020124,
+  "model_calls": 3,
+  "time_to_first_real_proposal": 5.637441975006368,
+  "time_to_reference_match": 5.927379225031473,
+  "best_cut": 68.0,
+  "baseline_construction": [],
+  "candidates": [
+    {
+      "id": "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial rank-two Burer\u2013Monteiro solver",
+      "diff": "",
+      "complete": true,
+      "median": 66.0,
+      "minimum": 64.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 66.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 66.0,
+              "runtime_seconds": 0.01081996300490573,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.012958767008967698
+        },
+        {
+          "seed": 4,
+          "cut": 66.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 66.0,
+              "runtime_seconds": 0.010711097973398864,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.012701976986136287
+        },
+        {
+          "seed": 5,
+          "cut": 64.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 64.0,
+              "runtime_seconds": 0.010339907021261752,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.01237817300716415
+        }
+      ]
+    },
+    {
+      "id": "a40df053422fb3b2b686ceac3d34dee9080673eb561e6abb8f904222afa96a7d",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          },
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 20,
+              "restart_after": 0
+            },
+            "max_work": 5000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8"
+      ],
+      "hypothesis": "Retaining the fast BM labels and applying a bounded local-search polish may improve the weaker seed without discarding BM's robust starting solution.",
+      "diff": "--- parent\n+++ child\n@@ -1 +1,2 @@\n 1. bm(max_sweeps=20, rounding_count=8); work<=1; start=retained\n+2. tabu(restart_after=0, tenure=20); work<=5000; start=retained",
+      "complete": true,
+      "median": 68.0,
+      "minimum": 68.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 66.0,
+              "runtime_seconds": 0.011901449004653841,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.09402345097623765,
+              "work_counters": {
+                "iterations": 5000,
+                "flips": 5000,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.10927385202376172
+        },
+        {
+          "seed": 4,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 66.0,
+              "runtime_seconds": 0.010916103958152235,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.08575309300795197,
+              "work_counters": {
+                "iterations": 5000,
+                "flips": 5000,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.10015348403248936
+        },
+        {
+          "seed": 5,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 64.0,
+              "runtime_seconds": 0.01138142595300451,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.08703799499198794,
+              "work_counters": {
+                "iterations": 5000,
+                "flips": 5000,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.10180998500436544
+        }
+      ]
+    },
+    {
+      "id": "66e1637cc1cd9650c8a7defc8e6738ec7580911ef185b40a67f3605c57894ad9",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          },
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8"
+      ],
+      "hypothesis": "Retaining the fast BM labels and applying a bounded local-search polish may improve the weaker seed without discarding BM's robust starting solution.",
+      "diff": "--- parent\n+++ child\n@@ -1 +1,2 @@\n 1. bm(max_sweeps=20, rounding_count=8); work<=1; start=retained\n+2. bls(jump=1, p_min=0.8, q=0.5, stagnation=1000, tenure_max=10, tenure_min=3); work<=6000; start=retained",
+      "complete": true,
+      "median": 66.0,
+      "minimum": 66.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 66.0,
+              "runtime_seconds": 0.010177822026889771,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 68.0,
+              "runtime_seconds": 0.6069217059994116,
+              "work_counters": {
+                "flips": 6000,
+                "attractors": 3122,
+                "directed_single": 1523,
+                "directed_pair": 1504,
+                "random": 615,
+                "strong_random": 3
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.620267425023485
+        },
+        {
+          "seed": 4,
+          "cut": 66.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 66.0,
+              "runtime_seconds": 0.009858965990133584,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 66.0,
+              "runtime_seconds": 0.5889840420568362,
+              "work_counters": {
+                "flips": 6000,
+                "attractors": 3258,
+                "directed_single": 1566,
+                "directed_pair": 1568,
+                "random": 624,
+                "strong_random": 3
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.6021267059841193
+        },
+        {
+          "seed": 5,
+          "cut": 66.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 64.0,
+              "runtime_seconds": 0.010318208020180464,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 66.0,
+              "runtime_seconds": 0.5961705489899032,
+              "work_counters": {
+                "flips": 6000,
+                "attractors": 3276,
+                "directed_single": 1618,
+                "directed_pair": 1523,
+                "random": 643,
+                "strong_random": 2
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.6099624980124645
+        }
+      ]
+    },
+    {
+      "id": "1e599d564ea9b1bcd07b84d441d58a50e226114eb92cc9ab147de6ab58b300ad",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          },
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 30,
+              "restart_after": 500
+            },
+            "max_work": 12000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "a40df053422fb3b2b686ceac3d34dee9080673eb561e6abb8f904222afa96a7d",
+        "66e1637cc1cd9650c8a7defc8e6738ec7580911ef185b40a67f3605c57894ad9"
+      ],
+      "hypothesis": "Longer retained tabu search may escape the stable 68-cut plateau; a second retained BLS stage tests whether diversification improves the tabu incumbent without exceeding the measured trial-time budget.",
+      "diff": "--- parent\n+++ child\n@@ -1,2 +1,2 @@\n 1. bm(max_sweeps=20, rounding_count=8); work<=1; start=retained\n-2. tabu(restart_after=0, tenure=20); work<=5000; start=retained\n+2. tabu(restart_after=500, tenure=30); work<=12000; start=retained",
+      "complete": true,
+      "median": 68.0,
+      "minimum": 68.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 66.0,
+              "runtime_seconds": 0.009917753050103784,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.2020123889669776,
+              "work_counters": {
+                "iterations": 12000,
+                "flips": 12000,
+                "waits": 0,
+                "restarts": 23,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.21499939495697618
+        },
+        {
+          "seed": 4,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 66.0,
+              "runtime_seconds": 0.010297604952938855,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.19886624196078628,
+              "work_counters": {
+                "iterations": 12000,
+                "flips": 12000,
+                "waits": 0,
+                "restarts": 23,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.2123464170144871
+        },
+        {
+          "seed": 5,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 64.0,
+              "runtime_seconds": 0.012330041965469718,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.21284586796537042,
+              "work_counters": {
+                "iterations": 12000,
+                "flips": 12000,
+                "waits": 0,
+                "restarts": 23,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.229032595991157
+        }
+      ]
+    },
+    {
+      "id": "99fd172ecca285b29d17dfe796d91419c285e22dbd6ce9ec0cc3e7445c3e8f95",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          },
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 30,
+              "restart_after": 500
+            },
+            "max_work": 8000,
+            "fresh": false
+          },
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "a40df053422fb3b2b686ceac3d34dee9080673eb561e6abb8f904222afa96a7d",
+        "66e1637cc1cd9650c8a7defc8e6738ec7580911ef185b40a67f3605c57894ad9"
+      ],
+      "hypothesis": "Longer retained tabu search may escape the stable 68-cut plateau; a second retained BLS stage tests whether diversification improves the tabu incumbent without exceeding the measured trial-time budget.",
+      "diff": "--- parent\n+++ child\n@@ -1,2 +1,3 @@\n 1. bm(max_sweeps=20, rounding_count=8); work<=1; start=retained\n-2. tabu(restart_after=0, tenure=20); work<=5000; start=retained\n+2. tabu(restart_after=500, tenure=30); work<=8000; start=retained\n+3. bls(jump=1, p_min=0.8, q=0.5, stagnation=1000, tenure_max=10, tenure_min=3); work<=6000; start=retained",
+      "complete": true,
+      "median": 68.0,
+      "minimum": 68.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 66.0,
+              "runtime_seconds": 0.010262217023409903,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.1318662500125356,
+              "work_counters": {
+                "iterations": 8000,
+                "flips": 8000,
+                "waits": 0,
+                "restarts": 15,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 2,
+              "backend": "bls",
+              "cut": 68.0,
+              "runtime_seconds": 0.6193867219844833,
+              "work_counters": {
+                "flips": 6000,
+                "attractors": 3147,
+                "directed_single": 1506,
+                "directed_pair": 1523,
+                "random": 615,
+                "strong_random": 4
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.7658423260436393
+        },
+        {
+          "seed": 4,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 66.0,
+              "runtime_seconds": 0.010821908013895154,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.14397191698662937,
+              "work_counters": {
+                "iterations": 8000,
+                "flips": 8000,
+                "waits": 0,
+                "restarts": 15,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 2,
+              "backend": "bls",
+              "cut": 68.0,
+              "runtime_seconds": 0.6408185710315593,
+              "work_counters": {
+                "flips": 6000,
+                "attractors": 3110,
+                "directed_single": 1536,
+                "directed_pair": 1475,
+                "random": 664,
+                "strong_random": 3
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.8003483710344881
+        },
+        {
+          "seed": 5,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 64.0,
+              "runtime_seconds": 0.011020781996194273,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.14044658304192126,
+              "work_counters": {
+                "iterations": 8000,
+                "flips": 8000,
+                "waits": 0,
+                "restarts": 15,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 2,
+              "backend": "bls",
+              "cut": 68.0,
+              "runtime_seconds": 0.5998762280214578,
+              "work_counters": {
+                "flips": 6000,
+                "attractors": 3091,
+                "directed_single": 1479,
+                "directed_pair": 1505,
+                "random": 634,
+                "strong_random": 5
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.7557141740107909
+        }
+      ]
+    }
+  ],
+  "terminal_reason": "bounded experiment completed",
+  "raw_records": "demo/runs/b44509726ea3453595046b5613252af2/",
+  "replay_eligible": true,
+  "caps": {
+    "total_seconds": 240,
+    "stop_and_save_by_seconds": 250,
+    "max_model_calls": 3,
+    "max_rounds": 3,
+    "children_per_round": 2
+  },
+  "human_aloud_presentation_rehearsal": false,
+  "metrics": {
+    "reference": 68.0,
+    "initial_best_median": 66.0,
+    "best_median": 68.0,
+    "best_cut": 68.0,
+    "median_reference": {
+      "seconds": 6.492603481980041,
+      "calls": 1
+    },
+    "all_trials_reference": {
+      "seconds": 6.492603481980041,
+      "calls": 1
+    },
+    "witness_reference": {
+      "seconds": 5.927379225031473,
+      "calls": 1
+    },
+    "numerical_seconds": 5.159916146134492,
+    "model_calls": 3
+  }
+}

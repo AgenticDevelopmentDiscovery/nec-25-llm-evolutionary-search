@@ -1,0 +1,794 @@
+{
+  "date_utc": "2026-10-27T03:29:32.349085+00:00",
+  "run_id": "674ece0b370441dd9e68c7b53b35eb2d",
+  "mode": "live",
+  "status": "finished",
+  "scenario": "contrast_limited",
+  "initial_solvers": [
+    "tabu",
+    "annealing"
+  ],
+  "population_protocol": "shared_raw",
+  "seed": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "wall_seconds": 24.003409281023778,
+  "model_calls": 2,
+  "time_to_first_real_proposal": 9.380716903018765,
+  "time_to_reference_match": null,
+  "best_cut": 1031.0,
+  "baseline_construction": [],
+  "candidates": [
+    {
+      "id": "55d784ea6bf6ff0e552746f4539e6ba03ef8f473d15476235d7786c8ee8b7e36",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Tabu Search solver",
+      "diff": "",
+      "complete": true,
+      "median": 975.0,
+      "minimum": 964.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 980.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 980.0,
+              "runtime_seconds": 0.38709695800207555,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.4184622160391882
+        },
+        {
+          "seed": 4,
+          "cut": 975.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 975.0,
+              "runtime_seconds": 0.39984656299930066,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.4321128290030174
+        },
+        {
+          "seed": 5,
+          "cut": 964.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 964.0,
+              "runtime_seconds": 0.40641202399274334,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.4372085150098428
+        }
+      ]
+    },
+    {
+      "id": "726b4485501a91404ffbcbc122272784185a7ee32987389698f85e56bbee03bc",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Simulated Annealing solver",
+      "diff": "",
+      "complete": true,
+      "median": 921.0,
+      "minimum": 912.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 912.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 912.0,
+              "runtime_seconds": 0.3947796549764462,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 1146,
+                "accepted_worsening": 140,
+                "polish_flips": 8
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.42280626198044047
+        },
+        {
+          "seed": 4,
+          "cut": 948.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 948.0,
+              "runtime_seconds": 0.48723632702603936,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 1173,
+                "accepted_worsening": 130,
+                "polish_flips": 16
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5169290940393694
+        },
+        {
+          "seed": 5,
+          "cut": 921.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 921.0,
+              "runtime_seconds": 0.4354531879653223,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 1142,
+                "accepted_worsening": 137,
+                "polish_flips": 22
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.46446196496253833
+        }
+      ]
+    },
+    {
+      "id": "ed99ee113dc310d6a78465557f4df65db897744a3c0c9da79a23dccfc4c0d440",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 1600,
+            "fresh": false
+          },
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "55d784ea6bf6ff0e552746f4539e6ba03ef8f473d15476235d7786c8ee8b7e36",
+        "726b4485501a91404ffbcbc122272784185a7ee32987389698f85e56bbee03bc"
+      ],
+      "hypothesis": "Tabu was substantially stronger from shared starts; extending it and retaining its best labels for annealing may improve robustness, while a higher tenure tests whether longer memory avoids local cycles.",
+      "diff": "--- parent\n+++ child\n@@ -1 +1,2 @@\n-1. tabu(restart_after=0, tenure=5); work<=800; start=retained\n+1. tabu(restart_after=0, tenure=5); work<=1600; start=retained\n+2. annealing(final_temperature=0.01, initial_temperature=2.0, polish=True); work<=6000; start=retained",
+      "complete": true,
+      "median": 983.0,
+      "minimum": 982.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 982.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 982.0,
+              "runtime_seconds": 0.4733657090109773,
+              "work_counters": {
+                "iterations": 1600,
+                "flips": 1600,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 982.0,
+              "runtime_seconds": 0.045359300973359495,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 491,
+                "accepted_worsening": 130,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5692865280434489
+        },
+        {
+          "seed": 4,
+          "cut": 983.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 976.0,
+              "runtime_seconds": 0.43116861901944503,
+              "work_counters": {
+                "iterations": 1600,
+                "flips": 1600,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 983.0,
+              "runtime_seconds": 0.033864688011817634,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 518,
+                "accepted_worsening": 124,
+                "polish_flips": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5105550339794718
+        },
+        {
+          "seed": 5,
+          "cut": 1003.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 993.0,
+              "runtime_seconds": 0.4385371429962106,
+              "work_counters": {
+                "iterations": 1600,
+                "flips": 1600,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 1003.0,
+              "runtime_seconds": 0.03597949800314382,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 408,
+                "accepted_worsening": 101,
+                "polish_flips": 3
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5219682670431212
+        }
+      ]
+    },
+    {
+      "id": "be64a7e0bbd69418edbf891f9faa92d2021510b46f3f400ae1f70134aac03081",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 20,
+              "restart_after": 0
+            },
+            "max_work": 1600,
+            "fresh": false
+          },
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "55d784ea6bf6ff0e552746f4539e6ba03ef8f473d15476235d7786c8ee8b7e36",
+        "726b4485501a91404ffbcbc122272784185a7ee32987389698f85e56bbee03bc"
+      ],
+      "hypothesis": "Tabu was substantially stronger from shared starts; extending it and retaining its best labels for annealing may improve robustness, while a higher tenure tests whether longer memory avoids local cycles.",
+      "diff": "--- parent\n+++ child\n@@ -1 +1,2 @@\n-1. tabu(restart_after=0, tenure=5); work<=800; start=retained\n+1. tabu(restart_after=0, tenure=20); work<=1600; start=retained\n+2. annealing(final_temperature=0.01, initial_temperature=2.0, polish=True); work<=6000; start=retained",
+      "complete": true,
+      "median": 1008.0,
+      "minimum": 965.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1031.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 999.0,
+              "runtime_seconds": 0.43443667801329866,
+              "work_counters": {
+                "iterations": 1600,
+                "flips": 1600,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 1031.0,
+              "runtime_seconds": 0.051895163021981716,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 441,
+                "accepted_worsening": 114,
+                "polish_flips": 5
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5359750700299628
+        },
+        {
+          "seed": 4,
+          "cut": 1008.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 991.0,
+              "runtime_seconds": 0.4355980589753017,
+              "work_counters": {
+                "iterations": 1600,
+                "flips": 1600,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 1008.0,
+              "runtime_seconds": 0.04124566604150459,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 518,
+                "accepted_worsening": 120,
+                "polish_flips": 6
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5262315879808739
+        },
+        {
+          "seed": 5,
+          "cut": 965.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 951.0,
+              "runtime_seconds": 0.388046117965132,
+              "work_counters": {
+                "iterations": 1600,
+                "flips": 1600,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 965.0,
+              "runtime_seconds": 0.04224820202216506,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 466,
+                "accepted_worsening": 115,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.4781878830399364
+        }
+      ]
+    },
+    {
+      "id": "9fa2140d0fe1997ce74280fc65587bad24982861b0a81ffec14db824d67dc180",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 10,
+              "restart_after": 0
+            },
+            "max_work": 4000,
+            "fresh": false
+          },
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 12000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "be64a7e0bbd69418edbf891f9faa92d2021510b46f3f400ae1f70134aac03081",
+        "ed99ee113dc310d6a78465557f4df65db897744a3c0c9da79a23dccfc4c0d440"
+      ],
+      "hypothesis": "Increasing tabu work while testing intermediate tenure may improve the weaker seeds; annealing then has more refined retained labels to polish.",
+      "diff": "--- parent\n+++ child\n@@ -1,2 +1,2 @@\n-1. tabu(restart_after=0, tenure=20); work<=1600; start=retained\n-2. annealing(final_temperature=0.01, initial_temperature=2.0, polish=True); work<=6000; start=retained\n+1. tabu(restart_after=0, tenure=10); work<=4000; start=retained\n+2. annealing(final_temperature=0.01, initial_temperature=2.0, polish=True); work<=12000; start=retained",
+      "complete": true,
+      "median": 1007.0,
+      "minimum": 976.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1007.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 980.0,
+              "runtime_seconds": 0.42013064096681774,
+              "work_counters": {
+                "iterations": 4000,
+                "flips": 4000,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 1007.0,
+              "runtime_seconds": 0.06544127804227173,
+              "work_counters": {
+                "proposals": 12000,
+                "accepted": 1107,
+                "accepted_worsening": 257,
+                "polish_flips": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5270126599934883
+        },
+        {
+          "seed": 4,
+          "cut": 1026.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 974.0,
+              "runtime_seconds": 0.44759650400374085,
+              "work_counters": {
+                "iterations": 4000,
+                "flips": 4000,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 1026.0,
+              "runtime_seconds": 0.08453301299596205,
+              "work_counters": {
+                "proposals": 12000,
+                "accepted": 1095,
+                "accepted_worsening": 261,
+                "polish_flips": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5807441779761575
+        },
+        {
+          "seed": 5,
+          "cut": 976.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 945.0,
+              "runtime_seconds": 0.44556043902412057,
+              "work_counters": {
+                "iterations": 4000,
+                "flips": 4000,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 976.0,
+              "runtime_seconds": 0.07420113903935999,
+              "work_counters": {
+                "proposals": 12000,
+                "accepted": 1030,
+                "accepted_worsening": 242,
+                "polish_flips": 4
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.567110356001649
+        }
+      ]
+    },
+    {
+      "id": "0839d1fb7392e488eca515bc205da8c624e2b16a1ec95e007605685f5fad2e0a",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 20,
+              "restart_after": 600
+            },
+            "max_work": 4000,
+            "fresh": false
+          },
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 12000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "be64a7e0bbd69418edbf891f9faa92d2021510b46f3f400ae1f70134aac03081",
+        "ed99ee113dc310d6a78465557f4df65db897744a3c0c9da79a23dccfc4c0d440"
+      ],
+      "hypothesis": "Increasing tabu work while testing intermediate tenure may improve the weaker seeds; annealing then has more refined retained labels to polish.",
+      "diff": "--- parent\n+++ child\n@@ -1,2 +1,2 @@\n-1. tabu(restart_after=0, tenure=20); work<=1600; start=retained\n-2. annealing(final_temperature=0.01, initial_temperature=2.0, polish=True); work<=6000; start=retained\n+1. tabu(restart_after=600, tenure=20); work<=4000; start=retained\n+2. annealing(final_temperature=0.01, initial_temperature=2.0, polish=True); work<=12000; start=retained",
+      "complete": true,
+      "median": 1004.0,
+      "minimum": 998.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1004.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 999.0,
+              "runtime_seconds": 0.47595977602759376,
+              "work_counters": {
+                "iterations": 4000,
+                "flips": 4000,
+                "waits": 0,
+                "restarts": 5,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 1004.0,
+              "runtime_seconds": 0.05844579002587125,
+              "work_counters": {
+                "proposals": 12000,
+                "accepted": 926,
+                "accepted_worsening": 229,
+                "polish_flips": 2
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5857354179606773
+        },
+        {
+          "seed": 4,
+          "cut": 1025.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 991.0,
+              "runtime_seconds": 0.48468397895339876,
+              "work_counters": {
+                "iterations": 4000,
+                "flips": 4000,
+                "waits": 0,
+                "restarts": 5,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 1025.0,
+              "runtime_seconds": 0.07749383500777185,
+              "work_counters": {
+                "proposals": 12000,
+                "accepted": 1066,
+                "accepted_worsening": 258,
+                "polish_flips": 2
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.6054303540149704
+        },
+        {
+          "seed": 5,
+          "cut": 998.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 995.0,
+              "runtime_seconds": 0.5055323999840766,
+              "work_counters": {
+                "iterations": 4000,
+                "flips": 4000,
+                "waits": 0,
+                "restarts": 4,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "annealing",
+              "cut": 998.0,
+              "runtime_seconds": 0.06435812899144366,
+              "work_counters": {
+                "proposals": 12000,
+                "accepted": 957,
+                "accepted_worsening": 221,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.6167467630002648
+        }
+      ]
+    }
+  ],
+  "terminal_reason": "bounded experiment completed",
+  "raw_records": "demo/runs/674ece0b370441dd9e68c7b53b35eb2d/",
+  "replay_eligible": true,
+  "caps": {
+    "total_seconds": 240,
+    "stop_and_save_by_seconds": 250,
+    "max_model_calls": 2,
+    "max_rounds": 2,
+    "children_per_round": 2
+  },
+  "human_aloud_presentation_rehearsal": false,
+  "metrics": {
+    "reference": 1098.0,
+    "initial_best_median": 975.0,
+    "best_median": 1008.0,
+    "best_cut": 1031.0,
+    "median_reference": null,
+    "all_trials_reference": null,
+    "witness_reference": null,
+    "numerical_seconds": 9.316964980098419,
+    "model_calls": 2
+  }
+}

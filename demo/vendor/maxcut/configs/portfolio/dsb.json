@@ -1,0 +1,7 @@
+{
+  "replicas": 8,
+  "dt": 0.25,
+  "a0": 1.0,
+  "c0": null,
+  "polish": false
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "numerical_capacity_check": true,
+    "strategy_index": 0,
+    "seed": 3,
+    "cut": 712.0,
+    "complete": true,
+    "seconds": 0.561240351991728
+  },
+  {
+    "numerical_capacity_check": true,
+    "strategy_index": 0,
+    "seed": 4,
+    "cut": 708.0,
+    "complete": true,
+    "seconds": 0.5811331939767115
+  },
+  {
+    "numerical_capacity_check": true,
+    "strategy_index": 0,
+    "seed": 5,
+    "cut": 708.0,
+    "complete": true,
+    "seconds": 0.5838616410037503
+  },
+  {
+    "numerical_capacity_check": true,
+    "strategy_index": 1,
+    "seed": 3,
+    "cut": 714.0,
+    "complete": true,
+    "seconds": 3.6272559899953194
+  },
+  {
+    "numerical_capacity_check": true,
+    "strategy_index": 1,
+    "seed": 4,
+    "cut": 710.0,
+    "complete": true,
+    "seconds": 3.6431967769749463
+  },
+  {
+    "numerical_capacity_check": true,
+    "strategy_index": 1,
+    "seed": 5,
+    "cut": 712.0,
+    "complete": true,
+    "seconds": 3.6194264270015992
+  }
+]

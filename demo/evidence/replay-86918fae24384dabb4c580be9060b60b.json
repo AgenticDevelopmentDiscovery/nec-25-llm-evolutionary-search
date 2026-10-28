@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-26",
+  "run_id": "86918fae24384dabb4c580be9060b60b",
+  "source_run": "68c13029005c4430a520123e3d10fc51",
+  "source_events_sha256": "38a18dfa30a304dc3777044b63cbfd695459ddfdef53371892a23f9a868117c8",
+  "mode": "replay",
+  "status": "finished",
+  "speed": 4,
+  "original_seconds": 12.707625721988734,
+  "playback_wall_seconds": 3.197367435961496,
+  "new_model_calls": 0,
+  "best_cut": 68.0,
+  "parent_networking_disabled": true,
+  "owned_process_disabled": true,
+  "source_unchanged": true,
+  "assignment_matches_source_best": true,
+  "raw_records": "demo/runs/86918fae24384dabb4c580be9060b60b"
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Tabu Search",
+    "backend": "tabu",
+    "trials": [
+      {
+        "seed": 3,
+        "cut": 64.0,
+        "complete": true,
+        "seconds": 0.01752398902317509
+      },
+      {
+        "seed": 4,
+        "cut": 68.0,
+        "complete": true,
+        "seconds": 0.01826375996461138
+      },
+      {
+        "seed": 5,
+        "cut": 68.0,
+        "complete": true,
+        "seconds": 0.030329203000292182
+      }
+    ]
+  },
+  {
+    "name": "Simulated Annealing",
+    "backend": "annealing",
+    "trials": [
+      {
+        "seed": 3,
+        "cut": 68.0,
+        "complete": true,
+        "seconds": 0.04286190599668771
+      },
+      {
+        "seed": 4,
+        "cut": 66.0,
+        "complete": true,
+        "seconds": 0.030807913979515433
+      },
+      {
+        "seed": 5,
+        "cut": 66.0,
+        "complete": true,
+        "seconds": 0.03024989098776132
+      }
+    ]
+  },
+  {
+    "name": "Breakout Local Search",
+    "backend": "bls",
+    "trials": [
+      {
+        "seed": 3,
+        "cut": 64.0,
+        "complete": true,
+        "seconds": 0.07925999502185732
+      },
+      {
+        "seed": 4,
+        "cut": 68.0,
+        "complete": true,
+        "seconds": 0.09466934500960633
+      },
+      {
+        "seed": 5,
+        "cut": 68.0,
+        "complete": true,
+        "seconds": 0.08989406196633354
+      }
+    ]
+  },
+  {
+    "name": "rank-two Burer\u2013Monteiro",
+    "backend": "bm",
+    "trials": [
+      {
+        "seed": 3,
+        "cut": 66.0,
+        "complete": true,
+        "seconds": 0.013720951974391937
+      },
+      {
+        "seed": 4,
+        "cut": 66.0,
+        "complete": true,
+        "seconds": 0.013137135014403611
+      },
+      {
+        "seed": 5,
+        "cut": 64.0,
+        "complete": true,
+        "seconds": 0.013320091005880386
+      }
+    ]
+  }
+]

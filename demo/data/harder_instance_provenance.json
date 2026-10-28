@@ -1,0 +1,20 @@
+{
+  "instance": "dense_gauss_100_s14.txt",
+  "sha256": "3e43712162847581b5e10fb69feb7dc11845e6280b7fb8e5759d2abc56f75a34",
+  "source": "User-specified repository: instances/public/dense_gauss_100_s14.txt",
+  "nodes": 100,
+  "edges": 4950,
+  "reference": {
+    "ref": 402.5209000000002,
+    "exact": false,
+    "source": "simulated annealing, best of 4 x 30 s",
+    "runs": [
+      402.5209000000002,
+      402.5209000000002,
+      402.5209000000002,
+      402.5209000000002
+    ]
+  },
+  "selection": "24.75 times as many edges as the old torus, dense real-valued signed couplings. 1024-node torus was screened but did not reliably reach its provided reference within practical classroom work caps.",
+  "copied": "one public input plus scalar public reference metadata; no assignment solutions, credentials, source logs or private repository code"
+}

@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "target_score": 1.0,
+  "campaign_seed": 1,
+  "max_rounds": 20,
+  "max_wall_seconds": 7200,
+  "max_codex_calls": 25,
+  "codex_call_timeout_seconds": 180,
+  "max_solver_trials": 500,
+  "screen_trial_seconds": 120,
+  "trial_seconds": 30,
+  "repeats": 2,
+  "survivors": 3,
+  "children_per_round": 3,
+  "stagnation_rounds": 3,
+  "parallel_trials": 1,
+  "auto_commit": false,
+  "auto_publish_improvements": false,
+  "certification_after_target": false,
+  "lift_backend_guards": false,
+  "finalize_reserve_seconds": 5,
+  "validation_seconds": 30,
+  "baseline_solutions": "experiments/bm_real_pilot_s1_s2/solutions",
+  "public_solutions": "solutions",
+  "instances": "instances/public",
+  "references": "references/public.json",
+  "screen_solvers": null,
+  "screen_work_caps": {},
+  "work_caps": {
+    "bm": 8
+  },
+  "candidate_configs": {},
+  "codex_executable": "codex",
+  "codex_model": null,
+  "codex_reasoning": null,
+  "codex_profile": null,
+  "provider": "codex",
+  "fixture_decisions": [],
+  "candidate_variants": {
+    "mqlib": [
+      {
+        "heuristic": "PALUBECKIS2004bMST1"
+      },
+      {
+        "heuristic": "FESTA2002GVNSPR",
+        "max_nodes": 10000
+      },
+      {
+        "heuristic": "MERZ2002KOPT",
+        "max_nodes": 10000
+      }
+    ]
+  }
+}

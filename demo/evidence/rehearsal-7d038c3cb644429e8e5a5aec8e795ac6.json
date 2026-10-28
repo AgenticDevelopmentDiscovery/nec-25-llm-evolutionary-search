@@ -1,0 +1,384 @@
+{
+  "date_utc": "2026-10-26T22:01:57.724657+00:00",
+  "run_id": "7d038c3cb644429e8e5a5aec8e795ac6",
+  "mode": "live",
+  "status": "stopped",
+  "seed": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "wall_seconds": 9.952060828043614,
+  "model_calls": 1,
+  "time_to_first_real_proposal": null,
+  "time_to_reference_match": null,
+  "best_cut": 402.39320000000004,
+  "baseline_construction": [],
+  "candidates": [
+    {
+      "id": "55d784ea6bf6ff0e552746f4539e6ba03ef8f473d15476235d7786c8ee8b7e36",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Tabu solver",
+      "diff": "",
+      "complete": true,
+      "median": 395.03560000000004,
+      "minimum": 361.5479,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 395.03560000000004,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 395.03560000000004,
+              "runtime_seconds": 0.07341406401246786,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 3
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.09557305101770908
+        },
+        {
+          "seed": 4,
+          "cut": 401.0616,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 401.0616,
+              "runtime_seconds": 0.07965397299267352,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.10393555398331955
+        },
+        {
+          "seed": 5,
+          "cut": 361.5479,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 361.5479,
+              "runtime_seconds": 0.07327785802772269,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.09588348300894722
+        }
+      ]
+    },
+    {
+      "id": "726b4485501a91404ffbcbc122272784185a7ee32987389698f85e56bbee03bc",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 6000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Annealing solver",
+      "diff": "",
+      "complete": true,
+      "median": 378.0887,
+      "minimum": 377.78560000000004,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 378.0887,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 378.0887,
+              "runtime_seconds": 0.11679304298013449,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 154,
+                "accepted_worsening": 41,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.14293356199050322
+        },
+        {
+          "seed": 4,
+          "cut": 394.10960000000006,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 394.10960000000006,
+              "runtime_seconds": 0.07591470697661862,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 123,
+                "accepted_worsening": 40,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.10103356896433979
+        },
+        {
+          "seed": 5,
+          "cut": 377.78560000000004,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 377.78560000000004,
+              "runtime_seconds": 0.07234374497784302,
+              "work_counters": {
+                "proposals": 6000,
+                "accepted": 172,
+                "accepted_worsening": 63,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.09522801003186032
+        }
+      ]
+    },
+    {
+      "id": "e11e30cce2b9ed6ceb9420bdf1fd49c228d5bd911dba29cc0acbbc735ec3bd02",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 700,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial BLS solver",
+      "diff": "",
+      "complete": true,
+      "median": 401.0616,
+      "minimum": 368.66290000000004,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 401.0616,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 401.0616,
+              "runtime_seconds": 0.4931319190072827,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 154,
+                "directed_single": 118,
+                "directed_pair": 123,
+                "random": 3,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5176750509999692
+        },
+        {
+          "seed": 4,
+          "cut": 401.0616,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 401.0616,
+              "runtime_seconds": 0.46734861499862745,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 137,
+                "directed_single": 96,
+                "directed_pair": 126,
+                "random": 15,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.49159392702858895
+        },
+        {
+          "seed": 5,
+          "cut": 368.66290000000004,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 368.66290000000004,
+              "runtime_seconds": 0.4789863729965873,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 135,
+                "directed_single": 131,
+                "directed_pair": 114,
+                "random": 5,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.50117165397387
+        }
+      ]
+    },
+    {
+      "id": "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Rank-two BM solver",
+      "diff": "",
+      "complete": true,
+      "median": 402.3824,
+      "minimum": 399.6734,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 399.6734,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 399.6734,
+              "runtime_seconds": 0.17218053597025573,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.19631499500246719
+        },
+        {
+          "seed": 4,
+          "cut": 402.39320000000004,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 402.39320000000004,
+              "runtime_seconds": 0.1493157650111243,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.1708123569842428
+        },
+        {
+          "seed": 5,
+          "cut": 402.3824,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 402.3824,
+              "runtime_seconds": 0.1681950039928779,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.19213679298991337
+        }
+      ]
+    }
+  ],
+  "terminal_reason": "explicit Stop/Reset",
+  "raw_records": "demo/runs/7d038c3cb644429e8e5a5aec8e795ac6/",
+  "replay_eligible": false,
+  "caps": {
+    "total_seconds": 240,
+    "stop_and_save_by_seconds": 250,
+    "max_model_calls": 1,
+    "max_rounds": 1,
+    "children_per_round": 2
+  },
+  "human_aloud_presentation_rehearsal": false
+}

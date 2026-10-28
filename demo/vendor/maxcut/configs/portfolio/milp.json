@@ -1,0 +1,5 @@
+{
+  "feasibility_tolerance": 1e-09,
+  "relative_gap": 0.0,
+  "max_nodes": 5000
+}

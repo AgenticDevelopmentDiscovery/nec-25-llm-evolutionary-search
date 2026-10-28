@@ -1,0 +1,383 @@
+{
+  "date_utc": "2026-10-26T21:15:47.081554+00:00",
+  "run_id": "ac4eabb65fcd4a95b2a6c41dbddcf6b0",
+  "mode": "live",
+  "status": "finished",
+  "seed": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "wall_seconds": 6.5546190880122595,
+  "model_calls": 1,
+  "time_to_first_real_proposal": 4.778195341990795,
+  "time_to_reference_match": 5.12186685699271,
+  "best_cut": 68.0,
+  "baseline_construction": [
+    {
+      "seed": 3,
+      "cut": 58.0
+    },
+    {
+      "seed": 4,
+      "cut": 60.0
+    },
+    {
+      "seed": 5,
+      "cut": 60.0
+    }
+  ],
+  "candidates": [
+    {
+      "id": "d7262164aa3f325f7d93e911deb1b3e525b1d7f614f0825b274675a40e6dc52d",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 0,
+              "restart_after": 0
+            },
+            "max_work": 100,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "",
+      "diff": "",
+      "complete": true,
+      "median": 64.0,
+      "minimum": 60.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 60.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 60.0,
+              "runtime_seconds": 0.0020502450061030686,
+              "work_counters": {
+                "iterations": 100,
+                "flips": 100,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.003760092018637806
+        },
+        {
+          "seed": 4,
+          "cut": 66.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 66.0,
+              "runtime_seconds": 0.0023011540179140866,
+              "work_counters": {
+                "iterations": 100,
+                "flips": 100,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.004127360007259995
+        },
+        {
+          "seed": 5,
+          "cut": 64.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 64.0,
+              "runtime_seconds": 0.002395344024989754,
+              "work_counters": {
+                "iterations": 100,
+                "flips": 100,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.004223023017402738
+        }
+      ]
+    },
+    {
+      "id": "a616242d6dd97b6444c5913f9bdb5385b5ec151d82e154a84353c1dd9af8af1b",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 20,
+              "restart_after": 0
+            },
+            "max_work": 1500,
+            "fresh": false
+          },
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 1500,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "d7262164aa3f325f7d93e911deb1b3e525b1d7f614f0825b274675a40e6dc52d"
+      ],
+      "hypothesis": "Longer tabu search with default tenure may escape the weak parent's short-run outcomes; a retained BLS polish may improve local optima, while annealing offers an independent composition test.",
+      "diff": "--- parent\n+++ child\n@@ -1 +1,2 @@\n-1. tabu(restart_after=0, tenure=0); work<=100; start=retained\n+1. tabu(restart_after=0, tenure=20); work<=1500; start=retained\n+2. bls(jump=1, p_min=0.8, q=0.5, stagnation=1000, tenure_max=10, tenure_min=3); work<=1500; start=retained",
+      "complete": true,
+      "median": 68.0,
+      "minimum": 68.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.024995120998937637,
+              "work_counters": {
+                "iterations": 1500,
+                "flips": 1500,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 68.0,
+              "runtime_seconds": 0.15178640000522137,
+              "work_counters": {
+                "flips": 1500,
+                "attractors": 812,
+                "directed_single": 394,
+                "directed_pair": 385,
+                "random": 157,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.179963642032817
+        },
+        {
+          "seed": 4,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.022457271988969296,
+              "work_counters": {
+                "iterations": 1500,
+                "flips": 1500,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 68.0,
+              "runtime_seconds": 0.1341391919995658,
+              "work_counters": {
+                "flips": 1500,
+                "attractors": 790,
+                "directed_single": 398,
+                "directed_pair": 381,
+                "random": 139,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.15917855297448114
+        },
+        {
+          "seed": 5,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.023453013971447945,
+              "work_counters": {
+                "iterations": 1500,
+                "flips": 1500,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 1
+              },
+              "execution_status": "completed"
+            },
+            {
+              "stage": 1,
+              "backend": "bls",
+              "cut": 68.0,
+              "runtime_seconds": 0.13758152298396453,
+              "work_counters": {
+                "flips": 1500,
+                "attractors": 769,
+                "directed_single": 356,
+                "directed_pair": 386,
+                "random": 159,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.16375034197699279
+        }
+      ]
+    },
+    {
+      "id": "c1b7d7cd792d55a4eab014263bf6627a6a740cf33b1a2af251298d567b0ac124",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "annealing",
+            "config": {
+              "initial_temperature": 2.0,
+              "final_temperature": 0.01,
+              "polish": true
+            },
+            "max_work": 30000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "d7262164aa3f325f7d93e911deb1b3e525b1d7f614f0825b274675a40e6dc52d"
+      ],
+      "hypothesis": "Longer tabu search with default tenure may escape the weak parent's short-run outcomes; a retained BLS polish may improve local optima, while annealing offers an independent composition test.",
+      "diff": "--- parent\n+++ child\n@@ -1 +1 @@\n-1. tabu(restart_after=0, tenure=0); work<=100; start=retained\n+1. annealing(final_temperature=0.01, initial_temperature=2.0, polish=True); work<=30000; start=retained",
+      "complete": true,
+      "median": 68.0,
+      "minimum": 68.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 68.0,
+              "runtime_seconds": 0.09194458601996303,
+              "work_counters": {
+                "proposals": 30000,
+                "accepted": 5644,
+                "accepted_worsening": 559,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.09402714599855244
+        },
+        {
+          "seed": 4,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 68.0,
+              "runtime_seconds": 0.09632294502807781,
+              "work_counters": {
+                "proposals": 30000,
+                "accepted": 5489,
+                "accepted_worsening": 542,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.09838836203562096
+        },
+        {
+          "seed": 5,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "annealing",
+              "cut": 68.0,
+              "runtime_seconds": 0.10024743695976213,
+              "work_counters": {
+                "proposals": 30000,
+                "accepted": 5109,
+                "accepted_worsening": 574,
+                "polish_flips": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.10238200396997854
+        }
+      ]
+    }
+  ],
+  "terminal_reason": "bounded experiment completed",
+  "raw_records": "demo/runs/ac4eabb65fcd4a95b2a6c41dbddcf6b0/",
+  "replay_eligible": true,
+  "caps": {
+    "total_seconds": 165,
+    "stop_and_save_by_seconds": 175,
+    "max_model_calls": 1,
+    "max_rounds": 1,
+    "children_per_round": 2
+  },
+  "human_aloud_presentation_rehearsal": false,
+  "provider": "tamu_chat_completions",
+  "model": "protected.gpt-5.6-luna",
+  "usage": {
+    "input_tokens": 1782,
+    "output_tokens": 373,
+    "total_tokens": 2155
+  },
+  "explicit_budget_extension": "One additional Luna call approved by presenter",
+  "total_generation_requests_this_task": 4
+}

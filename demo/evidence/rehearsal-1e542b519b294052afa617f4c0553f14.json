@@ -1,0 +1,226 @@
+{
+  "date_utc": "2026-10-26T20:38:12.405394+00:00",
+  "run_id": "1e542b519b294052afa617f4c0553f14",
+  "mode": "numerical",
+  "status": "finished",
+  "seed": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "wall_seconds": 1.7829140429967083,
+  "model_calls": 0,
+  "time_to_first_real_proposal": null,
+  "time_to_reference_match": 1.3413879360305145,
+  "best_cut": 68.0,
+  "baseline_construction": [
+    {
+      "seed": 3,
+      "cut": 58.0
+    },
+    {
+      "seed": 4,
+      "cut": 60.0
+    },
+    {
+      "seed": 5,
+      "cut": 60.0
+    }
+  ],
+  "candidates": [
+    {
+      "id": "d7262164aa3f325f7d93e911deb1b3e525b1d7f614f0825b274675a40e6dc52d",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 0,
+              "restart_after": 0
+            },
+            "max_work": 100,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "",
+      "diff": "",
+      "complete": true,
+      "median": 64.0,
+      "minimum": 60.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 60.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 60.0,
+              "runtime_seconds": 0.002134201000444591,
+              "work_counters": {
+                "iterations": 100,
+                "flips": 100,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.0038627239991910756
+        },
+        {
+          "seed": 4,
+          "cut": 66.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 66.0,
+              "runtime_seconds": 0.0021215539891272783,
+              "work_counters": {
+                "iterations": 100,
+                "flips": 100,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.003765899979043752
+        },
+        {
+          "seed": 5,
+          "cut": 64.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 64.0,
+              "runtime_seconds": 0.002188011014368385,
+              "work_counters": {
+                "iterations": 100,
+                "flips": 100,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.004408410983160138
+        }
+      ]
+    },
+    {
+      "id": "780c1bb4eb226895f700135571ad028687ddd53252a15ee7fcf01b71fbb650f8",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 11,
+              "restart_after": 300
+            },
+            "max_work": 3000,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [
+        "d7262164aa3f325f7d93e911deb1b3e525b1d7f614f0825b274675a40e6dc52d"
+      ],
+      "hypothesis": "Preset numerical comparison; no LLM supplied this strategy",
+      "diff": "--- parent\n+++ child\n@@ -1 +1 @@\n-1. tabu(restart_after=0, tenure=0); work<=100; start=retained\n+1. tabu(restart_after=300, tenure=11); work<=3000; start=retained",
+      "complete": true,
+      "median": 68.0,
+      "minimum": 68.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.05452967598102987,
+              "work_counters": {
+                "iterations": 3000,
+                "flips": 3000,
+                "waits": 0,
+                "restarts": 8,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.05659607396228239
+        },
+        {
+          "seed": 4,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.05089519399916753,
+              "work_counters": {
+                "iterations": 3000,
+                "flips": 3000,
+                "waits": 0,
+                "restarts": 8,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.0529244439676404
+        },
+        {
+          "seed": 5,
+          "cut": 68.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 68.0,
+              "runtime_seconds": 0.053189183003269136,
+              "work_counters": {
+                "iterations": 3000,
+                "flips": 3000,
+                "waits": 0,
+                "restarts": 9,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.05574209801852703
+        }
+      ]
+    }
+  ],
+  "terminal_reason": "bounded experiment completed",
+  "raw_records": "demo/runs/1e542b519b294052afa617f4c0553f14/",
+  "replay_eligible": false,
+  "caps": {
+    "total_seconds": 165,
+    "stop_and_save_by_seconds": 175,
+    "max_model_calls": 3,
+    "max_rounds": 3,
+    "children_per_round": 2
+  },
+  "human_aloud_presentation_rehearsal": false
+}

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="ENGR 689 · Texas A&amp;M University" />
+  <meta name="dcterms.date" content="2026-10-26" />
+  <title>Architecture and data flow of the solver-evolution classroom</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="/notes.css" />
+  <link rel="stylesheet" href="/brand.css" />
+</head>
+<body><nav><a href="/">Presentation</a> · <a href="/demo">Solver demo</a> · <a href="/exchange">Luna exchange</a> · <a href="/architecture.pdf">Download architecture PDF</a></nav><main>
+<header id="title-block-header">
+<h1 class="title">Architecture and data flow of the solver-evolution
+classroom</h1>
+<p class="subtitle">A guide to the local server, evolutionary loop and
+Luna API</p>
+<p class="author">ENGR 689 · Texas A&amp;M University</p>
+<p class="date">October 26, 2026</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#what-the-system-does" id="toc-what-the-system-does">What
+the system does</a></li>
+<li><a href="#architecture-flow-chart"
+id="toc-architecture-flow-chart">Architecture flow chart</a></li>
+<li><a href="#components-and-responsibilities"
+id="toc-components-and-responsibilities">Components and
+responsibilities</a></li>
+<li><a href="#control-routes-and-what-triggers-a-call"
+id="toc-control-routes-and-what-triggers-a-call">Control routes and what
+triggers a call</a></li>
+<li><a href="#initial-population-and-numerical-execution"
+id="toc-initial-population-and-numerical-execution">Initial population
+and numerical execution</a></li>
+<li><a href="#how-one-luna-request-is-created"
+id="toc-how-one-luna-request-is-created">How one Luna request is
+created</a></li>
+<li><a href="#what-the-context-contains"
+id="toc-what-the-context-contains">What the context contains</a></li>
+<li><a href="#how-the-response-becomes-measured-evidence"
+id="toc-how-the-response-becomes-measured-evidence">How the response
+becomes measured evidence</a></li>
+<li><a href="#timing-cancellation-and-modes"
+id="toc-timing-cancellation-and-modes">Timing, cancellation and
+modes</a></li>
+<li><a href="#the-three-demonstrations-and-what-they-establish"
+id="toc-the-three-demonstrations-and-what-they-establish">The three
+demonstrations and what they establish</a></li>
+<li><a href="#where-to-inspect-the-evidence"
+id="toc-where-to-inspect-the-evidence">Where to inspect the
+evidence</a></li>
+</ul>
+</nav>
+<h1 id="what-the-system-does">What the system does</h1>
+<p>The browser is the presenter interface. The Python server owns the
+experiment. Trusted numerical algorithms produce feasible sign vectors;
+an independent harness measures their cuts. Luna proposes changes to
+solver programs. The controller validates those changes, runs them and
+selects the next parents.</p>
+<p>There are two nested searches. The <strong>outer evolutionary
+search</strong> changes a solver program. The <strong>inner numerical
+search</strong> executes that program to find a partition. The partition
+is a feasible witness used for evaluation. It is not a member of the
+program population. The language model is the outer mutation operator;
+it is neither the numerical executor nor the fitness authority.</p>
+<p>The implementation is local, not a deployed multi-service platform.
+Start it with <code>python demo/server.py --port 8766 --rounds 3</code>,
+then open <a href="http://127.0.0.1:8766/">the presentation hub</a>.
+Only the model worker makes an external API request. Visiting a page,
+reading a snapshot, reconnecting or replaying recorded evidence cannot
+buy a new model generation.</p>
+<h1 id="architecture-flow-chart">Architecture flow chart</h1>
+<figure>
+<img src="/figures/system-architecture.svg" style="width:100.0%"
+alt="Responsibilities and ownership. Only the model and numerical worker boxes are child processes." />
+<figcaption aria-hidden="true">Responsibilities and ownership. Only the
+model and numerical worker boxes are child processes.</figcaption>
+</figure>
+<p>The scorer is checked in two places: inside the numerical adapter and
+again in the controller after a worker returns. “Selection” and “event
+feed” are controller responsibilities, not additional network services.
+The API worker contains the credential boundary: its environment
+supplies the key; the browser never does.</p>
+<p>The diagram is an editable SVG. The wider <a
+href="http://127.0.0.1:8766/figures/request-data-flow.svg">request
+data-flow diagram</a> provides a second view suitable for discussing one
+round.</p>
+<h1 id="components-and-responsibilities">Components and
+responsibilities</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Main responsibility</th>
+<th>Input and output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>demo/static/presentation.*</code></td>
+<td>Frames, sequential block reveals, navigation and rehearsal
+clock</td>
+<td>Shared presentation bundle; switches to the mounted demo without
+resetting it</td>
+</tr>
+<tr class="even">
+<td><code>demo/static/app.js</code></td>
+<td>Solver checkboxes, mode, seed, round gate, table and witness
+views</td>
+<td>Same-origin JSON control requests; snapshots and SSE events</td>
+</tr>
+<tr class="odd">
+<td><code>demo/server.py</code></td>
+<td>Fixed routes, origin/Host checks, write tokens and HTTP
+transport</td>
+<td>Validated JSON; fixed static assets; event streams</td>
+</tr>
+<tr class="even">
+<td><code>Manager</code> in <code>controller.py</code></td>
+<td>One active run, creation, reset, recording catalog and
+comparisons</td>
+<td>Run configurations and owned <code>Run</code> objects</td>
+</tr>
+<tr class="odd">
+<td><code>Run</code> in <code>controller.py</code></td>
+<td>Initial evaluation, context, model requests, child trials,
+selection, stop and evidence</td>
+<td>A bounded serial execution with append-only events</td>
+</tr>
+<tr class="even">
+<td><code>proposals.py</code></td>
+<td>Schema, normalization, genome identity, mutation validation and
+context</td>
+<td>Data-only strategy programs; no arbitrary executable model code</td>
+</tr>
+<tr class="odd">
+<td><code>model_worker.py</code></td>
+<td>One tool-free provider request</td>
+<td>Public system/schema and user/context messages; public response and
+completion metadata</td>
+</tr>
+<tr class="even">
+<td><code>backend.py</code></td>
+<td>Interpret one to three trusted algorithm stages</td>
+<td>Graph, seed, starting signs and budget; verified witness and stage
+counters</td>
+</tr>
+<tr class="odd">
+<td><code>vendor/maxcut/</code></td>
+<td>Preserved numerical kernels and owned-process support</td>
+<td>Immutable reference snapshot; 133 hashes checked</td>
+</tr>
+<tr class="even">
+<td><code>demo/runs/&lt;id&gt;/</code></td>
+<td>Private local provenance</td>
+<td>Requests, public responses, trial results, witnesses and terminal
+state; gitignored</td>
+</tr>
+</tbody>
+</table>
+<p>The server serves the presentation, numerical/model demonstration,
+full algorithm guide, exact exchange, architecture document, detailed
+notes and PDF handout. They share one origin, so the browser can read
+live state without receiving an API credential or opening another
+execution controller.</p>
+<h1 id="control-routes-and-what-triggers-a-call">Control routes and what
+triggers a call</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Action / route</th>
+<th>What happens</th>
+<th>New model call?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>GET /api/instance</code></td>
+<td>Read a pinned classroom graph and reference metadata</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><code>GET /api/status</code></td>
+<td>Read provider/model availability, caps, presets, solver catalog and
+recordings</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td><code>POST /api/runs</code></td>
+<td>Validate and freeze a run configuration; return a run ID and write
+token</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><code>POST /api/runs/&lt;id&gt;/start</code></td>
+<td>Start the one owned controller; evaluate selected seed programs</td>
+<td>Not immediately in guided mode</td>
+</tr>
+<tr class="odd">
+<td><code>POST /api/runs/&lt;id&gt;/continue</code></td>
+<td>Release the current explicit round gate</td>
+<td>Yes, when the live controller reaches <code>propose</code></td>
+</tr>
+<tr class="even">
+<td><code>GET /api/runs/&lt;id&gt;</code></td>
+<td>Read existing state</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td><code>GET /api/runs/&lt;id&gt;/events</code></td>
+<td>Subscribe to SSE or resume with an event cursor</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><code>GET /api/runs/&lt;id&gt;/exchange/&lt;round&gt;</code></td>
+<td>Read exact public request/response evidence</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td><code>GET /api/comparisons</code></td>
+<td>Read current or verified stored experiment metrics</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><code>POST .../stop</code></td>
+<td>Stop only that run’s owned work and preserve evidence</td>
+<td>No further call</td>
+</tr>
+<tr class="odd">
+<td><code>POST /api/reset</code></td>
+<td>Stop and clean up before creating a new configuration and token</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>Write actions require same-origin checks and a run or bootstrap write
+token. Start is idempotent: a second click does not create a second
+controller. Reading SSE never starts a controller. There is no generic
+shell, file-write or file-read endpoint. Static assets and private
+presenter aids have fixed allowlisted routes.</p>
+<h1 id="initial-population-and-numerical-execution">Initial population
+and numerical execution</h1>
+<p>The checkboxes choose the seed population
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding="application/x-tex">P_0</annotation></semantics></math>.
+Each checked kernel contributes its disclosed initial program. All four
+trusted kernels remain available to Luna when it proposes children. This
+distinction is deliberate: changing initialization is a different
+experiment from restricting the allowed hypothesis space.</p>
+<p>The seed programs are:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Full name</th>
+<th>Initial configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tabu Search</td>
+<td>tenure 5, no stagnation restart, 800 iterations</td>
+</tr>
+<tr class="even">
+<td>Simulated Annealing</td>
+<td>temperature 2 to 0.01, polish enabled, 6000 proposals</td>
+</tr>
+<tr class="odd">
+<td>Breakout Local Search</td>
+<td>disclosed defaults, 700 flips</td>
+</tr>
+<tr class="even">
+<td>Rank-two Burer–Monteiro method</td>
+<td>20 sweeps, 8 rounding directions, one solve</td>
+</tr>
+</tbody>
+</table>
+<p>At Start, the new population protocol constructs raw sign vectors
+from seeds
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>,</mo><mi>s</mi><mo>+</mo><mn>1</mn><mo>,</mo><mi>s</mi><mo>+</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">s,s+1,s+2</annotation></semantics></math>
+modulo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>2</mn><mn>32</mn></msup><annotation encoding="application/x-tex">2^{32}</annotation></semantics></math>
+and freezes them. Every seed program and every child receives a copy of
+those same vectors. No candidate inherits an undisclosed final
+assignment from another competitor. Within a multistage program,
+however, <code>fresh=false</code> passes the best retained witness from
+one stage to the next. <code>fresh=true</code> starts that stage’s own
+seeded exploratory state while protecting the old best if it remains
+better.</p>
+<p>Execution version <code>retained-bm-refinement-v1</code> makes a
+retained Burer–Monteiro stage after stage one consume the incoming
+partition as a geometric starting point: map signs to angles 0 or pi,
+add reproducible uniform angular offsets in [-0.35, 0.35] radians, then
+use the unchanged vector optimization, rounding and local-polish
+primitives. Retain the better incoming or returned partition. Thus
+Burer–Monteiro → Tabu Search passes a partition to discrete search; Tabu
+Search → Burer–Monteiro now genuinely refines vectors around the
+retained partition. <code>demo/bm_refinement.py</code> owns this
+adaptation; the vendor snapshot is unchanged. First-stage and fresh
+Burer–Monteiro calls retain their original independent vector search,
+preserving the measured initial solver screen.</p>
+<p>Replacing a parent with a one-stage child is a different operation:
+that child starts from the common raw trial labels, not the previously
+evaluated parent’s output. The execution version and start rules enter
+new run records and Luna’s context. Stage results expose initialization,
+incoming/retained cut and allocated seconds. Earlier replays retain
+their original behavior and are not evidence for this newly added warm
+refinement.</p>
+<p>Numerical allowance is 8 seconds per current comparison or dense-case
+trial. The historical torus retains its 1.5-second allowance. That clock
+covers all stages of one program. Remaining time is divided among
+remaining stages; unused time carries forward. Process startup has a
+separate bounded allowance. Kernel-specific work caps are additional
+limits, not a claim that iterations, proposals, flips and rounding
+directions cost the same amount.</p>
+<p>The original torus recordings from the previous single-parent
+protocol remain available as legacy evidence. Their frozen warm-start
+construction is not silently reinterpreted as the new raw-start
+population protocol. New records carry the initial solver selection,
+scenario and protocol explicitly.</p>
+<h1 id="how-one-luna-request-is-created">How one Luna request is
+created</h1>
+<ol type="1">
+<li>The round gate exposes the selected parent programs to the
+presenter.</li>
+<li><code>Run.propose</code> takes up to three complete survivors and
+their measured evidence.</li>
+<li><code>proposals.context</code> combines those records with history,
+constraints and budget.</li>
+<li>The controller saves a request description and increments the call
+count.</li>
+<li>An owned <code>model_worker.py</code> subprocess creates the actual
+Chat Completions body.</li>
+<li>The worker adds the credential as an HTTPS Authorization header and
+sends one request to the fixed TAMU endpoint.</li>
+<li>Public response chunks are recorded and relayed as real events.</li>
+</ol>
+<figure>
+<img src="/figures/request-data-flow.svg" style="width:100.0%"
+alt="Request construction and measured return. Authorization is added by the worker, not the browser." />
+<figcaption aria-hidden="true">Request construction and measured return.
+Authorization is added by the worker, not the browser.</figcaption>
+</figure>
+<p>The actual body uses model <code>protected.gpt-5.6-luna</code>, two
+messages and streaming. The completion limit is <strong>2400
+tokens</strong>, reasoning effort is low, and tool lists are empty. The
+system message contains instructions and the required output schema. The
+user message contains the serialized round context. TAMU’s transport
+uses <code>https://chat-api.tamu.ai/api/chat/completions</code>; it is
+not assumed to accept the direct OpenAI Responses protocol.</p>
+<p>The <a href="http://127.0.0.1:8766/exchange">exact exchange page</a>
+shows the actual recorded body and public return. Its display excludes
+the Authorization header. A replay keeps a persistent label and
+withholds future received text until its recorded response time. This
+prevents a prerecorded answer from appearing to be a new model
+result.</p>
+<h1 id="what-the-context-contains">What the context contains</h1>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Context field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>round_id</code></td>
+<td>Bind the answer to the pending round</td>
+</tr>
+<tr class="even">
+<td><code>parents</code></td>
+<td>IDs, normalized stage programs, median/minimum and three trial
+records</td>
+</tr>
+<tr class="odd">
+<td>Trial <code>stage_results</code></td>
+<td>Algorithm outcomes, elapsed numerical time, work counters and
+completeness</td>
+</tr>
+<tr class="even">
+<td><code>previous_genome_ids</code></td>
+<td>Avoid paying for identical normalized programs again</td>
+</tr>
+<tr class="odd">
+<td><code>actual_failures</code></td>
+<td>Explain rejected values, execution errors and censored trials</td>
+</tr>
+<tr class="even">
+<td><code>initial_solver_selection</code></td>
+<td>Make the researcher’s seed choice explicit</td>
+</tr>
+<tr class="odd">
+<td><code>mutation_scope</code></td>
+<td>State that unchecked trusted kernels remain allowed</td>
+</tr>
+<tr class="even">
+<td><code>algorithm_names</code>, <code>allowed_defaults</code>,
+<code>config_bounds</code>, <code>work_caps</code></td>
+<td>Define available kernels and permitted edits</td>
+</tr>
+<tr class="odd">
+<td><code>graph_summary</code></td>
+<td>Public size and signedness information without an answer vector</td>
+</tr>
+<tr class="even">
+<td><code>initialization</code>, <code>trial_seconds</code>,
+<code>trial_count</code>, <code>max_stages</code></td>
+<td>State the numerical comparison protocol</td>
+</tr>
+<tr class="odd">
+<td><code>remaining_seconds</code></td>
+<td>Limit proposals to remaining run resources</td>
+</tr>
+</tbody>
+</table>
+<p>The model does <strong>not</strong> receive solution vectors, stored
+replay, the preset numerical comparison, benchmark name, reference
+target or API key in this context. The fixed evaluator retains the graph
+and original edge weights. This makes the model a strategy proposer
+rather than an answer-copying or self-grading service. No model weights
+are trained or updated during the search; the external context and
+selected programs carry learning across calls.</p>
+<h1 id="how-the-response-becomes-measured-evidence">How the response
+becomes measured evidence</h1>
+<p>The public answer must finish as JSON with the expected round, known
+parent IDs, a short hypothesis, mutation category, up to two children
+and an optional plateau reason. The controller validates each child’s
+allowed stage fields, numerical bounds, work caps and normalized
+identity. Invalid or duplicate children are rejected without a silent
+repair or free retry.</p>
+<p>Every admitted program runs serially on the frozen starts. The
+backend accepts only original-order integer signs in {-1,+1}; it pins
+graph bytes by SHA-256 and recomputes the cut using two independent
+scoring paths. The parent controller checks the returned graph identity
+and recomputes witness quality again. A reported model score has no
+authority.</p>
+<p>A program ranks only when all three trials and every required stage
+complete. Rank complete programs by higher median cut, higher minimum
+cut, fewer stages, then stable genome identity. Keep at most three from
+parents plus children. Separately retain the best valid witness,
+including one from an incomplete trial. The next context contains the
+surviving programs and measured failures.</p>
+<h1 id="timing-cancellation-and-modes">Timing, cancellation and
+modes</h1>
+<p>The live profile permits three calls, two children per call, one to
+three stages per program and serial trials. Each model call is bounded
+by 35 seconds. The run deadline is 240 seconds, with owned cleanup by
+250 seconds. Guided inspection pauses consume the same deadline. A
+successful reference match does not force an early stop in the teaching
+profile, so report calls-to-first-target separately from later
+demonstration calls.</p>
+<p>Stop and Reset identify owned processes by PID and start tick, not by
+a broad process-name kill. Reset refuses to create overlapping work
+while cleanup is pending. The real-provider Stop path was exercised in
+the prior revision. Closing the local connection cannot establish that
+remote computation or billing ends instantaneously.</p>
+<ul>
+<li><strong>LIVE LLM:</strong> actual new provider proposals.</li>
+<li><strong>NUMERICAL ONLY:</strong> disclosed fixed comparison program;
+zero model calls.</li>
+<li><strong>RECORDED LLM REPLAY:</strong> verified prior live events;
+zero new calls, original model identity and timing distinct from
+playback speed.</li>
+</ul>
+<p>No mode silently turns into another. Hidden reasoning is excluded
+from logs and UI; public output, completion metadata and
+provider-reported usage are retained.</p>
+<h1 id="the-three-demonstrations-and-what-they-establish">The three
+demonstrations and what they establish</h1>
+<p>The old torus quickly saturated near reference 68. The presenter
+requested a case with clearer algorithm differences. Five supplied
+public graphs were screened using normalized classroom programs,
+identical raw seeds 3/4/5 and fixed work limits. The selected
+<code>rand_pm_1000_s23.txt</code> has 1000 vertices and 5043 signed
+edges, SHA-256
+ebb1ee5df894bb2159cd29b2a65d237fa72c9d1fdc2080b2cc7cdb16f25a0503, and
+supplied unproven reference 1098. Only graph input and scalar reference
+metadata were imported. Public source records are:</p>
+<ul>
+<li>Graph provenance:
+<code>data/comparison_instance_provenance.json</code>.</li>
+<li>Normalized numerical screen, in <code>demo/evidence/</code>:
+<code>replacement_instance_screen_normalized.json</code>.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Initial configured solver</th>
+<th>Three measured cuts</th>
+<th style="text-align: right;">Median</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Simulated Annealing</td>
+<td>912, 948, 921</td>
+<td style="text-align: right;">921</td>
+</tr>
+<tr class="even">
+<td>Tabu Search</td>
+<td>980, 975, 964</td>
+<td style="text-align: right;">975</td>
+</tr>
+<tr class="odd">
+<td>Breakout Local Search</td>
+<td>966, 992, 995</td>
+<td style="text-align: right;">992</td>
+</tr>
+<tr class="even">
+<td>Rank-two Burer–Monteiro</td>
+<td>1012, 1012, 1007</td>
+<td style="text-align: right;">1012</td>
+</tr>
+</tbody>
+</table>
+<p>These values use explicit normalized classroom defaults, including
+the Breakout Local Search configuration. A preliminary direct-dispatch
+screen used that kernel’s implicit defaults and is not the current
+comparison evidence.</p>
+<p>Preset 1 checks Tabu Search and Simulated Annealing. Preset 2 checks
+Tabu Search, Breakout Local Search and Burer–Monteiro. Graph, starts,
+seeds, caps, mutation space and ranking remain fixed. More seed programs
+cost more initial evaluations. Burer–Monteiro is included because of
+measured performance here, not because every evolutionary algorithm
+should start from it. The earlier BM-only torus control is preserved as
+history, not retained as the current recommended starting suite.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Replacement rehearsal</th>
+<th style="text-align: right;">Limited suite</th>
+<th style="text-align: right;">Informed suite</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Initial best eligible median</td>
+<td style="text-align: right;">975</td>
+<td style="text-align: right;">1012</td>
+</tr>
+<tr class="even">
+<td>Final best eligible median</td>
+<td style="text-align: right;">1008</td>
+<td style="text-align: right;">1012</td>
+</tr>
+<tr class="odd">
+<td>Best valid witness</td>
+<td style="text-align: right;">1031</td>
+<td style="text-align: right;">1060</td>
+</tr>
+<tr class="even">
+<td>Completed model calls</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td>Elapsed time</td>
+<td style="text-align: right;">24.003 s</td>
+<td style="text-align: right;">66.589 s</td>
+</tr>
+<tr class="even">
+<td>Reference 1098</td>
+<td style="text-align: right;">Not reached</td>
+<td style="text-align: right;">Not reached</td>
+</tr>
+<tr class="odd">
+<td>Terminal status</td>
+<td style="text-align: right;">Finished</td>
+<td style="text-align: right;">Failed validation</td>
+</tr>
+</tbody>
+</table>
+<p>The informed run’s longer Burer–Monteiro → Breakout Local Search
+proposals left incomplete trials. Their witnesses remained valid; their
+programs were excluded. Its second response named an ineligible parent,
+so validation stopped the run. This is a genuine provider failure case
+with recorded context and public response, not a successful optimization
+run. The stronger initial suite did not establish a faster or more
+effective full search in these observations. Do not force that
+story.</p>
+<p>The six newly authorized attempts are exhausted: two network-sandbox
+DNS failures before provider contact, then four real Luna calls across
+the two replacement runs. No retries or further calls are hidden. Both
+valid finished and valid failed sources can be replayed with their
+original terminal status; transport failures without verified model
+results are ineligible for genuine replay.</p>
+<p>The third case is a separate dense real-weight stress test: 100
+vertices, 4950 edges, reference 402.5209. Its preserved three-call
+genuine run matched all three trials after one call at 16.091s and
+finished at 56.602s. Sparse-1000 and dense-100 have similar edge counts
+but very different degree, density and weights. This is a transfer test;
+greater density does not establish a universal hardness ordering.</p>
+<p>One run per condition cannot establish a causal effect or model
+superiority. The screened seeds are teaching evidence, not a held-out
+evaluation. Human prior-design effort is also absent from the run clock.
+All references are unproven.</p>
+<h1 id="where-to-inspect-the-evidence">Where to inspect the
+evidence</h1>
+<p>Use the live population table, actual mutation diff, exact exchange
+and measured comparison table. Detailed local records are in ignored
+<code>demo/runs/&lt;id&gt;/</code>: <code>request.json</code>,
+<code>config.json</code>, append-only <code>events.jsonl</code>, model
+context/payload/ public response, numerical trial requests/results,
+independently verified witnesses and terminal
+<code>final.json</code>.</p>
+<p>Public evidence summaries omit solution vectors. Current live
+sources:</p>
+<ul>
+<li>Limited, finished:
+<code>674ece0b370441dd9e68c7b53b35eb2d</code>.</li>
+<li>Informed, failed:
+<code>529482638cac4e17bca87f8587bc4cf7</code>.</li>
+<li>Dense, finished: <code>166aa16ae7c84e309fbed5af73b03b25</code>.</li>
+</ul>
+<p>Earlier torus records remain unchanged and separately labeled.
+Read-only pages and replay spend zero new calls.</p>
+<p>The color base is Texas A&amp;M’s official Aggie Maroon, #500000,
+with white and supporting neutral tones. See the <a
+href="https://marcomm.tamu.edu/creative-platform/visual-style/brand-colors/">university
+brand color specification</a>.</p>
+</main></body>
+</html>
