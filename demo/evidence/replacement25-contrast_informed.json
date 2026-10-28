@@ -1,0 +1,314 @@
+{
+  "date_utc": "2026-10-27T03:28:27.648552+00:00",
+  "run_id": "b923ccd4752241bb8c481eee29be0218",
+  "mode": "live",
+  "status": "failed",
+  "scenario": "contrast_informed",
+  "initial_solvers": [
+    "tabu",
+    "bls",
+    "bm"
+  ],
+  "population_protocol": "shared_raw",
+  "seed": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "wall_seconds": 6.217533580027521,
+  "model_calls": 1,
+  "time_to_first_real_proposal": null,
+  "time_to_reference_match": null,
+  "best_cut": 1012.0,
+  "baseline_construction": [],
+  "candidates": [
+    {
+      "id": "55d784ea6bf6ff0e552746f4539e6ba03ef8f473d15476235d7786c8ee8b7e36",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 5,
+              "restart_after": 0
+            },
+            "max_work": 800,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Tabu Search solver",
+      "diff": "",
+      "complete": true,
+      "median": 975.0,
+      "minimum": 964.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 980.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 980.0,
+              "runtime_seconds": 0.3501494029769674,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.3792982389568351
+        },
+        {
+          "seed": 4,
+          "cut": 975.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 975.0,
+              "runtime_seconds": 0.41216840903507546,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.4429548929911107
+        },
+        {
+          "seed": 5,
+          "cut": 964.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 964.0,
+              "runtime_seconds": 0.42742530396208167,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.45559453300666064
+        }
+      ]
+    },
+    {
+      "id": "e11e30cce2b9ed6ceb9420bdf1fd49c228d5bd911dba29cc0acbbc735ec3bd02",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bls",
+            "config": {
+              "jump": 1,
+              "stagnation": 1000,
+              "p_min": 0.8,
+              "q": 0.5,
+              "tenure_min": 3,
+              "tenure_max": 10
+            },
+            "max_work": 700,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial Breakout Local Search solver",
+      "diff": "",
+      "complete": true,
+      "median": 992.0,
+      "minimum": 966.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 966.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 966.0,
+              "runtime_seconds": 0.6847951969830319,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 221,
+                "directed_single": 109,
+                "directed_pair": 112,
+                "random": 1,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.7164514269679785
+        },
+        {
+          "seed": 4,
+          "cut": 992.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 992.0,
+              "runtime_seconds": 0.5845737700001337,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 184,
+                "directed_single": 87,
+                "directed_pair": 97,
+                "random": 0,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.6146673319744878
+        },
+        {
+          "seed": 5,
+          "cut": 995.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bls",
+              "cut": 995.0,
+              "runtime_seconds": 0.5106194649706595,
+              "work_counters": {
+                "flips": 700,
+                "attractors": 197,
+                "directed_single": 106,
+                "directed_pair": 91,
+                "random": 1,
+                "strong_random": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.5377606619731523
+        }
+      ]
+    },
+    {
+      "id": "d2c209b716154a648ec8c7a06c1f7f54aaca2a3a8556aa52f25658d1115099d8",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "bm",
+            "config": {
+              "max_sweeps": 20,
+              "rounding_count": 8
+            },
+            "max_work": 1,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "Initial rank-two Burer\u2013Monteiro solver",
+      "diff": "",
+      "complete": true,
+      "median": 1012.0,
+      "minimum": 1007.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1012.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1012.0,
+              "runtime_seconds": 0.25894378195516765,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.29353388998424634
+        },
+        {
+          "seed": 4,
+          "cut": 1012.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1012.0,
+              "runtime_seconds": 0.23906868899939582,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.2684076500008814
+        },
+        {
+          "seed": 5,
+          "cut": 1007.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1007.0,
+              "runtime_seconds": 0.23239167901920155,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.2613746610004455
+        }
+      ]
+    }
+  ],
+  "terminal_reason": "owned process failed: HTTPSConnectionPool(host='chat-api.tamu.ai', port=443): Max retries exceeded with url: /api/chat/completions (Caused by NameResolutionError(\"HTTPSConnection(host='chat-api.tamu.ai', port=443): Failed to resolve 'chat-api.tamu.ai' ([Errno -2] Name or service not known)\"))\n",
+  "raw_records": "demo/runs/b923ccd4752241bb8c481eee29be0218/",
+  "replay_eligible": false,
+  "caps": {
+    "total_seconds": 240,
+    "stop_and_save_by_seconds": 250,
+    "max_model_calls": 3,
+    "max_rounds": 3,
+    "children_per_round": 2
+  },
+  "human_aloud_presentation_rehearsal": false,
+  "metrics": {
+    "reference": 1098.0,
+    "initial_best_median": 1012.0,
+    "best_median": 1012.0,
+    "best_cut": 1012.0,
+    "median_reference": null,
+    "all_trials_reference": null,
+    "witness_reference": null,
+    "numerical_seconds": 3.970043286855798,
+    "model_calls": 1
+  }
+}

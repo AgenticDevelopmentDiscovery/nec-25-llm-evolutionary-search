@@ -1,0 +1,9 @@
+{
+  "warm_fraction": 0.2,
+  "warm_samples": 16,
+  "check_samples": 8,
+  "tabu_sample": 2,
+  "dt": 1.0,
+  "warm_xi": null,
+  "check_xi": 0.05
+}

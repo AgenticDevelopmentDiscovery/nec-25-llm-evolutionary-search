@@ -1,0 +1,188 @@
+{
+  "source_sha256": "6512b7a583d27a7f24c89c6aa2b45eb4ce4ac549205b8a14bbed8669a9cbb3a3",
+  "title": "LLM-driven evolutionary search",
+  "chapter": "Chapter 10: Agentic Evolutionary Frameworks",
+  "frames": [
+    {
+      "id": "title",
+      "title": "Evolutionary search with a language-model mutator",
+      "seconds": 20,
+      "appendix": false,
+      "html": "<div class=\"question title-only\">\n<p><strong>Evolving solver programs through measured feedback</strong></p>\n<p>ENGR 689 · Texas A&amp;M University · Fall 2026</p>\n<p>How can we improve the algorithm that performs the search?</p>\n</div>\n",
+      "reveals": 1
+    },
+    {
+      "id": "optimization",
+      "title": "Optimization as search",
+      "seconds": 40,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>When the best candidate is unknown, what can we do besides guess once?</strong></p>\n</div>\n<div class=\"block\">\n<p>Define a candidate space <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mi>𝒜</mi><annotation encoding=\"application/x-tex\">\\mathcal A</annotation></semantics></math> and a measurable objective <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mi>F</mi><annotation encoding=\"application/x-tex\">F</annotation></semantics></math>. Seek</p>\n<p><math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msup><mi>a</mi><mo>*</mo></msup><mo>∈</mo><mo>arg</mo><munder><mo>max</mo><mrow><mi>a</mi><mo>∈</mo><mi>𝒜</mi></mrow></munder><mi>F</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>a</mi><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mi>.</mi></mrow><annotation encoding=\"application/x-tex\">a^*\\in\\arg\\max_{a\\in\\mathcal A}F(a).</annotation></semantics></math></p>\n</div>\n<div class=\"block\">\n<p>Generate candidates → measure them → spend the next trial where the evidence suggests it may help.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Optimization is an evidence-guided search.</strong> An evolutionary algorithm adds a population, inherited variation and selection.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "population",
+      "title": "Population and fitness",
+      "seconds": 40,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Why keep several candidates instead of only the current champion?</strong></p>\n</div>\n<div class=\"block\">\n<p>A population stores alternative structures. Fitness measures each candidate under a declared evaluation protocol.</p>\n</div>\n<div class=\"block\">\n<p>Illustrative scores: A = 5, B = 7, C = 6. Keeping B and C preserves two starting points for the next variation step.</p>\n</div>\n<div class=\"answer\">\n<p><strong>A population supplies material for inheritance and exploration.</strong> Its size and selection rule determine what information survives.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "evolution",
+      "title": "Variation, evaluation and selection",
+      "seconds": 45,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>What turns repeated candidate generation into an evolutionary algorithm?</strong></p>\n</div>\n<div class=\"block visual\">\n<figure>\n<img src=\"/figures/evolutionary-cycle.svg\" style=\"width:100.0%\" alt=\"Seed once; derive children from survivors; evaluate and select again.\" />\n<figcaption aria-hidden=\"true\">Seed once; derive children from survivors; evaluate and select again.</figcaption>\n</figure>\n</div>\n<div class=\"block\">\n<p>Mutation can perturb a parameter, replace a component or compose stages. Selection compares parents and children using the same fitness protocol.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Useful structure is inherited, varied and tested.</strong> Elitism retains measured parents when a mutation is worse.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "exploration",
+      "title": "Exploration and exploitation",
+      "seconds": 40,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Should the next mutation refine a strong candidate or try a different mechanism?</strong></p>\n</div>\n<div class=\"block\">\n<p><strong>Exploit:</strong> adjust a promising parameter or refine an existing composition. <strong>Explore:</strong> replace a stage or try another algorithm family.</p>\n</div>\n<div class=\"block\">\n<p>Too little variation can collapse the population. Too much unconstrained variation can waste evaluations on poor candidates.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Variation and selection must balance inheritance with discovery.</strong> Better starting material may help; a weak start does not imply permanent failure.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "llm-mutation",
+      "title": "The language-model mutator",
+      "seconds": 45,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>What changes if the variation operator can read programs and measured feedback?</strong></p>\n</div>\n<div class=\"block\">\n<p>A large language model reads selected programs, trial outcomes and allowed edits, then proposes a motivated mutation.</p>\n</div>\n<div class=\"block\">\n<p>For example: retain a vector-relaxation stage, then append local search to improve the rounded assignment. The proposal is a hypothesis.</p>\n</div>\n<div class=\"answer\">\n<p><strong>The LLM supplies context-conditioned variation. The harness still supplies fitness.</strong> Its weights are not trained during this run.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "problem",
+      "title": "Signed Max-Cut",
+      "seconds": 45,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>How should vertices be partitioned when some edges prefer separation and others prefer agreement?</strong></p>\n</div>\n<div class=\"block visual\">\n<figure>\n<img src=\"/figures/signed-four-vertex.svg\" style=\"width:65.0%\" alt=\"Four-vertex illustration of signed edge preferences.\" />\n<figcaption aria-hidden=\"true\">Four-vertex illustration of signed edge preferences.</figcaption>\n</figure>\n</div>\n<div class=\"block\">\n<p>Positive edge: prefer different sides. Negative edge: prefer the same side.</p>\n<p><math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>C</mi><mi>G</mi></msub><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>s</mi><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo>=</mo><munder><mo>∑</mo><mrow><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo>∈</mo><mi>E</mi></mrow></munder><msub><mi>w</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mfrac><mrow><mn>1</mn><mo>−</mo><msub><mi>s</mi><mi>i</mi></msub><msub><mi>s</mi><mi>j</mi></msub></mrow><mn>2</mn></mfrac><mo>,</mo><mspace width=\"1.0em\"></mspace><msub><mi>s</mi><mi>i</mi></msub><mo>∈</mo><mo stretchy=\"false\" form=\"prefix\">{</mo><mo>−</mo><mn>1</mn><mo>,</mo><mo>+</mo><mn>1</mn><mo stretchy=\"false\" form=\"postfix\">}</mo><mi>.</mi></mrow><annotation encoding=\"application/x-tex\">C_G(s)=\\sum_{(i,j)\\in E}w_{ij}\\frac{1-s_i s_j}{2},\\quad s_i\\in\\{-1,+1\\}.</annotation></semantics></math></p>\n</div>\n<div class=\"answer\">\n<p><strong>Maximize the original signed cut.</strong> The comparison uses 1,000 vertices, 5,043 signed edges and reference 1098.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "move",
+      "title": "Local moves and feasible witnesses",
+      "seconds": 40,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Can the search move to a worse state while keeping a better result?</strong></p>\n</div>\n<div class=\"block\">\n<p>Flip one sign, <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub><mo>←</mo><mo>−</mo><msub><mi>s</mi><mi>i</mi></msub></mrow><annotation encoding=\"application/x-tex\">s_i\\leftarrow-s_i</annotation></semantics></math>, with exact gain</p>\n<p><math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>Δ</mi><mi>i</mi></msub><mo>=</mo><msub><mi>s</mi><mi>i</mi></msub><munder><mo>∑</mo><mrow><mi>j</mi><mo>:</mo><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo>∈</mo><mi>E</mi></mrow></munder><msub><mi>w</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mi>s</mi><mi>j</mi></msub><mi>.</mi></mrow><annotation encoding=\"application/x-tex\">\\Delta_i=s_i\\sum_{j:(i,j)\\in E}w_{ij}s_j.</annotation></semantics></math></p>\n</div>\n<div class=\"block\">\n<p>The exploratory assignment may worsen. A separate best-so-far copy preserves the strongest valid witness seen during that execution.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Separate the moving state, best witness and strategy fitness.</strong> Only a complete evaluation makes a strategy eligible for ranking.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "program",
+      "title": "Solver programs",
+      "seconds": 45,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>What can Luna edit if the assignment itself is not the evolving artifact?</strong></p>\n</div>\n<div class=\"block\">\n<p>A program has one to three stages: algorithm, configuration, work cap and start rule.</p>\n<pre class=\"text\"><code>bm(max_sweeps=20, rounding_count=8); retained\n→ bls(max_work=9000); retained</code></pre>\n</div>\n<div class=\"block\">\n<p>Execute a program → obtain signs → recompute the original cut → summarize three trials → rank the program.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Evolve the solver; evaluate its witness.</strong> Trusted kernels execute the stages. Unchecked algorithms remain available to the mutator.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "kernels",
+      "title": "Four numerical algorithms",
+      "seconds": 70,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Which mechanism changes when we choose a different solver stage?</strong></p>\n</div>\n<div class=\"block\">\n<p><strong>Tabu Search:</strong> best admissible flips, temporary reversal bans and aspiration. <strong>Simulated Annealing:</strong> temperature-dependent acceptance of random flips.</p>\n</div>\n<div class=\"block\">\n<p><strong>Breakout Local Search:</strong> improving descent followed by adaptive perturbations. <strong>Rank-two Burer–Monteiro:</strong> unit-vector refinement, projection to signs and polish.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Acceptance, memory, escape and representation are different design levers.</strong> Full examples and parameter meanings are available in the algorithm guide.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "initialization",
+      "title": "Initial population and fair starts",
+      "seconds": 40,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Do the solver checkboxes change the initial population or the whole search space?</strong></p>\n</div>\n<div class=\"block\">\n<p>Checkboxes choose <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding=\"application/x-tex\">P_0</annotation></semantics></math>. Every selected program and proposed child receives copies of the same raw starts for seeds 3, 4 and 5.</p>\n</div>\n<div class=\"block\">\n<p>All four trusted kernels remain available to Luna. Both current graphs allow 8 numerical seconds per trial. The selected seed programs produce distinct initial fitness on the 1,000-vertex graph.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Change initialization deliberately and hold the comparison protocol fixed.</strong> A missing seed algorithm can still appear in a later mutation.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "experiment-design",
+      "title": "Designing the three experiments",
+      "seconds": 35,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Which differences can our initialization comparison actually explain?</strong></p>\n</div>\n<div class=\"block\">\n<p>Demos 1 and 2: same signed graph, seeds, trial allowance, mutation catalog and call cap. Change only the initial solver suite.</p>\n</div>\n<div class=\"block\">\n<p>Report initial median, calls and time to the median target, all-trial robustness, numerical effort and total teaching-run time.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Declare the success criterion before comparing runs.</strong> The third graph is a separate dense real-weight stress case.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "demo-limited",
+      "title": "Demo 1: a limited initialization",
+      "seconds": 180,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Can local-search seeds recover a useful relaxation method through mutation?</strong></p>\n</div>\n<div class=\"block\">\n<p>Use the 1,000-vertex signed graph, seed 3, <strong>Tabu Search and Simulated Annealing</strong>. The initial best median is 975; reference 1098 is unproven.</p>\n</div>\n<div class=\"block\">\n<p>All four kernels remain available. Inspect parent programs, the actual request, public proposals and complete measured child fitness.</p>\n</div>\n<div class=\"answer\">\n<p><strong>A limited suite defines a starting point, not a permanent restriction.</strong> Follow improvement, reference gap, numerical effort and model calls.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "demo-informed",
+      "title": "Demo 2: a researcher-selected suite",
+      "seconds": 180,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>What changes when measured domain knowledge supplies stronger starting programs?</strong></p>\n</div>\n<div class=\"block\">\n<p>Keep graph, seeds and caps fixed. Select <strong>Tabu Search, Breakout Local Search and rank-two Burer–Monteiro</strong>.</p>\n</div>\n<div class=\"block\">\n<p>The initial best median is 1012, compared with 975 for the limited suite. The reference gap falls from 123 to 86 before any model call.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Researcher knowledge improves this starting population.</strong> Evaluate later gains and costs; a stronger start does not guarantee a faster run.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "comparison",
+      "title": "Comparing the evidence",
+      "seconds": 50,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>If every method eventually reaches the same target, how should we compare them?</strong></p>\n</div>\n<div class=\"block\">\n<p>Compare initial fitness, complete-program improvement, reference gap and calls or time to a declared target. Retain unsuccessful and censored proposals.</p>\n</div>\n<div class=\"block\">\n<p>Initial medians: <strong>921 / 975 / 992 / 1012</strong>. These distinguish the four configured solvers on the replacement graph; reference <strong>1098</strong> is unproven.</p>\n</div>\n<div class=\"answer\">\n<p><strong>A common final score can hide different search costs.</strong> An unreached reference must remain visibly unreached.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "demo-harder",
+      "title": "Demo 3: a dense real-weight stress case",
+      "seconds": 240,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Will the same architecture work when interactions are dense and weights are real-valued?</strong></p>\n</div>\n<div class=\"block\">\n<p>Use <strong>100 vertices, 4950 real-valued signed edges</strong>, all four initial solvers and supplied reference <strong>402.5209</strong>, unproven.</p>\n</div>\n<div class=\"block\">\n<p>Eight numerical seconds per trial; three Luna calls maximum. Inspect composition, rejection, completeness and the actual surviving programs.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Evaluate the dense case on its own evidence.</strong> A reference match is a feasible result; it is not a proof of optimality or broad model superiority.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "harder-evidence",
+      "title": "Reading solver evidence",
+      "seconds": 45,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Which record proves that a solver improved: the graph, the hypothesis or the completed trials?</strong></p>\n</div>\n<div class=\"block\">\n<p>Require original-order integer signs and a matching graph hash. Recompute the objective from the original signed edges with two scoring paths.</p>\n</div>\n<div class=\"block\">\n<p>Rank complete programs by median, minimum, fewer stages and stable genome ID. Retain a valid best witness separately, including one from a censored trial.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Selection follows complete measured evidence.</strong> Preserve failures, timeouts and plateaus so students can inspect the full mechanism.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "definition",
+      "title": "The agentic evolutionary framework",
+      "seconds": 60,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Can we now name the five choices we implemented?</strong></p>\n</div>\n<div class=\"block\">\n<p><math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>𝒜</mi><mo>,</mo><mi>f</mi><mo>,</mo><mi>μ</mi><mo>,</mo><mi>σ</mi><mo>,</mo><msub><mi>P</mi><mn>0</mn></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><annotation encoding=\"application/x-tex\">(\\mathcal A,f,\\mu,\\sigma,P_0)</annotation></semantics></math>: artifact space, fitness, mutation, selection and initial population. Checkboxes choose <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding=\"application/x-tex\">P_0</annotation></semantics></math>; they do not change <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mi>𝒜</mi><annotation encoding=\"application/x-tex\">\\mathcal A</annotation></semantics></math>.</p>\n</div>\n<div class=\"block\">\n<p><math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>Q</mi><mi>t</mi></msub><mo>∼</mo><mi>μ</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mo>⋅</mo><mo>∣</mo><msub><mi>P</mi><mi>t</mi></msub><mo>,</mo><msub><mi>H</mi><mi>t</mi></msub><mo>,</mo><msub><mi>B</mi><mi>t</mi></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo>,</mo><mspace width=\"1.0em\"></mspace><msub><mi>P</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>σ</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo>∪</mo><mi>E</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>Q</mi><mi>t</mi></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mi>.</mi></mrow><annotation encoding=\"application/x-tex\">Q_t\\sim\\mu(\\cdot\\mid P_t,H_t,B_t),\\quad P_{t+1}=\\sigma(P_t\\cup E(Q_t)).</annotation></semantics></math></p>\n<p><math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>H</mi><mi>t</mi></msub><annotation encoding=\"application/x-tex\">H_t</annotation></semantics></math>: measured history. <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding=\"application/x-tex\">B_t</annotation></semantics></math>: remaining budget. <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mi>E</mi><annotation encoding=\"application/x-tex\">E</annotation></semantics></math>: validation and complete evaluation.</p>\n</div>\n<div class=\"answer\">\n<p><strong>The LLM is the mutation operator inside an externally measured evolutionary loop.</strong> For the course minimization convention, <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>f</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>a</mi><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo>=</mo><mo>−</mo><msub><mo>median</mo><mi>j</mi></msub><msub><mi>C</mi><mi>G</mi></msub><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>A</mi><mi>a</mi></msub><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>G</mi><mo>,</mo><msub><mi>z</mi><mi>j</mi></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow></mrow><annotation encoding=\"application/x-tex\">f(a)=-\\operatorname{median}_j C_G(A_a(G,z_j))</annotation></semantics></math>.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "transfer",
+      "title": "Applying the framework to research",
+      "seconds": 40,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Which component would be hardest to supply honestly for your own research problem?</strong></p>\n</div>\n<div class=\"block\">\n<p>Specify the artifact, automatic evaluator, mutation context, survivor rule and initial population. Declare budgets and a success criterion before running.</p>\n</div>\n<div class=\"block\">\n<p>Use domain knowledge, compare strong numerical baselines, and test unseen instances before claiming generalization.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Build trustworthy measurement and inspectable data flow first.</strong> Then decide where a language-model mutator earns its cost.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "system-flow",
+      "title": "Server architecture",
+      "seconds": 45,
+      "appendix": true,
+      "html": "<div class=\"question\">\n<p><strong>What coordinates the browser, numerical search and model?</strong></p>\n</div>\n<div class=\"block visual\">\n<figure>\n<img src=\"/figures/architecture-overview.svg\" style=\"width:100.0%\" alt=\"Only the model worker contacts TAMU.\" />\n<figcaption aria-hidden=\"true\">Only the model worker contacts TAMU.</figcaption>\n</figure>\n</div>\n<div class=\"block\">\n<p>One loopback server owns run state and workers, serves every teaching page, and streams events to the browser.</p>\n</div>\n<div class=\"answer\">\n<p><strong>The server orchestrates; workers execute; events explain.</strong> The API key stays in the server-side client.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "api-context",
+      "title": "The API request and context",
+      "seconds": 60,
+      "appendix": true,
+      "html": "<div class=\"question\">\n<p><strong>What is actually sent when we press “Send parents to Luna”?</strong></p>\n</div>\n<div class=\"block\">\n<pre class=\"text\"><code>model: protected.gpt-5.6-luna\nmessages:\n  system: instructions + response schema\n  user: serialized round context\nstream: true; tools: []</code></pre>\n</div>\n<div class=\"block\">\n<p>Context: up to three genomes and trial evidence; failures and tried IDs; algorithm defaults, bounds and remaining budget. The worker adds HTTPS authorization separately.</p>\n</div>\n<div class=\"answer\">\n<p><strong>The context carries measured search memory.</strong> Solution vectors, reference answers and the API key are excluded from the model’s context.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "api-return",
+      "title": "Response and loop closure",
+      "seconds": 50,
+      "appendix": true,
+      "html": "<div class=\"question\">\n<p><strong>When does streamed text become a candidate that can survive?</strong></p>\n</div>\n<div class=\"block\">\n<p>Public chunks → completed JSON → known parent IDs → schema, bounds and duplicate checks → admitted stage program.</p>\n</div>\n<div class=\"block\">\n<p>Owned numerical trials → independent original-edge scores → complete-candidate ranking → new survivors and failure feedback for the next request.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Text is a proposal until validated and measured.</strong> Server-sent events expose progress; selection supplies the next mutation context.</p>\n</div>\n",
+      "reveals": 4
+    }
+  ],
+  "main_frame_count": 19,
+  "main_reveals": 73,
+  "prepared_seconds": 1300,
+  "appendix_seconds": 155,
+  "reserve_seconds": 45
+}

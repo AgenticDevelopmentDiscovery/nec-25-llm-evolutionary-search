@@ -1,0 +1,6 @@
+{
+  "temperatures": 8,
+  "temperature_min": 0.1,
+  "temperature_max": 5.0,
+  "cluster_temperature_max": 1.0
+}

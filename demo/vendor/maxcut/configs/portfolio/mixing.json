@@ -1,0 +1,6 @@
+{
+  "rank": 8,
+  "rounding_count": 32,
+  "warm_noise": 0.1,
+  "polish_flips": 10000
+}

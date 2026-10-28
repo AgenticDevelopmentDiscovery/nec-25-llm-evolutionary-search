@@ -2,7 +2,7 @@
 # it is the one place the title and authors are written down.
 
 title: "Tutorial 25 — LLM-Driven Evolutionary Search"
-subtitle: "Using language models as smart mutation operators for program search"
+subtitle: "A bounded signed Max-Cut classroom demonstration"
 author:
   - ENGR 689 Tutorial Team
 date: \today
@@ -22,11 +22,11 @@ reference-section-title: References
 # but have never written code" is useful. "Technical readers" is not.
 
 audience: >-
-  This tutorial is for students and researchers who already understand Python,
-  simple code generation workflows, and the idea of an evaluation harness. They
-  should be able to recognize the generate → evaluate → select → mutate loop,
-  explain why fitness design matters, and describe how a held-out check guards
-  against eval hacking after reading.
+  ENGR 689 students who know Python, elementary optimization and evaluation
+  harnesses. In 20–25 minutes they should distinguish strategy programs, solution
+  vectors and verified fitness; trace LLM proposal, numerical evaluation and
+  survivor selection; explain the four solver mechanisms; inspect exact Luna
+  exchanges; and identify live, numerical-only and recorded modes.
 
 # --- Presentation only -------------------------------------------------------
 # Any beamer theme in TeX Live. Metropolis is clean and projects well.
@@ -36,5 +36,5 @@ aspectratio: 169
 # --- PDF outputs only --------------------------------------------------------
 # Link colouring. The website takes its link colours from `site/style.css`.
 colorlinks: true
-linkcolor: NavyBlue
-urlcolor: NavyBlue
+linkcolor: Maroon
+urlcolor: Maroon

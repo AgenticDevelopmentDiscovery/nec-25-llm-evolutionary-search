@@ -17,14 +17,14 @@ engine := "xelatex"
 open   := "open"
 
 # Shared across all three outputs.
-common := "--metadata-file=metadata.yaml --resource-path=.:figures --citeproc --bibliography=references.bib"
+common := "--metadata-file=metadata.yaml --resource-path=.:figures --citeproc --bibliography=references.bib --lua-filter=filters/pdf-images.lua"
 
 # Print available recipes (default).
 default:
     @just --list
 
 # Build all three outputs.
-build: doc slides site
+build: doc slides architecture site
 
 # --- Document ---------------------------------------------------------------
 
@@ -33,19 +33,21 @@ doc:
     mkdir -p {{outdir}}
     {{pandoc}} sections/*.prose.md {{common}} \
         --pdf-engine={{engine}} \
-        --toc --toc-depth=2 --number-sections \
+        --toc --toc-depth=2 --number-sections --include-in-header=site/document-header.tex \
         -V documentclass=article -V fontsize=11pt -V geometry:margin=1in \
         -o {{outdir}}/document.pdf
+    cp {{outdir}}/document.pdf demo/static/document.pdf
 
 # --- Presentation -----------------------------------------------------------
 
-# output/slides.pdf — every `##` heading becomes one slide.
+# output/slides.pdf — one final-state handout page per ## frame.
 slides:
     mkdir -p {{outdir}}
     {{pandoc}} sections/*.prose.md {{common}} \
         --pdf-engine={{engine}} \
-        -t beamer --slide-level=2 \
+        -t beamer --slide-level=2 --lua-filter=filters/slides.lua --include-in-header=site/maroon-slides.tex -V handout=true \
         -o {{outdir}}/slides.pdf
+    cp {{outdir}}/slides.pdf demo/static/handout.pdf
 
 # Overflowing slides are not a build problem to work around. They are the
 # clearest signal you have that a `##` unit is carrying more than one idea, and
@@ -61,10 +63,10 @@ slides:
 # preview has two dead links that only show up after deploying.
 
 # _site/ — one page, sidebar table of contents, both PDFs linked.
-site: doc slides
+site: doc slides presentation
     mkdir -p {{site}}
     {{pandoc}} sections/*.prose.md {{common}} \
-        --standalone --toc --toc-depth=2 \
+        --standalone --mathml --toc --toc-depth=2 \
         --template=site/template.html \
         --css=style.css \
         -o {{site}}/index.html
@@ -104,3 +106,31 @@ deploy:
 # Remove all build outputs.
 clean:
     rm -rf {{outdir}} {{site}}
+
+# Local interactive demo; static-site serving remains `just serve`.
+demo port="8766":
+    python3 demo/server.py --port {{port}}
+
+# Canonical browser frames and long-form teaching notes, from the same prose.
+presentation:
+    python3 demo/build_presentation.py
+
+# Optional offline PDF: four overlay slides per teaching frame.
+overlays:
+    mkdir -p {{outdir}}
+    {{pandoc}} sections/*.prose.md {{common}} --pdf-engine={{engine}} \
+        -t beamer --slide-level=2 --lua-filter=filters/slides.lua --include-in-header=site/maroon-slides.tex \
+        -o {{outdir}}/overlays.pdf
+
+# No paid requests. HTTP tests use ephemeral loopback ports.
+demo-test:
+    python3 -m unittest discover -s demo/tests -v
+    PYTHONPATH=demo/vendor/maxcut python3 -m unittest discover -s demo/vendor/maxcut/tests -p 'test_bm_solver.py' -v
+
+# One bounded rehearsal; no retries or hidden mode fallback.
+demo-rehearse mode="numerical" seed="3":
+    python3 demo/rehearse.py --mode {{mode}} --seed {{seed}}
+
+# Separate architecture and data-flow document.
+architecture:
+    python3 demo/build_architecture.py

@@ -1,0 +1,12 @@
+{
+  "source": "051251dcd77c4bd4942055114dd45a00",
+  "replay_run": "27c2b31a202347b1b3a7d79cc0b6eda5",
+  "seconds": 23.90121513500344,
+  "speed": 4,
+  "new_model_calls": 0,
+  "network_disabled": true,
+  "owned_workers_disabled": true,
+  "source_sha256_unchanged": "39155a8d360a36ea7cb3641703034cf479bdf5a68ce12ab4f2b8b551f43a2210",
+  "best_cut": 402.5209000000001,
+  "mode": "replay"
+}

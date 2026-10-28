@@ -1,27 +1,24 @@
-# Content — spine
-
-## Purpose
-
-Teach the HOW: the mental model, then worked use, then the failure modes — so the reader can use the tool on a case this tutorial never showed them.
-
-## Claims
-
-- The reader should be able to explain the LLM-guided program mutation loop as generate → evaluate → select → mutate.
-- The reader should be able to identify a fitness function that rewards the intended objective and rejects exploitative shortcuts.
-- The reader should be able to trace why diversity maintenance and held-out scoring matter in search.
-
-## Decisions
-
-- The worked example uses symbolic regression because it fits a small, explainable score and demonstrates both code generation and evaluation naturally.
-- The tutorial chooses a five-generation demonstration rather than a larger benchmark because the lesson is the shape of the loop, not the final performance.
-- The section frames eval hacking through a visible-data special case so the failure mode is concrete and memorable.
-
-## Open questions
-
-- How much of the evaluator should be made visible to the LLM and how much should stay implicit to reduce cheating?
-- Which diversity mechanism is best for a small course deployment that must stay explainable?
-
-## Not doing
-
-- We are not introducing a production deployment of OpenEvolve or a full map-elites implementation.
-- We are not proving that LLM mutation always outperforms random GP mutation in every setting.
+# Claims
+- Programs comprise one to three trusted stages with configuration, work and start rules.
+- Tabu Search, Simulated Annealing, Breakout Local Search and rank-two Burer–Monteiro use distinct mechanisms and work units.
+- Checkboxes choose only the initial population; all four kernels remain available to Luna.
+- The initialization comparison fixes the 1000-vertex signed graph, seeds 3/4/5, raw starts, trial allowance and mutation space; seed-suite size changes initial evaluation cost.
+- Validation precedes numerical execution; complete-trial ranking differs from best-witness retention.
+- Current normalized seed medians are 921, 975, 992 and 1012; reference 1098 is unproven.
+- Limited suite is Tabu Search + Simulated Annealing; informed suite adds the stronger relaxation/escape programs, using Tabu Search + Breakout Local Search + Burer–Monteiro.
+- Six additional authorized attempts are exhausted: two DNS failures and four real calls.
+- Limited run improved eligible median 975 to 1008; best witness 1031; 24.003s and two calls.
+- Informed run retained eligible median 1012; censored children left best witness 1060; invalid parent ID stopped it at 66.589s after two calls.
+- Neither comparison reached 1098; stronger initial fitness did not establish superior full-run efficiency.
+- Dense case remains separate: reference matched after one call at 16.091s, three-call run 56.602s.
+# Decisions
+- Keep the main sequence on solver programs, numerical algorithms, initialization, three demos and their evidence; architecture/API details move to the appendix.
+- Reserve 3min + 3min + 4min for the three demos, within 21:40 main content + 0:45 reserve; optional appendix adds 2:35.
+- Report primary median, stronger all-trial criterion, numerical effort and continued three-call cost separately.
+- Preserve all earlier recordings, failed calls and immutable vendor hashes; current scenarios use explicit raw-start protocol.
+- A separate architecture document maps ownership, routes, context and data flow.
+# Open questions
+- Human aloud timing remains a presenter action; a prerecorded voice cannot certify it.
+- No unseen-graph generalization or causal model-versus-numerical advantage established.
+# Not doing
+- New paid calls beyond the exhausted approved call allowances, silent fallback, fabricated trajectories, arbitrary generated code or answer-vector publication.

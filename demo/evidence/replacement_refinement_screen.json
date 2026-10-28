@@ -1,0 +1,173 @@
+{
+  "mode": "NUMERICAL ONLY",
+  "model_calls": 0,
+  "instance": "rand_pm_1000_s23.txt",
+  "trial_seconds": 8,
+  "results": [
+    {
+      "name": "Longer Tabu Search",
+      "stages": [
+        [
+          "tabu",
+          {
+            "tenure": 20,
+            "restart_after": 300
+          },
+          20000
+        ]
+      ],
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 999.0,
+          "seconds": 1.1716030390234664,
+          "statuses": [
+            "completed"
+          ]
+        },
+        {
+          "seed": 4,
+          "cut": 991.0,
+          "seconds": 1.2115404409705661,
+          "statuses": [
+            "completed"
+          ]
+        },
+        {
+          "seed": 5,
+          "cut": 951.0,
+          "seconds": 1.1059678070014343,
+          "statuses": [
+            "completed"
+          ]
+        }
+      ],
+      "median": 991.0
+    },
+    {
+      "name": "Longer Breakout Local Search",
+      "stages": [
+        [
+          "bls",
+          {},
+          12000
+        ]
+      ],
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1057.0,
+          "seconds": 8.008967739006039,
+          "statuses": [
+            "time_limit"
+          ]
+        },
+        {
+          "seed": 4,
+          "cut": 1077.0,
+          "seconds": 8.007137403008528,
+          "statuses": [
+            "time_limit"
+          ]
+        },
+        {
+          "seed": 5,
+          "cut": 1063.0,
+          "seconds": 8.008157780044712,
+          "statuses": [
+            "time_limit"
+          ]
+        }
+      ],
+      "median": 1063.0
+    },
+    {
+      "name": "Stronger Burer\u2013Monteiro",
+      "stages": [
+        [
+          "bm",
+          {
+            "max_sweeps": 60,
+            "rounding_count": 16
+          },
+          1
+        ]
+      ],
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1024.0,
+          "seconds": 0.602014581032563,
+          "statuses": [
+            "completed"
+          ]
+        },
+        {
+          "seed": 4,
+          "cut": 1036.0,
+          "seconds": 0.5784963289625011,
+          "statuses": [
+            "completed"
+          ]
+        },
+        {
+          "seed": 5,
+          "cut": 1042.0,
+          "seconds": 0.6693056889926083,
+          "statuses": [
+            "completed"
+          ]
+        }
+      ],
+      "median": 1036.0
+    },
+    {
+      "name": "Burer\u2013Monteiro then Breakout Local Search",
+      "stages": [
+        [
+          "bm",
+          {
+            "max_sweeps": 20,
+            "rounding_count": 8
+          },
+          1
+        ],
+        [
+          "bls",
+          {},
+          12000
+        ]
+      ],
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1043.0,
+          "seconds": 8.00698782101972,
+          "statuses": [
+            "completed",
+            "time_limit"
+          ]
+        },
+        {
+          "seed": 4,
+          "cut": 1057.0,
+          "seconds": 8.007577726966701,
+          "statuses": [
+            "completed",
+            "time_limit"
+          ]
+        },
+        {
+          "seed": 5,
+          "cut": 1076.0,
+          "seconds": 8.007840019010473,
+          "statuses": [
+            "completed",
+            "time_limit"
+          ]
+        }
+      ],
+      "median": 1057.0
+    }
+  ]
+}

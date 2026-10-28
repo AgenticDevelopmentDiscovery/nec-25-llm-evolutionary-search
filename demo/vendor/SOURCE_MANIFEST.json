@@ -1,0 +1,808 @@
+{
+  "source_repository": "/home/mht/AcademicTAMU/TAMU-Fall-2026/Courses/ENGR689/assignments_github/project3-bipartite/bipartite-mahmudulh-tamim",
+  "source_commit": "3e3c7854db17d3819618eec77724811b46e284e5",
+  "tutorial_branch": "Tamim-dev",
+  "purpose": "Portable reference suite and classroom handoff; no submitted solutions, credentials, model transcripts, environments, native binaries or campaign histories copied.",
+  "files": [
+    {
+      "source": "bm_solver.py",
+      "destination": "demo/vendor/maxcut/bm_solver.py",
+      "sha256": "746fa4117cf09023b7474fee3f0657803f98b5221042eab1321d5c7a1aab6950",
+      "bytes": 69093
+    },
+    {
+      "source": "compare_bm.py",
+      "destination": "demo/vendor/maxcut/compare_bm.py",
+      "sha256": "c343f2699665e1c4ff6478b21b65acc90d22995d452fb7bfd64afad14f31d1d6",
+      "bytes": 22750
+    },
+    {
+      "source": "evaluate.py",
+      "destination": "demo/vendor/maxcut/evaluate.py",
+      "sha256": "1edf51662d464727d3e28384820f179b3e3a2049f0869ed3f32a641899206fe5",
+      "bytes": 4854
+    },
+    {
+      "source": "evolution_batch.py",
+      "destination": "demo/vendor/maxcut/evolution_batch.py",
+      "sha256": "16ac4e11e675a95bf6628dfac72f2a73c74150dcf9f7d98076e96c40d601b779",
+      "bytes": 13314
+    },
+    {
+      "source": "evolution_candidates.py",
+      "destination": "demo/vendor/maxcut/evolution_candidates.py",
+      "sha256": "1919e38701863cba8776752c531ca3181841a828aaa91649c4ae8873c7f7e5d1",
+      "bytes": 28172
+    },
+    {
+      "source": "evolution_codex.py",
+      "destination": "demo/vendor/maxcut/evolution_codex.py",
+      "sha256": "04b23d6749d24abbf6ffa186372330c5ec634c6f50eaef461406a8d68946bf5c",
+      "bytes": 24517
+    },
+    {
+      "source": "evolution_common.py",
+      "destination": "demo/vendor/maxcut/evolution_common.py",
+      "sha256": "78531d51394503ec12c753f09bec134a026f5ed1d3ab691f9e44ac73f0541c0d",
+      "bytes": 33102
+    },
+    {
+      "source": "evolution_controller.py",
+      "destination": "demo/vendor/maxcut/evolution_controller.py",
+      "sha256": "c9d6d17240f0484bf1f650c01a42364891545ea8ffb493b4543286448daa254e",
+      "bytes": 112222
+    },
+    {
+      "source": "evolution_evaluation.py",
+      "destination": "demo/vendor/maxcut/evolution_evaluation.py",
+      "sha256": "daf88510eed3da414a6450c4464eb2b3147701df492d29993adc349d5359dd26",
+      "bytes": 35484
+    },
+    {
+      "source": "evolution_reaper.py",
+      "destination": "demo/vendor/maxcut/evolution_reaper.py",
+      "sha256": "a86a2793022bbd343ea561c7f0454ca57241529b4e5bc7e27c94e3260d6f26b8",
+      "bytes": 4548
+    },
+    {
+      "source": "evolution_worker.py",
+      "destination": "demo/vendor/maxcut/evolution_worker.py",
+      "sha256": "332a26caf444f2c7353365790ebf8cc9fd766f4fed698b4df41e5aa4a666147b",
+      "bytes": 28845
+    },
+    {
+      "source": "evolve_search.py",
+      "destination": "demo/vendor/maxcut/evolve_search.py",
+      "sha256": "5d8fe8449c050397f83dc2c28f9c5583703ab08788ae5f15dc9b59bc3e35247c",
+      "bytes": 27345
+    },
+    {
+      "source": "make_bm_figures.py",
+      "destination": "demo/vendor/maxcut/make_bm_figures.py",
+      "sha256": "6085f4f06c58828f4ff5b49a6751b668708c0b70f8dde47b670bb8435e7d33e3",
+      "bytes": 53843
+    },
+    {
+      "source": "portfolio_bifurcation.py",
+      "destination": "demo/vendor/maxcut/portfolio_bifurcation.py",
+      "sha256": "d5f436282241c6658692a36caa63ba78924118ab47d2f45ea8a2d18da4367acb",
+      "bytes": 21661
+    },
+    {
+      "source": "portfolio_common.py",
+      "destination": "demo/vendor/maxcut/portfolio_common.py",
+      "sha256": "a02ee597a656da962828152bfbb00454e1464b109b7359caf48790667af77f9d",
+      "bytes": 10576
+    },
+    {
+      "source": "portfolio_external.py",
+      "destination": "demo/vendor/maxcut/portfolio_external.py",
+      "sha256": "5854a16ee48106ab03a8de8261a1343753f7f6e1f9d5cd08e27abe650abac73b",
+      "bytes": 40661
+    },
+    {
+      "source": "portfolio_milp.py",
+      "destination": "demo/vendor/maxcut/portfolio_milp.py",
+      "sha256": "bc4d87087c820c89a2d5ad40acd83d2e7fe5c88e2a85ad247ae171ae0ec09213",
+      "bytes": 12030
+    },
+    {
+      "source": "portfolio_mixing.py",
+      "destination": "demo/vendor/maxcut/portfolio_mixing.py",
+      "sha256": "9011df1430c3167ceb3bb4766f9df62705cd9f245a10beb5f8604c82ca416b66",
+      "bytes": 4183
+    },
+    {
+      "source": "portfolio_neighborhood.py",
+      "destination": "demo/vendor/maxcut/portfolio_neighborhood.py",
+      "sha256": "77c772acd72e8f159ce07d5d8695ec01adf2204d3c3609fdb5e56baeec90972f",
+      "bytes": 14901
+    },
+    {
+      "source": "portfolio_perturbations.py",
+      "destination": "demo/vendor/maxcut/portfolio_perturbations.py",
+      "sha256": "4685aaab00d876e1f828d20c156764cbf2e9e74d8bd52ed084bd3b57fe4e01b2",
+      "bytes": 12074
+    },
+    {
+      "source": "portfolio_search.py",
+      "destination": "demo/vendor/maxcut/portfolio_search.py",
+      "sha256": "32d6ba91af4a3e2d36bc759646ca43465687cf9ce2228b9fe8e915bd3a457aa5",
+      "bytes": 35819
+    },
+    {
+      "source": "portfolio_tempering.py",
+      "destination": "demo/vendor/maxcut/portfolio_tempering.py",
+      "sha256": "521c10fe0d3f0f68e4ee8effc12ca7fe69b4be8d6bb7683e5c0e612178b4ed6d",
+      "bytes": 6766
+    },
+    {
+      "source": "portfolio_tesb.py",
+      "destination": "demo/vendor/maxcut/portfolio_tesb.py",
+      "sha256": "29e66503a8bd1e528a1404997bc6a3971cfcd1a7c81a1dc1bc27f67b478d8cc3",
+      "bytes": 12934
+    },
+    {
+      "source": "portfolio_topology.py",
+      "destination": "demo/vendor/maxcut/portfolio_topology.py",
+      "sha256": "1b18efe91df8109111e21d1c39af52a2c1b6faf0dc5002298bd5dce25921e483",
+      "bytes": 31588
+    },
+    {
+      "source": "portfolio_window.py",
+      "destination": "demo/vendor/maxcut/portfolio_window.py",
+      "sha256": "fee2beee30aaff987a24126036a71a348283b4b6bd7ce9799e5b8a2fc6f842ff",
+      "bytes": 5064
+    },
+    {
+      "source": "run_bm.py",
+      "destination": "demo/vendor/maxcut/run_bm.py",
+      "sha256": "728a5cbe3ae7fefca5858b316eff7047b110852272a24a63c44da95b36a88a99",
+      "bytes": 40214
+    },
+    {
+      "source": "run_bm_experiment.py",
+      "destination": "demo/vendor/maxcut/run_bm_experiment.py",
+      "sha256": "c04fc1474812f5d481d0277f914c7fd4d5d5dd5dd1ffcdd70aca5b0f2af36381",
+      "bytes": 28480
+    },
+    {
+      "source": "run_bm_refine.py",
+      "destination": "demo/vendor/maxcut/run_bm_refine.py",
+      "sha256": "2fd309bede852a5df70e99d5468b158ffcd417a663d25e004ddc646d8f68b676",
+      "bytes": 12915
+    },
+    {
+      "source": "run_solver.py",
+      "destination": "demo/vendor/maxcut/run_solver.py",
+      "sha256": "5560f2add1edab82b6761d8cad0442cc640557d229f7ad64ca35edc3e31b537b",
+      "bytes": 23719
+    },
+    {
+      "source": "solver_portfolio.py",
+      "destination": "demo/vendor/maxcut/solver_portfolio.py",
+      "sha256": "8c87fdfb4cfb32c6657920984a2101c7b2ff1bde1acdec57f7e8bda133ff2442",
+      "bytes": 19765
+    },
+    {
+      "source": "viz.py",
+      "destination": "demo/vendor/maxcut/viz.py",
+      "sha256": "a308f5dc78ca1443cadc0a31e650088a30696dbd8c3e77316db4594a3fb7c033",
+      "bytes": 7157
+    },
+    {
+      "source": "configs/portfolio/annealing.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/annealing.json",
+      "sha256": "ad8e246747c30863fefb7ee7c19d839bcce7e2c81b0112988043ab14adfc58c6",
+      "bytes": 80
+    },
+    {
+      "source": "configs/portfolio/biqbin.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/biqbin.json",
+      "sha256": "e0c081a9ad9d7dd8db60cf535af9e63891a5aae85483eda0a9e8ad7ec78ef0ee",
+      "bytes": 24
+    },
+    {
+      "source": "configs/portfolio/biqcrunch.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/biqcrunch.json",
+      "sha256": "587fc33252158bd2c50ab403885f1e086366b34bb8c1c1f852067f4a328237c0",
+      "bytes": 24
+    },
+    {
+      "source": "configs/portfolio/bls.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/bls.json",
+      "sha256": "744158f5d6fd2be53139c66aa98fd381cff513de29b646cea7cc4d77dfcaa3fc",
+      "bytes": 104
+    },
+    {
+      "source": "configs/portfolio/bm.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/bm.json",
+      "sha256": "51bb8e283b6b66d35d0eadd2bae78aebb70f417f13e78ab78d6ce98061241b27",
+      "bytes": 242
+    },
+    {
+      "source": "configs/portfolio/bsb.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/bsb.json",
+      "sha256": "5e644a2a3180e158736ce57bd5106f9cbed2eefb1e244ce1788836ee0752c425",
+      "bytes": 80
+    },
+    {
+      "source": "configs/portfolio/dsb.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/dsb.json",
+      "sha256": "5e644a2a3180e158736ce57bd5106f9cbed2eefb1e244ce1788836ee0752c425",
+      "bytes": 80
+    },
+    {
+      "source": "configs/portfolio/exhaustive.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/exhaustive.json",
+      "sha256": "c8af261f0b78e9c1051d46193d63e8b546f26600659b32b6a8faf04bb1cdec97",
+      "bytes": 22
+    },
+    {
+      "source": "configs/portfolio/gsb.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/gsb.json",
+      "sha256": "57491b7b11d54bc7ecbd31b10e3a161b8ffd50a75373d7e43df84bd732a23be2",
+      "bytes": 109
+    },
+    {
+      "source": "configs/portfolio/lns.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/lns.json",
+      "sha256": "3aa31ed54c247b18dec44879bfa0ab94db55f73c8d0c4da9503ee8f4f03d4a71",
+      "bytes": 94
+    },
+    {
+      "source": "configs/portfolio/madam.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/madam.json",
+      "sha256": "e0c081a9ad9d7dd8db60cf535af9e63891a5aae85483eda0a9e8ad7ec78ef0ee",
+      "bytes": 24
+    },
+    {
+      "source": "configs/portfolio/milp.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/milp.json",
+      "sha256": "b984b1d1e9f3f4ae261b2c798f1d11634e6dc534b26307142fd4b3d94a0cd9c9",
+      "bytes": 81
+    },
+    {
+      "source": "configs/portfolio/mixing.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/mixing.json",
+      "sha256": "1684b2a36be5b307b36220951c9f67b9195033503a0438528338b616526613e5",
+      "bytes": 86
+    },
+    {
+      "source": "configs/portfolio/mqlib.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/mqlib.json",
+      "sha256": "eed5a02eee0e587c3d589ef5a50ace8170983bf65471e68b52e3e740cdcb299b",
+      "bytes": 54
+    },
+    {
+      "source": "configs/portfolio/planar_matching.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/planar_matching.json",
+      "sha256": "495cffee45d57dfac3ad1fbd7ab8ed80a69bad92abb19ec959f8d0f44509e21b",
+      "bytes": 48
+    },
+    {
+      "source": "configs/portfolio/pt_icm.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/pt_icm.json",
+      "sha256": "c8766149beff3df13b85487882e0ffbf88996c8ca908fe743792b94b26fa8db4",
+      "bytes": 110
+    },
+    {
+      "source": "configs/portfolio/qubowl.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/qubowl.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "source": "configs/portfolio/sbqa.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/sbqa.json",
+      "sha256": "617a6c6eb437fbef6c5cb4dcb73be8a2fe1ee5b4ebe9ca0fa5cb8509f59a8220",
+      "bytes": 190
+    },
+    {
+      "source": "configs/portfolio/scientific.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/scientific.json",
+      "sha256": "9442d3d109985fb0900d01aca2cfdbf61b696b2ba4f597f956e61c51076b9ca3",
+      "bytes": 26
+    },
+    {
+      "source": "configs/portfolio/tabu.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/tabu.json",
+      "sha256": "4f4749825b487398a4f9e01583f64fe404b28689de642674a8a1e6cd8972d15b",
+      "bytes": 41
+    },
+    {
+      "source": "configs/portfolio/tesb.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/tesb.json",
+      "sha256": "6b5b7ab3c6810389c7cd280ecd33eecd3c6e3c906b6885f8f4c56d4ca3f5f10f",
+      "bytes": 143
+    },
+    {
+      "source": "configs/portfolio/toroidal_bound.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/toroidal_bound.json",
+      "sha256": "71e7bccf1cb4f818df9e75bec7bfeebab1ffcaf7534e98d034c3ac4b562d3e40",
+      "bytes": 52
+    },
+    {
+      "source": "configs/portfolio/toroidal_search.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/toroidal_search.json",
+      "sha256": "71e7bccf1cb4f818df9e75bec7bfeebab1ffcaf7534e98d034c3ac4b562d3e40",
+      "bytes": 52
+    },
+    {
+      "source": "configs/portfolio/toroidal_window.json",
+      "destination": "demo/vendor/maxcut/configs/portfolio/toroidal_window.json",
+      "sha256": "284d6632718109d7241e2f23d0300ab55b096d050ba2cd9ddd0979e9e876a16e",
+      "bytes": 45
+    },
+    {
+      "source": "tests/test_bm_solver.py",
+      "destination": "demo/vendor/maxcut/tests/test_bm_solver.py",
+      "sha256": "1fc50451f6070e5adb332dcd173f94da8480f7bd8b20a1b2573c6eed10ef4ba5",
+      "bytes": 36372
+    },
+    {
+      "source": "evolve/configs/default.json",
+      "destination": "demo/vendor/maxcut/evolve/configs/default.json",
+      "sha256": "50888c16caa5531c4d5395bc25151ceebe0c7d7d355f29e868415b8cf3b36daf",
+      "bytes": 1287
+    },
+    {
+      "source": "docs/portfolio/ARCHITECTURE.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/ARCHITECTURE.md",
+      "sha256": "7718471f8aa6caf4f50ac2206833ca956463f502578fa9158cb746600930decb",
+      "bytes": 5198
+    },
+    {
+      "source": "docs/portfolio/MATHEMATICS.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/MATHEMATICS.md",
+      "sha256": "6634c0696620991961d007e3a0fb249f7b898e5265bb83bf9e4d2226f015a564",
+      "bytes": 7175
+    },
+    {
+      "source": "docs/portfolio/SOURCE_REVIEW.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/SOURCE_REVIEW.md",
+      "sha256": "6c5731e778e9742c3d6d86e655ebcc9a5fa3cfa9826a36adc1ae6ae0627440e6",
+      "bytes": 6282
+    },
+    {
+      "source": "docs/portfolio/EXTERNAL_BUILDS.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/EXTERNAL_BUILDS.md",
+      "sha256": "b52f2fde27ecfc2b7393268f17da93ef42db6d572beaa66511fa1aebb873e399",
+      "bytes": 7285
+    },
+    {
+      "source": "docs/portfolio/SUITE_V3.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/SUITE_V3.md",
+      "sha256": "d27457efc9f802b3df639d4f83d99a7407ef0c8233c8e18fe52e421cfb18bb9d",
+      "bytes": 10172
+    },
+    {
+      "source": "docs/evolution/ARCHITECTURE.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/ARCHITECTURE.md",
+      "sha256": "2adb008aaf88a3aeffa4bf186f8134e38e5b7fa543c5cd2baebf411aa8dc0ffa",
+      "bytes": 2822
+    },
+    {
+      "source": "docs/evolution/CONCURRENT_CAMPAIGNS.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CONCURRENT_CAMPAIGNS.md",
+      "sha256": "e8fa3585aa1e76646d1a152366915bf7da23486298ddcec6b67546b5cf87073f",
+      "bytes": 9841
+    },
+    {
+      "source": "instances/public/torus_pm_10_s11.txt",
+      "destination": "demo/data/torus_pm_10_s11.txt",
+      "sha256": "b57a871c1c196bd417b651ef3f9a9998d4a77076a93928deafee193e7e149704",
+      "bytes": 1676
+    },
+    {
+      "source": "docs/portfolio/FIGURES.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/FIGURES.md",
+      "sha256": "b3b3d5d8aede70505ac0e9740685051f8bf5a5fc3017fa1b9a39d8a62c24a88d",
+      "bytes": 3068
+    },
+    {
+      "source": "docs/portfolio/INVENTORY.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/INVENTORY.md",
+      "sha256": "973560056ad5eec1337cb3f4f46841b5d306925050ca20f3278adec8246927a7",
+      "bytes": 4186
+    },
+    {
+      "source": "docs/portfolio/METHODS.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/METHODS.md",
+      "sha256": "393662b5477f9a2f4730e6296432355b49ed51338067db558a231edc64a4df30",
+      "bytes": 1923
+    },
+    {
+      "source": "docs/portfolio/PERTURBATIONS.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/PERTURBATIONS.md",
+      "sha256": "6f383dac379cdead2a7bfd923656a5242ed235d69ab9b197c2185dcd188df462",
+      "bytes": 3316
+    },
+    {
+      "source": "docs/portfolio/README.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/README.md",
+      "sha256": "9763d1fd19f283df7b795c976f31a30cbe38b105572933fd6fcd72c1ffc51035",
+      "bytes": 2591
+    },
+    {
+      "source": "docs/portfolio/SA_CALIBRATED_EXPERIMENT.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/SA_CALIBRATED_EXPERIMENT.md",
+      "sha256": "6efac8b365b43e955120c7784dc4a170137fa2f99d9cccf0c8eee499ae5afdb4",
+      "bytes": 9229
+    },
+    {
+      "source": "docs/portfolio/STATUS.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/STATUS.md",
+      "sha256": "713de29c18d328511dfcdd88dfd8f829bee34af008db55822a90d8caa52cb0c7",
+      "bytes": 5054
+    },
+    {
+      "source": "docs/portfolio/VERIFICATION.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/VERIFICATION.md",
+      "sha256": "b9f465a4aa59d1ce81c95d4e4cb7ab44496b8d860eb393364223621dcf8ce341",
+      "bytes": 7991
+    },
+    {
+      "source": "docs/portfolio/annealing.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/annealing.md",
+      "sha256": "5b90f4a72544bd43c89de92716ec34c165d31021670f458074a9efd5fd08499f",
+      "bytes": 4811
+    },
+    {
+      "source": "docs/portfolio/biqbin.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/biqbin.md",
+      "sha256": "da54976c02656fb331a1185865f874569c9ac58d7c242134dadd0873bec51261",
+      "bytes": 4665
+    },
+    {
+      "source": "docs/portfolio/biqcrunch.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/biqcrunch.md",
+      "sha256": "a7add766aff33892fefe9fd71946c56a9a98ecb63c86c8c2bad7ecd10ed2bc26",
+      "bytes": 4809
+    },
+    {
+      "source": "docs/portfolio/bls.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/bls.md",
+      "sha256": "aac6e220e5e0e99515e4634ea91f1d0e77d112fe1350f21125d731be39d36407",
+      "bytes": 4919
+    },
+    {
+      "source": "docs/portfolio/bm.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/bm.md",
+      "sha256": "bcfab78e569dbe3d72be11bbaea023a69f16043c274b576f7831feca72586a8e",
+      "bytes": 4581
+    },
+    {
+      "source": "docs/portfolio/bsb.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/bsb.md",
+      "sha256": "a2510e1a07310ed0e3161127a5cdd625747ed36009b9f5f00640fb0141f5f9da",
+      "bytes": 4371
+    },
+    {
+      "source": "docs/portfolio/dsb.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/dsb.md",
+      "sha256": "0fcd10f91b8cc099ed0d3b6a81c1a7c2f7613eb9cdfb8fcc82f28a4132918895",
+      "bytes": 4266
+    },
+    {
+      "source": "docs/portfolio/exhaustive.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/exhaustive.md",
+      "sha256": "7e5ac285d54f36446a30df6489a74a133095041f9529858a4e90f69f3624c45b",
+      "bytes": 4219
+    },
+    {
+      "source": "docs/portfolio/figures/adaptive.svg",
+      "destination": "demo/vendor/maxcut/docs/portfolio/figures/adaptive.svg",
+      "sha256": "eac286276804bf6706b154b7906f1449af67572406215d43355908269a34a2ce",
+      "bytes": 1661
+    },
+    {
+      "source": "docs/portfolio/figures/bounds.svg",
+      "destination": "demo/vendor/maxcut/docs/portfolio/figures/bounds.svg",
+      "sha256": "d7e1b727f2ba6e7456a92bc763cc9501432b7c81926a52705c0e37e7fcf09275",
+      "bytes": 1683
+    },
+    {
+      "source": "docs/portfolio/figures/branch_bound.svg",
+      "destination": "demo/vendor/maxcut/docs/portfolio/figures/branch_bound.svg",
+      "sha256": "c3781dc57d7cf137b1a7c330883448ae5d9a0eba8d3a149ce93f5ac903e942fa",
+      "bytes": 1913
+    },
+    {
+      "source": "docs/portfolio/figures/bsb_trajectory.svg",
+      "destination": "demo/vendor/maxcut/docs/portfolio/figures/bsb_trajectory.svg",
+      "sha256": "9a9141fceff602192a3359bdf653f2468da6c09c999bba913d48bd6d77f82739",
+      "bytes": 4939
+    },
+    {
+      "source": "docs/portfolio/figures/escape.svg",
+      "destination": "demo/vendor/maxcut/docs/portfolio/figures/escape.svg",
+      "sha256": "91c7db606521da952ab5ef1cb71623df2968ff0c54b17d439992043957425261",
+      "bytes": 2248
+    },
+    {
+      "source": "docs/portfolio/figures/gsb_trajectory.svg",
+      "destination": "demo/vendor/maxcut/docs/portfolio/figures/gsb_trajectory.svg",
+      "sha256": "7d5c634d4334faeeb9ec9ed1088b76b42b8340596291aff2858de11f730f8962",
+      "bytes": 4940
+    },
+    {
+      "source": "docs/portfolio/figures/neighborhood.svg",
+      "destination": "demo/vendor/maxcut/docs/portfolio/figures/neighborhood.svg",
+      "sha256": "39179619a5da6f83bd060393f0e3acb04651f6d2c046817dbcbf88dcd736089f",
+      "bytes": 1973
+    },
+    {
+      "source": "docs/portfolio/figures/replicas.svg",
+      "destination": "demo/vendor/maxcut/docs/portfolio/figures/replicas.svg",
+      "sha256": "294f7482f11331deac6755d4c397ee5093b8011d51480875efd416a9745bd741",
+      "bytes": 2418
+    },
+    {
+      "source": "docs/portfolio/figures/tabu_memory.svg",
+      "destination": "demo/vendor/maxcut/docs/portfolio/figures/tabu_memory.svg",
+      "sha256": "be06a5147f9f9a939b7bfcf0bbb633aea74abae90371fed7678a0414b3a59185",
+      "bytes": 1763
+    },
+    {
+      "source": "docs/portfolio/figures/torus.svg",
+      "destination": "demo/vendor/maxcut/docs/portfolio/figures/torus.svg",
+      "sha256": "6187187ee8019ea6c33390d22ea3f5759fd484ed070096e3df5ed42f647bf26c",
+      "bytes": 3634
+    },
+    {
+      "source": "docs/portfolio/gsb.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/gsb.md",
+      "sha256": "aa3b7b360d21ee17026d5864148219001f723efe7daebd8d0207b7988a9ddcfd",
+      "bytes": 4541
+    },
+    {
+      "source": "docs/portfolio/lns.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/lns.md",
+      "sha256": "bc035aa1f40dd4bd87b1cd3c8b118f83f0e7d752ddc6de088d4d0dd895d0b3f7",
+      "bytes": 4589
+    },
+    {
+      "source": "docs/portfolio/madam.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/madam.md",
+      "sha256": "d2e70c49e1c6ddcd0817794ddcb8b4a3c743da55e5d84eaf091d4dbe12addd3f",
+      "bytes": 4561
+    },
+    {
+      "source": "docs/portfolio/milp.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/milp.md",
+      "sha256": "a81ede1fd26f1dc1cd96cfb030e1055e762dbf4542b979796eecbb093661e384",
+      "bytes": 4511
+    },
+    {
+      "source": "docs/portfolio/mqlib.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/mqlib.md",
+      "sha256": "cc59df22ab8fafbf289e1c52d2c860b899032dba0333d48d0f06850c00e01dde",
+      "bytes": 4573
+    },
+    {
+      "source": "docs/portfolio/planar_matching.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/planar_matching.md",
+      "sha256": "c26b84bb4a84f27452a1faad815398b757522c0ba1658c04a6c6f6e957642798",
+      "bytes": 4965
+    },
+    {
+      "source": "docs/portfolio/qubowl.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/qubowl.md",
+      "sha256": "7a92013f0dfda229daf6c089e1554ae21b07eea4802ea45ea9fcef4247eb9fdd",
+      "bytes": 4286
+    },
+    {
+      "source": "docs/portfolio/sbqa.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/sbqa.md",
+      "sha256": "1a6c110cadb714d88edb87e433fc9d05055082b5c56d0fdbaea3cd5c83ef1493",
+      "bytes": 4709
+    },
+    {
+      "source": "docs/portfolio/scientific.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/scientific.md",
+      "sha256": "69143baa09b2903a590fa8a154bdb57ba287dc9c56b42489ece74504264a911e",
+      "bytes": 4816
+    },
+    {
+      "source": "docs/portfolio/tabu.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/tabu.md",
+      "sha256": "05c2a6e33cf28f10a30a1ac8dc6aabf23608911fdb3b33fb8a391dd3eed69a26",
+      "bytes": 4440
+    },
+    {
+      "source": "docs/portfolio/tesb.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/tesb.md",
+      "sha256": "42d128c8ffb71dc8ccc0bc95f142c36a2ed036cd5892f1acb0274d7f7ec93d97",
+      "bytes": 4937
+    },
+    {
+      "source": "docs/portfolio/toroidal_bound.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/toroidal_bound.md",
+      "sha256": "15e9a1da3247f7a562fa2a62471124688257ecfb5bb3f3810e17bfdaad36d2a4",
+      "bytes": 4829
+    },
+    {
+      "source": "docs/portfolio/toroidal_search.md",
+      "destination": "demo/vendor/maxcut/docs/portfolio/toroidal_search.md",
+      "sha256": "97c565aa46956d66542e9dd10bf9aa3e987516bbd4adb14efc66b3fa05583593",
+      "bytes": 4757
+    },
+    {
+      "source": "docs/evolution/ADMISSION_FIXES.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/ADMISSION_FIXES.md",
+      "sha256": "3399d3e29ee74f70a827da4aa2e5af7f3f4dfc59dad09494d156864c58977a0e",
+      "bytes": 7122
+    },
+    {
+      "source": "docs/evolution/AUTO_RESUME.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/AUTO_RESUME.md",
+      "sha256": "42660301a601dfa14dd1c78b89e2c14045d2bb5b71e812525c75bade9a7be82a",
+      "bytes": 7024
+    },
+    {
+      "source": "docs/evolution/CAPABILITIES.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CAPABILITIES.md",
+      "sha256": "11d74af627de118202cb4ff60d7c364a030dd071fbec1c205266dbab5fd00ef2",
+      "bytes": 2758
+    },
+    {
+      "source": "docs/evolution/CLASS001.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001.md",
+      "sha256": "4e375f46e0f73c3da88526a68d6cc2ac660e6820be9ed8692c5f4582adccb8e0",
+      "bytes": 15808
+    },
+    {
+      "source": "docs/evolution/CLASS001_COMMANDS.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_COMMANDS.md",
+      "sha256": "7b81d1866274eafb7a6e0955f18cc38d31879d2a6f96496c5eb60e35471db694",
+      "bytes": 15266
+    },
+    {
+      "source": "docs/evolution/CLASS001_CUTOFF_2230.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_CUTOFF_2230.md",
+      "sha256": "ead312f6f914b9541b75e345504dde8427b585c10b260ea24e44d179db9f95df",
+      "bytes": 3879
+    },
+    {
+      "source": "docs/evolution/CLASS001_FIX_BLOCKERS.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_FIX_BLOCKERS.md",
+      "sha256": "3513208fba28a2f92240cf3584452aa7f0f69b9893b96fb1efaea3f9cebbcef0",
+      "bytes": 5051
+    },
+    {
+      "source": "docs/evolution/CLASS001_GIT_INTEGRATION.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_GIT_INTEGRATION.md",
+      "sha256": "97374c6d96d0869970553d4af71ba10e7a03e8c263b4b93337bbaa522506f0d1",
+      "bytes": 5102
+    },
+    {
+      "source": "docs/evolution/CLASS001_LARGE_COMPLETION_REPAIR.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_LARGE_COMPLETION_REPAIR.md",
+      "sha256": "1981c9e4884bea84d5cd48134da897806bb0c45ad2cab07ae700e91e7dab6f4a",
+      "bytes": 8970
+    },
+    {
+      "source": "docs/evolution/CLASS001_METADATA_REPAIR.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_METADATA_REPAIR.md",
+      "sha256": "154a559f53def00022d82bdbcb81410e6832b07e6bb15ef3ae02cc9231193870",
+      "bytes": 10193
+    },
+    {
+      "source": "docs/evolution/CLASS001_OTHER_RUNS_REPAIR.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_OTHER_RUNS_REPAIR.md",
+      "sha256": "958160738bfba9375f5115566057dea49195a7523c6ca344a243a19cafe12058",
+      "bytes": 10801
+    },
+    {
+      "source": "docs/evolution/CLASS001_POSITIVE_RECOVERY.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_POSITIVE_RECOVERY.md",
+      "sha256": "6cbf64f7c7cbaec3aff927b0f282575a000a0a004e2626223021d1e18dec2554",
+      "bytes": 6964
+    },
+    {
+      "source": "docs/evolution/CLASS001_SEARCH_V4.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_SEARCH_V4.md",
+      "sha256": "d35b0e642d02ac1d9bd1b66d94e86f981261ceb17d9d439d3491b3dd0dc1987a",
+      "bytes": 12897
+    },
+    {
+      "source": "docs/evolution/CLASS001_SESSION_RESULTS.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_SESSION_RESULTS.md",
+      "sha256": "00583ea3201fd604818472db0f04b4328751abc1425f5860363b6d5495fa17a9",
+      "bytes": 12034
+    },
+    {
+      "source": "docs/evolution/CLASS001_SESSION_REVIEW.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_SESSION_REVIEW.md",
+      "sha256": "327ac08c6dc64be25dbceb319609ab9ab48ea0db693abe8492fcbc5862146c09",
+      "bytes": 6729
+    },
+    {
+      "source": "docs/evolution/CLASS001_START_PROMPT.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/CLASS001_START_PROMPT.md",
+      "sha256": "ada22ba5b79b58bcc83a32859e8e0b5b1e8717d9b041ba7fd88f82b875839be1",
+      "bytes": 1623
+    },
+    {
+      "source": "docs/evolution/IMPLEMENTATION_MAP.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/IMPLEMENTATION_MAP.md",
+      "sha256": "7ffe018cc1610035b2a435bc51a946b5a51c8b92a666860545804f3f793a686f",
+      "bytes": 2105
+    },
+    {
+      "source": "docs/evolution/MATHEMATICS.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/MATHEMATICS.md",
+      "sha256": "8d407cfbd7c2d76c702eb84a8a843408efaa0e95182a4131390c8c6a9c2db7d9",
+      "bytes": 4057
+    },
+    {
+      "source": "docs/evolution/MUTATIONS.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/MUTATIONS.md",
+      "sha256": "fa39d5cef68f855f10ce34852521513598f52ab3d5b12f45102387a9b8d69452",
+      "bytes": 4490
+    },
+    {
+      "source": "docs/evolution/POLICIES.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/POLICIES.md",
+      "sha256": "24327a89b71083db025b14c7c2845cd9ee7ee26a66db92599300d74df9c718aa",
+      "bytes": 6246
+    },
+    {
+      "source": "docs/evolution/README.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/README.md",
+      "sha256": "ab1e32ba06a31de5a3ee787d4ead777797741d99013ea9281ca58f2b851d6029",
+      "bytes": 3094
+    },
+    {
+      "source": "docs/evolution/RECOVERY.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/RECOVERY.md",
+      "sha256": "2b1541e0c27bb293e2e1ade5d7094c92b406879bde258d52c6b0535abc93a039",
+      "bytes": 2444
+    },
+    {
+      "source": "docs/evolution/SCORING_TIMING_FIX.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/SCORING_TIMING_FIX.md",
+      "sha256": "4c4ee513dca61f605bb882e423e3de1ca6da547a3f9b2bbd95f329d1a3a95e0d",
+      "bytes": 8953
+    },
+    {
+      "source": "docs/evolution/TUTORIAL.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/TUTORIAL.md",
+      "sha256": "5802197c49515604467b7a8d959a31b5204f8e01e5809c03e77e12445d40b6aa",
+      "bytes": 3105
+    },
+    {
+      "source": "docs/evolution/VERIFICATION.md",
+      "destination": "demo/vendor/maxcut/docs/evolution/VERIFICATION.md",
+      "sha256": "9cba04f542cf50f7542d6e937b62bb6dbc9acbcfc7c9e1320e6996fac1248866",
+      "bytes": 12525
+    },
+    {
+      "source": "docs/evolution/figures/common_incumbent.svg",
+      "destination": "demo/vendor/maxcut/docs/evolution/figures/common_incumbent.svg",
+      "sha256": "dd8de95dedac509b466653bd22d03528ea43dd33a01ee1d2db87c13f088cf225",
+      "bytes": 1683
+    },
+    {
+      "source": "docs/evolution/figures/termination.svg",
+      "destination": "demo/vendor/maxcut/docs/evolution/figures/termination.svg",
+      "sha256": "f950bf2d03eca498692f99e3bced585491dcdc0ef9b029e9af21ce4190727b0c",
+      "bytes": 1683
+    },
+    {
+      "source": "docs/evolution/figures/trap_archive.svg",
+      "destination": "demo/vendor/maxcut/docs/evolution/figures/trap_archive.svg",
+      "sha256": "3e195f778def57b14020a2c04f3621d4ff76f37552cc4622776867717fdf5313",
+      "bytes": 1653
+    },
+    {
+      "source": "docs/evolution/figures/two_levels.svg",
+      "destination": "demo/vendor/maxcut/docs/evolution/figures/two_levels.svg",
+      "sha256": "64051dd601168ce9519d0d20520878247ecb556c90ecb0a630b61b8ff70dfa96",
+      "bytes": 2027
+    }
+  ],
+  "omitted": "Native dependencies/external source trees/builds and optional packages; availability must be reported honestly. Core Python source is byte-identical.",
+  "reference_status": "68 is an instructor best-known reference, not an independently proved optimum."
+}

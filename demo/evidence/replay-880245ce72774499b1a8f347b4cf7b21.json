@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-26",
+  "source_run": "ac4eabb65fcd4a95b2a6c41dbddcf6b0",
+  "source_model": "protected.gpt-5.6-luna",
+  "source_events_sha256": "c60320fc57e9840064d49af959bb95362bc0f7256c99bb8b7c000062cc330967",
+  "playback_run": "880245ce72774499b1a8f347b4cf7b21",
+  "original_seconds": 6.5546190880122595,
+  "playback_seconds": 1.6659625499742106,
+  "speed": 4,
+  "new_model_calls": 0,
+  "best_cut": 68.0,
+  "status": "finished",
+  "networking_disabled": true,
+  "owned_subprocesses_disabled": true,
+  "source_unchanged": true,
+  "assignment_matches_source_best": true
+}

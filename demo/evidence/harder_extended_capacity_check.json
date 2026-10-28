@@ -1,0 +1,26 @@
+[
+  {
+    "numerical_capacity_check": true,
+    "strategy_index": 1,
+    "seed": 3,
+    "cut": 714.0,
+    "complete": true,
+    "seconds": 6.530282362946309
+  },
+  {
+    "numerical_capacity_check": true,
+    "strategy_index": 1,
+    "seed": 4,
+    "cut": 710.0,
+    "complete": true,
+    "seconds": 6.417734289017972
+  },
+  {
+    "numerical_capacity_check": true,
+    "strategy_index": 1,
+    "seed": 5,
+    "cut": 712.0,
+    "complete": true,
+    "seconds": 6.512741644051857
+  }
+]

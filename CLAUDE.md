@@ -238,3 +238,15 @@ Before the first round, in this order:
 2. **[metadata.yaml](metadata.yaml)** — the title, the authors, and the
    `audience` the pedagogy reviewer judges against.
 3. **`sections/`** — replace the placeholder content, guided by the two above.
+
+## Current browser presentation adaptation
+
+The presenter requested sequential block reveals and an integrated local demo.
+Shared sections now use question/block/answer Divs (four overlay slides per teaching frame, with a single-state title)
+and notes Divs (detailed document/site explanations, hidden in presentation).
+`just slides` creates a 22-frame handout (19 main frames, then 3 optional appendix frames); `just overlays` creates all
+85 reveal states (73 main, 12 appendix). Main navigation stops at the conclusion; an explicit Appendix control opens the architecture/API frames. `just presentation` derives the browser bundle and notes from
+the same source. The generated browser bundle and teaching PDFs are included for student machines
+without Pandoc; authors regenerate it when changing the shared prose. The local
+server, not the static site, hosts presentation/demo/algorithm/exchange pages.
+Private practice aids under demo/rehearsal/ and SPEAKER_NOTES.md are ignored.

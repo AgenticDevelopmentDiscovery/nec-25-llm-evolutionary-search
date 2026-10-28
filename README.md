@@ -1,4 +1,20 @@
-# nel-course
+## Local classroom presentation
+
+Run `python demo/server.py --port 8766 --rounds 2`, then open
+[the presentation hub](http://127.0.0.1:8766/) on this computer. Keep the terminal
+running. The same server hosts the solver demo, algorithm examples, exact Luna
+exchange, detailed notes and derived handout. Student key setup is in
+[demo/README.md](demo/README.md); only the blank environment template is public.
+
+# Tutorial 25: LLM-driven evolutionary search
+
+The current 20–25-minute tutorial uses a signed Max-Cut strategy-search demo.
+See [demo/README.md](demo/README.md) for the local server, private API-key setup,
+mode provenance and checks, and [demo/READINESS.md](demo/READINESS.md) for verified status.
+Students copy the blank `demo/.env.example` to ignored `demo/.env` and add their own key locally.
+No credential belongs in this public repository.
+
+The original document-method instructions follow.
 
 A template for **evolving a document by critique**: one artifact, one Markdown
 source, three outputs, improved one round at a time by a panel of independent

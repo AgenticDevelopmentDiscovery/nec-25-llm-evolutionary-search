@@ -1,0 +1,21 @@
+test_actual_worker_cli_and_output_verification (test_backend.ClassroomTests.test_actual_worker_cli_and_output_verification) ... ok
+test_numeric_score_is_recomputed_not_supplied (test_backend.ClassroomTests.test_numeric_score_is_recomputed_not_supplied) ... ok
+test_reject_invalid_labels_and_unbounded_program (test_backend.ClassroomTests.test_reject_invalid_labels_and_unbounded_program) ... ok
+test_seeded_parent_child_and_retention (test_backend.ClassroomTests.test_seeded_parent_child_and_retention) ... ok
+test_frozen_fair_comparison_repeat_offline_no_network (test_controller.ControllerTests.test_frozen_fair_comparison_repeat_offline_no_network) ... ok
+test_live_blocked_keeps_failure_and_reset_changes_identity (test_controller.ControllerTests.test_live_blocked_keeps_failure_and_reset_changes_identity) ... ok
+test_normalization_and_proposer_excludes_answers (test_controller.ControllerTests.test_normalization_and_proposer_excludes_answers) ... ok
+test_snapshot_and_semantic_boundaries (test_controller.ControllerTests.test_snapshot_and_semantic_boundaries) ... ok
+test_stop_real_numerical_worker_only_owned_processes (test_controller.ControllerTests.test_stop_real_numerical_worker_only_owned_processes) ... ok
+test_actual_model_http_transport_and_stop_are_test_only (test_http.HTTPTests.test_actual_model_http_transport_and_stop_are_test_only) ... ok
+test_http_start_reconnect_reset_and_write_protection (test_http.HTTPTests.test_http_start_reconnect_reset_and_write_protection) ... ok
+test_censored_fitness_and_deadline (test_loop.LoopTests.test_censored_fitness_and_deadline) ... ok
+test_offline_playback_mechanics_fixture_with_original_clock_and_persistent_mode (test_loop.LoopTests.test_offline_playback_mechanics_fixture_with_original_clock_and_persistent_mode) ... ok
+test_three_rounds_even_after_target_duplicates_rejected_and_no_fixture_replay (test_loop.LoopTests.test_three_rounds_even_after_target_duplicates_rejected_and_no_fixture_replay) ... ok
+test_stream_error_recorded_and_key_redacted (test_model_errors.ModelErrorTests.test_stream_error_recorded_and_key_redacted) ... ok
+test_local_only_environment_precedence_and_no_shell_expansion (test_settings.SettingsTests.test_local_only_environment_precedence_and_no_shell_expansion) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 10.832s
+
+OK

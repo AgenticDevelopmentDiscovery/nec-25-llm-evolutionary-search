@@ -1,0 +1,12 @@
+{
+  "max_sweeps": 200,
+  "rounding_count": 32,
+  "restarts": 1,
+  "perturb_rounds": 0,
+  "perturb_scale": 0.35,
+  "field_rtol": 1e-12,
+  "sweep_atol": 1e-12,
+  "sweep_rtol": 1e-09,
+  "gain_tolerance": 1e-10,
+  "projection_tolerance": 1e-12
+}

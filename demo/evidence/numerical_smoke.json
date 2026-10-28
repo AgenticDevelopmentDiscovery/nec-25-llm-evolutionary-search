@@ -1,0 +1,1 @@
+{"mode": "numerical_smoke_not_llm", "seed": 3, "initial_cut": 0.0, "parent_cut": 58.0, "child_cut": 68.0, "child_score": 1.0, "reference_cut": 68.0, "proof_status": "unproven", "elapsed_solver_seconds": 0.07327180606080219}

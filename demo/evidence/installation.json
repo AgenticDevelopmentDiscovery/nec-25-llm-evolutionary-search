@@ -1,0 +1,13 @@
+{
+  "status": "installed",
+  "new_files": 151,
+  "pre_existing_files_preserved": 35,
+  "pre_existing_content_unchanged": true,
+  "source_file_hashes_verified": 133,
+  "branch": "Tamim-dev",
+  "commits_created": 0,
+  "pushes": 0,
+  "source_commit": "3e3c7854db17d3819618eec77724811b46e284e5",
+  "server_and_live_integration": "next tutorial session, not claimed implemented",
+  "final_setup_pass": "Added a demo-scoped ignore file and local demo/.venv setup; all 35 pre-existing tutorial files still unchanged."
+}

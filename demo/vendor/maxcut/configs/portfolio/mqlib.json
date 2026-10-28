@@ -1,0 +1,4 @@
+{
+  "max_nodes": 100000,
+  "heuristic": "BURER2002"
+}

@@ -1,0 +1,38 @@
+{
+  "instance": "rand_pm_1000_s23.txt",
+  "seed": 3,
+  "total_seconds": 240,
+  "stop_and_save_by_seconds": 250,
+  "max_model_calls": 3,
+  "model_call_timeout_seconds": 35,
+  "max_rounds": 3,
+  "children_per_round": 2,
+  "population_size": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "max_candidate_seconds": 8,
+  "max_stages": 3,
+  "max_tabu_iterations": 20000,
+  "max_annealing_proposals": 200000,
+  "max_bm_sweeps": 60,
+  "max_bm_directions": 16,
+  "allowed_backends": [
+    "tabu",
+    "annealing",
+    "bm",
+    "bls"
+  ],
+  "auto_git": false,
+  "auto_publish": false,
+  "stop_on_reference": false,
+  "mode_default": "live",
+  "replay_requires_recorded_real_model_events": true,
+  "initialization": "raw shared seeded partitions",
+  "initial_solver_count": 4,
+  "minimum_demonstration_model_calls": 2,
+  "max_legacy_candidate_seconds": 1.5,
+  "max_bls_flips": 12000
+}

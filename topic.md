@@ -2,53 +2,36 @@
 
 ## In one sentence
 
-LLM-driven evolutionary search uses language models as smart mutation operators inside a generate → evaluate → select loop to evolve programs under a carefully designed fitness function.
+An evolutionary algorithm improves solver programs; a language model supplies mutations and independent signed Max-Cut evaluation determines survival.
 
-## What it is
+## Promise and course connection
 
-LLM-driven evolutionary search keeps the evolutionary skeleton of a population or archive of candidate programs, but replaces the random mutation and crossover operator of classic genetic programming with a language model. The language model reads one or more high-scoring parent programs and proposes a revised program that is more likely to improve the score than a random subtree edit. In practice, the loop is generate → evaluate → select → mutate, and the mutation prompt carries parent code, scores, and constraints that guide the model toward a better candidate. A strong fitness function is the selective pressure; if it rewards the wrong things the search can optimize artifacts of the evaluator rather than the intended objective.
+Introduce ordinary evolutionary optimization, population, inheritance, fitness, exploration and selection before introducing the LLM as a mutation operator. Instantiate the loop with signed Max-Cut; explain the algorithms, bounded representation and fair starts; observe three experiments; then define Chapter 10's five components and recurrence rigorously.
 
-## Why it belongs in this course
+Students should distinguish a program, its solution witness and measured fitness; explain each of the four numerical kernels; inspect the exact sent context and public response; and reason about initialization, completeness, cost, references and generalization.
 
-This topic belongs in the course because it fuses the course’s central agentic development threads: generation, evaluation, orchestration, and sandboxed code execution. It is the clearest case in which an evaluation harness is not a side tool but the engine of selection. Students can see that the search loop depends on both the agentic model and the measurement design, and that a weak or gameable fitness function can produce plausible-looking but untrustworthy solutions.
+## Current scope
 
-## What the reader will be able to do
+- 19 main frames / 73 reveals; title then questions, two mechanism blocks and answers. Three optional architecture/API appendix frames add 12 reveals.
+- 21:40 main content plus 0:45 reserve, including guided demos of 3, 3 and 4 minutes. Optional appendix: 2:35. Main content and demos precede the architecture explanation.
+- Aggie Maroon base, high-contrast body text, white title/nav text and legible inactive controls.
+- Default comparison: supplied 1000-vertex, 5043-edge signed random graph, reference 1098 unproven. Same raw starts and seeds 3/4/5 in both conditions.
+- Limited suite: Tabu Search + Simulated Annealing. Informed suite: Tabu Search + Breakout Local Search + rank-two Burer–Monteiro. Checkboxes choose P0 only; all kernels remain available to Luna.
+- Separate dense real-weight stress case: 100 vertices, 4950 edges, reference 402.5209 unproven. No universal difficulty ordering asserted.
+- Three-call server cap; two real calls in each replacement recording, three in the preserved dense recording. 8s numerical trials, 35s model calls, 240s run deadline / 250s cleanup.
+- One local server hosts every teaching view, exact exchange, architecture, notes and derived PDFs. Private script, voice, video and timings are ignored.
+- No arbitrary code, new numerical kernels, solution publication, deployment, commit, push or reviewer panel.
 
-- Design a minimal generate → evaluate → select → mutate loop using an LLM as a mutation operator.
-- Explain how fitness design, diversity maintenance, and held-out checks shape an evolutionary search.
-- Distinguish LLM-guided search from random genetic programming and identify when evaluation hacking is likely.
+## Evidence and limits
 
-## Scope
+Normalized seed medians are 921, 975, 992, 1012. Burer–Monteiro is strongest here; the earlier BM-only torus seed was a pedagogical control, not a general initialization principle.
 
-**In scope**
+Limited replacement: median 975 → 1008, best witness 1031, two calls, 24.003s. Informed replacement: eligible median 1012 → 1012, best witness 1060 from incomplete children, two calls, 66.589s, stopped by invalid parent reference. Neither reached 1098. Stronger starting fitness did not establish a superior full search. Dense preserved source: reference matched at 16.091s after one call; three-call run 56.602s.
 
-- LLM-as-mutation operator for evolving code or equations.
-- Generate → evaluate → select → mutate as the shared loop.
-- Fitness design, diversity maintenance, and eval hacking.
-- A minimal symbolic-regression demo and held-out evaluation.
-
-**Out of scope**
-
-- Full production deployment of OpenEvolve or AlphaEvolve.
-- Deep formal treatment of genetic programming theory.
-- A complete implementation of every diversity scheme in the literature.
-
-## Shape
-
-- The tutorial keeps the default four-part arc: context, motivation, content, conclusion.
-- The content section carries the longest explanation and frames the worked example as a symbolic-regression loop.
-- The worked example in the content section is intentionally small: a five-generation loop that demonstrates the best-score curve, parent feedback, and one eval-hacking candidate.
+All nine initial revision calls and all six additional attempts are used. Two additional attempts were blocked by sandbox DNS before provider contact and are preserved. Valid failed sources may be replayed with explicit FAILED provenance; transport-only failures cannot masquerade as model evidence. Original-edge rescoring, complete-trial selection, real Stop evidence, immutable vendor hashes and old critique rounds remain intact.
 
 ## Open questions
 
-- How should a student team balance the overhead of model calls against the number of useful evolutionary evaluations?
-- What makes a fitness function robust enough to resist eval hacking in a classroom setting?
-- Which diversity mechanism—archive, islands, MAP-Elites, or novelty search—is most natural for the shared task?
-
-> What the team has not settled: an unresolved framing, an example you are not
-> sure earns its place, a claim you cannot yet support.
->
-> Naming these is cheap now and expensive in review. The panel reads them and
-> will not report a known unknown as a discovery.
-
-- (question)
+- Actual presenter's aloud timing within 25 minutes.
+- Equal-budget comparisons on unseen graphs, initial-suite sensitivity and diversity.
+- Model-context changes that reduce invalid parent references without silently repairing output.

@@ -1,0 +1,48 @@
+/* Aggie Maroon #500000: Texas A&M primary brand palette. */
+:root{color-scheme:light;--maroon:#500000;--bg:#f3f1ef;--paper:#fff;--ink:#242424;--soft:#66585b;--muted:#66585b;--teal:#500000;--gold:#9a5454;--line:#d7cbcd;--border:#d7cbcd;--orange:#8b4513}
+body{background:#f3f1ef;color:#242424}.hubbar,body>header{background:#500000;color:white}.hubbar a,.hubbar button,body>header a,body>header strong{color:white}.hubbar .selected{color:white;border-bottom-color:white}.hubbar button,.hubbar select{background:#6b2222;border-color:#b48686}.hubbar nav button{background:transparent}.hubbar .brand{color:white}a{color:#500000}button,select,input,textarea{background:white;color:#342929;border-color:#bba5aa;accent-color:#500000}button:hover{color:#500000;border-color:#500000}
+#frame{background:white;color:#242424;box-shadow:0 8px 40px #50000012}#frame h1,#frame .question,#frame .block strong{color:#500000}#frame .answer{color:#500000;border-color:#500000;background:#f8eeee;padding:14px 20px}#frame pre{background:#f3eeee;color:#342929;border-color:#500000}#frame figcaption{color:#66585b}#frame[data-frame="title"]{background:#500000;color:white;display:flex;flex-direction:column;justify-content:center}#frame[data-frame="title"] h1{color:white;font-size:76px;line-height:1.1;max-width:1360px;margin-bottom:48px}#frame[data-frame="title"] .question{color:white;border:0;font-size:35px;max-width:1250px}#frame[data-frame="title"] .question strong{font-weight:500}#frame[data-frame="title"] .question p+p{margin-top:28px}#frame[data-frame="system-flow"] img{height:245px}#frame[data-frame="api-context"] pre{font-size:25px}#timingStatus,dialog{background:white;color:#500000}.returnbar{background:#eee7e7}.presentControls{background:#f3f1ef}#progress{background:#dfd4d4}#progress span{background:#500000}
+nav:not(.hubbar nav){border-color:#d7cbcd}.teachingNav a{color:#500000}header h1{color:inherit}main>header{color:#500000}.badge,.badge.replay,.badge.numerical{background:white;color:#500000;border-color:#500000}.metrics{border-color:#d7cbcd}.metrics strong,#best{color:#500000}#loop{background:#f3eeee;border-color:#d7cbcd}#loop span.active{background:#500000;color:white}#phase{color:#500000}tr.survivor{background:#f0dfdf}tbody tr:hover{background:#e9d2d2}pre,#graph{background:white;color:#342929}pre{border-color:#500000}#diff{border-color:#9a5454;color:#5a2020}#publicProposal{border-color:#8f637f;color:#473347}#hypothesis,#outcome{color:#500000}#outcome{background:#fff}#rejections{background:#fff7ee;color:#7b451d}tr.incomplete{color:#8b4513}#witnessDetails>summary{color:#500000}svg text{fill:#3f3034}#populationNote,#runId,.accessline,.legend,.selection,small{color:#66585b}#start,#continue{background:#500000;color:white;border-color:#500000}#start:hover,#continue:hover{background:#6b2222}#stop{color:#7b2020}
+#initialSolvers{border:1px solid #c7b5b8;margin:10px 0;padding:9px 14px;background:white}#initialSolvers legend{font-size:13px;color:#500000;font-weight:650}#solverCheckboxes{display:flex;gap:24px;flex-wrap:wrap}#solverCheckboxes label{display:flex;flex-direction:row;align-items:center;gap:7px;font-size:13px;color:#3d3033}#solverCheckboxes input{width:auto;margin:0}#initialSolvers p{font-size:11px;margin:8px 0 0;color:#66585b}.scenarioLabel{display:flex;flex-direction:row;align-items:center;gap:12px;color:#500000;font-size:13px}.scenarioLabel select{min-width:390px}.embedded #initialSolvers{margin:6px 0;padding:5px 12px}.embedded #initialSolvers p{margin-top:4px}.embedded .scenarioLabel select{padding:5px}.embedded .tableScroll{max-height:170px}#comparisonDetails table{font-size:11px}#comparisonDetails th,#comparisonDetails td{text-align:left}#comparisonDetails p{font-size:12px}tr.evaluating{box-shadow:inset 4px 0 #8b4513}@keyframes evaluation-pulse{50%{background:#ead5d5}}
+body>nav{background:#500000;color:white}body>nav a{color:white}.question{color:#500000}.answer{border-color:#500000}main h1,main h2{color:#500000}main p,details{color:#45393c}#sent,#received{background:white;color:#342929}#sent{border-color:#500000}#received{border-color:#8f637f}#exchangeMode{color:white}.controls{border-color:#d7cbcd}.columns p,#readOnlyNote{color:#66585b}details summary{color:#500000}
+@media(max-width:1000px){#solverCheckboxes{gap:10px}.scenarioLabel select{min-width:0;max-width:80vw}}@media print{body{background:white}}
+
+/* High-contrast teaching palette. Keep body copy dark, including generated notes. */
+:root{background:#ffffff;--ink:#171717;--soft:#404040;--muted:#404040;--line:#aaa;--border:#aaa;--orange:#873600}
+body,main{color:#171717}body{background:#fff}
+main p,main li,main details,.notes{color:#171717}
+a{color:#500000;text-decoration:underline;text-underline-offset:3px}
+.hubbar a,.teachingNav a{text-decoration:none}
+.hubbar,.hubbar nav,body>nav,body>header{background:#500000;color:#fff}
+.hubbar a,.hubbar button,.hubbar .brand,.hubbar .selected,body>nav a,body>header a,body>header strong{color:#fff}
+.hubbar a:hover,.hubbar button:hover,body>nav a:hover,body>header a:hover{color:#fff;text-decoration:underline;background:#6b2020}
+.hubbar button,.hubbar select{border-color:#d9baba}
+#frame,.presentControls{background:#fff}
+#frame p,#frame li,#frame code,#frame pre,#frame .block{color:#171717}
+#frame h1,#frame .question,#frame .question p,#frame .question strong,#frame .block strong{color:#500000}
+#frame .answer,#frame .answer p,#frame .answer strong{color:#500000;background:#f8eeee}
+#frame figcaption,#pace,.returnbar,#populationNote,#runId,.accessline,.legend,.selection,small,.metrics span,th,label,#initialSolvers p{color:#404040}
+#frame[data-frame="title"],#frame[data-frame="title"] *{color:#fff!important;background-color:transparent}
+#frame[data-frame="title"]{background:#500000}
+button,select,input,textarea{background:#fff;color:#171717;border-color:#777}
+button:hover{background:#f3e5e5;color:#500000}
+button:disabled,#start:disabled,#continue:disabled{opacity:1;background:#e6e6e6;color:#454545;border-color:#777;cursor:default}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #500000;outline-offset:3px}
+.hubbar button:focus-visible,.hubbar a:focus-visible,body>nav a:focus-visible{outline-color:#fff}
+pre,code,#sent,#received,#controllerContext,#parsedResponse,#publicProposal,#program,#diff{background:#fff;color:#171717}
+#frame pre{background:#f5f1f1}
+pre code span{color:inherit}
+#proposalState,#phase,#outcome,#hypothesis,#rejections,#outcome.error,details summary{color:#500000}
+#rejections{background:#fff3e8;border-color:#873600}
+#loop{background:#f5f1f1;color:#171717}
+#loop span.active{background:#500000;color:#fff}
+tr.survivor{background:#f1dddd;color:#171717}
+tr.incomplete,.hot{color:#873600}
+#solverCheckboxes label{color:#171717;font-size:13px}
+#comparisonDetails p,.columns p,#readOnlyNote{color:#404040}
+#exchangeMode{color:#fff}
+.metrics span,small,.accessline,#populationNote,#runId,th,label{font-size:12px}
+#position{color:#500000}
+@media print{body,main{background:#fff;color:#171717}}
+
+body>nav~main table{width:100%;border-collapse:collapse;font-size:.88em}body>nav~main th,body>nav~main td{padding:9px 12px;border-bottom:1px solid #aaa;text-align:left}body>nav~main th{color:#171717;font-weight:700}body>nav~main code{overflow-wrap:anywhere}

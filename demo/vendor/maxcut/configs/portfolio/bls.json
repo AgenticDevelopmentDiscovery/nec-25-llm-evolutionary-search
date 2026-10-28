@@ -1,0 +1,8 @@
+{
+  "jump": 1,
+  "stagnation": 1000,
+  "p_min": 0.8,
+  "q": 0.5,
+  "tenure_min": 3,
+  "tenure_max": 3
+}

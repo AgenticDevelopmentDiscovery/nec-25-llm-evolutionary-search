@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-26",
+  "provider": "tamu_chat_completions",
+  "endpoint": "https://chat-api.tamu.ai/api/chat/completions",
+  "selection": "explicit presenter preference; not a benchmark claim",
+  "authenticated_model_list_http_status": 200,
+  "model_list_client": "requests",
+  "urllib_metadata_status": 403,
+  "urllib_public_diagnostic": "The site owner has blocked access based on your browser's signature.",
+  "generation_calls_for_metadata": 0,
+  "key_values_recorded": false,
+  "source_docs": [
+    "https://docs.tamus.ai/docs/prod/api-tool/create-and-test-api-key",
+    "https://docs.tamus.ai/docs/prod/models#gpt-56-sol"
+  ],
+  "live_rehearsal": {
+    "actual_model": "protected.gpt-5.6-sol",
+    "source_run": "68c13029005c4430a520123e3d10fc51",
+    "status": "finished",
+    "wall_seconds": 12.707625721988734,
+    "proposal_seconds": 10.095225040975492,
+    "reference_match_seconds": 10.423197416996118,
+    "best_cut": 68,
+    "generation_calls": 1
+  },
+  "default_model": "protected.gpt-5.6-luna",
+  "default_selection": "latest explicit presenter preference; exact ID verified by authenticated model metadata",
+  "luna_live_tested": true,
+  "total_generation_requests_this_task": 4,
+  "remaining_authorized_generations": 0,
+  "genuine_replay_verified_offline": true,
+  "total_authorized_generations": 4,
+  "luna_live_rehearsal": {
+    "actual_model": "protected.gpt-5.6-luna",
+    "source_run": "ac4eabb65fcd4a95b2a6c41dbddcf6b0",
+    "status": "finished",
+    "wall_seconds": 6.5546190880122595,
+    "proposal_seconds": 4.778195341990795,
+    "reference_match_seconds": 5.12186685699271,
+    "best_cut": 68,
+    "generation_calls": 1,
+    "usage": {
+      "input_tokens": 1782,
+      "output_tokens": 373,
+      "total_tokens": 2155
+    }
+  },
+  "luna_replay_verified_offline": true,
+  "initial_verified_model": "protected.gpt-5.6-sol",
+  "luna_browser_replay_verified": true,
+  "luna_trace": "figures/luna-trace.svg",
+  "deck_uses_actual_luna_run": true
+}

@@ -26,3 +26,16 @@ _site/
 # Local Claude Code settings. `.claude/skills/` IS tracked — the /round verb is
 # part of the template and every team member needs it.
 .claude/settings.local.json
+
+# Local model credentials. Only the blank teaching template is public.
+.env
+.env.*
+!.env.example
+**/__pycache__/
+*.py[cod]
+
+notes
+
+# Private presentation practice: narration, timing, captures and video.
+demo/rehearsal/
+demo/SPEAKER_NOTES.md

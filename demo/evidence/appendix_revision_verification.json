@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-28",
+  "change": "Move architecture/API explanation to optional appendix",
+  "main_frames": 19,
+  "main_reveals": 73,
+  "main_seconds": 1300,
+  "reserve_seconds": 45,
+  "appendix_frames": 3,
+  "appendix_reveals": 12,
+  "appendix_seconds": 155,
+  "appendix_ids": [
+    "system-flow",
+    "api-context",
+    "api-return"
+  ],
+  "main_conclusion": "transfer",
+  "main_demos": [
+    "demo-limited",
+    "demo-informed",
+    "demo-harder"
+  ],
+  "browser": {
+    "checked_reveal_states": 85,
+    "overflow_or_answer_overlap": 0,
+    "main_end_does_not_advance_to_appendix": true,
+    "appendix_button": true,
+    "appendix_end_stops": true,
+    "return_restores_main_frame_and_reveal": true,
+    "demo_return_under_reordered_frames_verified": true
+  },
+  "print": {
+    "handout_pages": 22,
+    "overlay_pages": 85,
+    "appendix_labels": [
+      "A1",
+      "A2",
+      "A3"
+    ],
+    "main_conclusion_has_no_appendix_banner": true,
+    "rendered_and_inspected": true
+  },
+  "private_script": {
+    "main_frames": 19,
+    "appendix_frames": 3,
+    "aligned": true,
+    "voice_video": "still deferred"
+  },
+  "http_tests_passed": 3,
+  "vendor_hashes_verified": 133,
+  "model_calls": 0,
+  "source_sha256": "6512b7a583d27a7f24c89c6aa2b45eb4ce4ac549205b8a14bbed8669a9cbb3a3",
+  "commit_push_deploy": false
+}

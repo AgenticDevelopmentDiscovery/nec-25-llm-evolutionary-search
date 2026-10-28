@@ -1,0 +1,134 @@
+{
+  "date_utc": "2026-10-26T20:47:39.985492+00:00",
+  "run_id": "3e151e5a15c344548fefe6f5047011cf",
+  "mode": "live",
+  "status": "failed",
+  "seed": 3,
+  "trial_seeds": [
+    3,
+    4,
+    5
+  ],
+  "wall_seconds": 2.049395534035284,
+  "model_calls": 1,
+  "time_to_first_real_proposal": null,
+  "time_to_reference_match": null,
+  "best_cut": 66.0,
+  "baseline_construction": [
+    {
+      "seed": 3,
+      "cut": 58.0
+    },
+    {
+      "seed": 4,
+      "cut": 60.0
+    },
+    {
+      "seed": 5,
+      "cut": 60.0
+    }
+  ],
+  "candidates": [
+    {
+      "id": "d7262164aa3f325f7d93e911deb1b3e525b1d7f614f0825b274675a40e6dc52d",
+      "strategy": {
+        "stages": [
+          {
+            "backend": "tabu",
+            "config": {
+              "tenure": 0,
+              "restart_after": 0
+            },
+            "max_work": 100,
+            "fresh": false
+          }
+        ]
+      },
+      "parent_ids": [],
+      "hypothesis": "",
+      "diff": "",
+      "complete": true,
+      "median": 64.0,
+      "minimum": 60.0,
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 60.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 60.0,
+              "runtime_seconds": 0.0023756659938953817,
+              "work_counters": {
+                "iterations": 100,
+                "flips": 100,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.0044543680269271135
+        },
+        {
+          "seed": 4,
+          "cut": 66.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 66.0,
+              "runtime_seconds": 0.0023165279999375343,
+              "work_counters": {
+                "iterations": 100,
+                "flips": 100,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.0040803320007398725
+        },
+        {
+          "seed": 5,
+          "cut": 64.0,
+          "complete": true,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 64.0,
+              "runtime_seconds": 0.0022280309931375086,
+              "work_counters": {
+                "iterations": 100,
+                "flips": 100,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed"
+            }
+          ],
+          "seconds": 0.004057864018250257
+        }
+      ]
+    }
+  ],
+  "terminal_reason": "owned process failed: provider response did not complete: error: {\"type\": \"insufficient_quota\", \"code\": \"credit_balance_exhausted\", \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\", \"param\": null}\n",
+  "raw_records": "demo/runs/3e151e5a15c344548fefe6f5047011cf/",
+  "replay_eligible": false,
+  "caps": {
+    "total_seconds": 165,
+    "stop_and_save_by_seconds": 175,
+    "max_model_calls": 1,
+    "max_rounds": 1,
+    "children_per_round": 2
+  },
+  "human_aloud_presentation_rehearsal": false
+}

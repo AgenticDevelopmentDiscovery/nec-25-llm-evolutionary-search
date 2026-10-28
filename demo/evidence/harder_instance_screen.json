@@ -1,0 +1,86 @@
+[
+  {
+    "instance": "rand_pm_100_s13.txt",
+    "method": "tabu",
+    "cut": 119.0,
+    "seconds": 0.06465160904917866,
+    "status": "completed"
+  },
+  {
+    "instance": "rand_pm_100_s13.txt",
+    "method": "annealing",
+    "cut": 115.0,
+    "seconds": 0.10336685099173337,
+    "status": "completed"
+  },
+  {
+    "instance": "rand_pm_100_s13.txt",
+    "method": "bls",
+    "cut": 116.0,
+    "seconds": 0.4446877859882079,
+    "status": "completed"
+  },
+  {
+    "instance": "rand_pm_100_s13.txt",
+    "method": "bm",
+    "cut": 114.0,
+    "seconds": 0.05437986901961267,
+    "status": "completed"
+  },
+  {
+    "instance": "dense_gauss_100_s14.txt",
+    "method": "tabu",
+    "cut": 402.5209,
+    "seconds": 0.18339731596643105,
+    "status": "completed"
+  },
+  {
+    "instance": "dense_gauss_100_s14.txt",
+    "method": "annealing",
+    "cut": 391.0915,
+    "seconds": 0.1736150109791197,
+    "status": "completed"
+  },
+  {
+    "instance": "dense_gauss_100_s14.txt",
+    "method": "bls",
+    "cut": 401.0616,
+    "seconds": 1.5041163939749822,
+    "status": "time_limit"
+  },
+  {
+    "instance": "dense_gauss_100_s14.txt",
+    "method": "bm",
+    "cut": 401.0616,
+    "seconds": 0.446859304967802,
+    "status": "completed"
+  },
+  {
+    "instance": "torus_pm_32_s21.txt",
+    "method": "tabu",
+    "cut": 704.0,
+    "seconds": 0.18555318599101156,
+    "status": "completed"
+  },
+  {
+    "instance": "torus_pm_32_s21.txt",
+    "method": "annealing",
+    "cut": 692.0,
+    "seconds": 0.21636893099639565,
+    "status": "completed"
+  },
+  {
+    "instance": "torus_pm_32_s21.txt",
+    "method": "bls",
+    "cut": 708.0,
+    "seconds": 1.501920495997183,
+    "status": "time_limit"
+  },
+  {
+    "instance": "torus_pm_32_s21.txt",
+    "method": "bm",
+    "cut": 682.0,
+    "seconds": 0.27711762400576845,
+    "status": "completed"
+  }
+]

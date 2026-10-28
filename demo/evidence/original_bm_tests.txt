@@ -1,0 +1,47 @@
+test_assignment_official_round_trip_and_cli (test_bm_solver.SolverTests.test_assignment_official_round_trip_and_cli)
+Steps 1/9: self is TestCase; return None; use disposable files and external evaluator. ... ok
+test_coordinate_update_and_zero_fields (test_bm_solver.SolverTests.test_coordinate_update_and_zero_fields)
+Step 5: self is TestCase; return None; verify opposite-field unit geometry. ... ok
+test_default_output_requires_explicit_overwrite (test_bm_solver.SolverTests.test_default_output_requires_explicit_overwrite)
+Step 9 plumbing: self is TestCase; return None; default files survive repeat runs. ... usage: python -m unittest [-h] --instance INSTANCE [--output OUTPUT]
+                          [--seed SEED] [--max-sweeps MAX_SWEEPS]
+                          [--roundings ROUNDINGS] [--field-rtol FIELD_RTOL]
+                          [--sweep-atol SWEEP_ATOL] [--sweep-rtol SWEEP_RTOL]
+                          [--gain-tolerance GAIN_TOLERANCE]
+                          [--projection-tolerance PROJECTION_TOLERANCE]
+                          [--restarts RESTARTS]
+                          [--perturb-rounds PERTURB_ROUNDS]
+                          [--perturb-scale PERTURB_SCALE]
+                          [--initial-assignment INITIAL_ASSIGNMENT]
+                          [--history HISTORY]
+python -m unittest: error: default smoke output already exists; select --output explicitly to retain/refine it
+ok
+test_empty_zero_weight_and_gain_threshold (test_bm_solver.SolverTests.test_empty_zero_weight_and_gain_threshold)
+Steps 4–9: self is TestCase; return None; degenerate whole solves stay finite. ... ok
+test_gains_direct_differences_and_incremental_updates (test_bm_solver.SolverTests.test_gains_direct_differences_and_incremental_updates)
+Step 8: self is TestCase; return None; signed fractional tiny exhaustive check. ... ok
+test_hand_objectives_and_binary_embedding (test_bm_solver.SolverTests.test_hand_objectives_and_binary_embedding)
+Steps 2–3: self is TestCase; return None; enumerate n<=4, checking F and R. ... ok
+test_invalid_vectors_and_settings (test_bm_solver.SolverTests.test_invalid_vectors_and_settings)
+Steps 2–9: self is TestCase; return None; invalid arrays/settings must fail. ... ok
+test_local_search_and_trap (test_bm_solver.SolverTests.test_local_search_and_trap)
+Step 8: self is TestCase; return None; audit improving moves and the 8/10 trap. ... ok
+test_local_search_refreshes_apparent_termination (test_bm_solver.SolverTests.test_local_search_refreshes_apparent_termination)
+Step 8: self is TestCase; return None; repair an intentionally stale initial cache. ... ok
+test_malformed_graphs (test_bm_solver.SolverTests.test_malformed_graphs)
+Step 1: self is TestCase; return None; reject bounded malformed examples. ... ok
+test_parse_fractional_signed_and_disconnected (test_bm_solver.SolverTests.test_parse_fractional_signed_and_disconnected)
+Step 1: self is TestCase; return None; check owned O(n+m) representation. ... ok
+test_retention_reproducibility_and_tiny_gaps (test_bm_solver.SolverTests.test_retention_reproducibility_and_tiny_gaps)
+Steps 4–9: self is TestCase; return None; repeat seeded runs and bound tiny gaps. ... ok
+test_rounding_geometry_and_ties (test_bm_solver.SolverTests.test_rounding_geometry_and_ties)
+Steps 3/7: self is TestCase; return None; check exact projections and ties. ... ok
+test_sequential_sweeps_monotonicity_and_stopping (test_bm_solver.SolverTests.test_sequential_sweeps_monotonicity_and_stopping)
+Steps 5–6: self is TestCase; return None; check seeded order and scaled R changes. ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.816s
+
+OK
+cut=7; reloaded_cut=7; runtime_seconds=0.005575466; output=/tmp/tmpjuclnx8o/out.txt; status=created; passes=1
+cut=4; reloaded_cut=4; runtime_seconds=0.000337112; output=solutions_bm_smoke/example.txt; status=created; passes=1
