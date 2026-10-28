@@ -4,6 +4,12 @@ The current instructions supersede the historical initial handoff below. Read `d
 
 The current private script is complete at `/rehearsal` and `/rehearsal-script`. Voice and video generation are deferred at the user’s request; offline TTS is not the requested future voice. Presenter aloud timing remains distinct from synthetic narration. Helping materials stay under ignored `demo/rehearsal/`.
 
+Current author preview: `just demo` reuses an identified server from this same
+repository on the requested port. Saved prose automatically rebuilds browser
+frames and HTML notes; open presentation tabs update without losing frame/reveal
+or demo state. Invalid drafts keep the last successful deck and display an error.
+PDF exports still require `just build`. No listener is killed automatically.
+
 ---
 
 ## Historical initial handoff (retained for provenance)

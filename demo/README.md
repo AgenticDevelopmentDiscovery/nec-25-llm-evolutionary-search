@@ -6,7 +6,7 @@ Linux process start ticks; no native solver build is needed. Start from the repo
 ```bash
 python3 -m venv demo/.venv
 demo/.venv/bin/python -m pip install -r demo/requirements.txt
-cp demo/.env.example demo/.env
+cp -n demo/.env.example demo/.env
 chmod 600 demo/.env
 # Edit demo/.env locally and insert your OWN TAMU key.
 demo/.venv/bin/python demo/server.py --port 8766 --rounds 3
@@ -17,6 +17,30 @@ This is a local loopback server; no account login on the server page is required
 The previous port 8765 belongs to a separate application and is left alone.
 The public presentation bundle, teaching notes and PDF handout are included, so
 students do not need Pandoc or LaTeX to run the server. Authors use `just build` to rebuild PDFs and the browser bundle.
+
+## Daily launch and prose editing
+
+From the repository root, run `just demo`, then open http://127.0.0.1:8766/.
+If this repository's server is already running, the command prints its URL and
+reuses it. It does not launch a duplicate or stop another process. Changing Conda
+environments does not stop an existing server; its interpreter and settings remain
+in use until that process is stopped.
+
+Edit and save `sections/*.prose.md`. The running server rebuilds the browser
+frames and HTML teaching notes when the source changes. Open presentation tabs
+check every two seconds and update the current frame without resetting its reveal
+or the mounted demo. No browser refresh or restart is required for prose edits.
+Refresh an already-open Notes tab to read its newly built HTML.
+
+If a draft fails validation, the last successful frames remain visible and a
+notice explains the error. Correct and save the source to recover. Pandoc is
+needed for authoring; unchanged bundled frames still work on student machines
+without it. `just presentation` remains available for a manual rebuild.
+
+PDFs are separate exports: run `just build`, then reopen or refresh the PDF.
+Python server/configuration changes require restarting the existing process first.
+If another repository or an unrecognized service occupies the port, use
+`just demo 8767` and open the printed URL. No listener is automatically killed.
 
 ## Pages and presenter navigation
 

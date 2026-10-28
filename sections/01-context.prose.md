@@ -7,13 +7,12 @@
 
 ENGR 689 · Texas A&M University · Fall 2026
 
-How can we improve the algorithm that performs the search?
 :::
 
 ## Optimization as search {#optimization data-seconds="40"}
 
 ::: {.question}
-**When the best candidate is unknown, what can we do besides guess once?**
+**When the best candidate is unknown, what can we do?**
 :::
 
 ::: {.block}
@@ -43,21 +42,28 @@ Begin with evolutionary computation itself. Language models are introduced later
 :::
 
 ::: {.block}
-A population stores alternative structures. Fitness measures each candidate under a declared evaluation protocol.
+Fitness measures how well a candidate performs now. A different candidate may offer changes that the champion's structure does not readily suggest.
 :::
 
 ::: {.block}
-Illustrative scores: A = 5, B = 7, C = 6. Keeping B and C preserves two starting points for the next variation step.
+Hypothetical example, equal mutation budgets:
+
+A: current fitness **7** → best tested child **8**.\
+B: current fitness **6** → best tested child **9**.
 :::
 
 ::: {.answer}
-**A population supplies material for inheritance and exploration.** Its size and selection rule determine what information survives.
+**Keep promising alternatives because a lower-scoring parent can lead to a better descendant.** Multiple parents preserve several paths for future search.
 :::
 
 ::: {.notes}
-The numbers here are an illustrative maximization example, not Max-Cut measurements. A population retains candidates together with evidence about their quality. Selection can preserve a champion and other useful alternatives. Population size alone does not guarantee diversity: several programs may implement nearly the same behavior.
+Pause after the question and let students argue for keeping only the champion: it has the highest measured fitness, so why spend effort elsewhere? The missing information is how good the candidates' descendants could be. Current fitness evaluates a candidate under a declared protocol; it does not evaluate every possible mutation of that candidate or of its competitors.
 
-In the classroom controller the population cap is three and ranking is deterministic. There is no reserved diversity slot, island migration or tournament sampling. Those are possible design choices, not hidden features of the example. The population contains solver programs; a later execution of a solver produces a separate solution witness.
+The numbers are a hypothetical maximization example, not Max-Cut measurements or predictions. Suppose A and B have different structures, and we give each the same mutation and evaluation budget. A currently scores 7 and its best tested child scores 8; B currently scores 6 and its best tested child scores 9. Keeping only A would discard B as a direct starting point before discovering that child. B's lower current score therefore does not make it useless for future search. The mechanism is that inherited structure affects which changes are available or likely under the variation operator. A search from A might eventually rediscover B's structure; retaining B keeps that route directly available.
+
+A population reduces dependence on descendants of a single parent, but it costs evaluations and does not guarantee improvement. Several nearly identical programs may offer little useful variety. The benefit depends on their behavioral differences, the variation operator, selection and the available budget. This example motivates retaining promising alternatives; it does not justify retaining every weak candidate.
+
+In the classroom controller the population contains solver programs, with a cap of three complete evaluated survivors and deterministic fitness ranking. Up to three survivors enter Luna's context as potential parents; a later execution of a solver produces a separate solution witness. There is no reserved diversity slot, island migration or tournament sampling. The controller preserves highly ranked alternatives when available, but it does not explicitly enforce structural or behavioral diversity, and a potentially useful lower-ranked program can still be discarded.
 :::
 
 ## Variation, evaluation and selection {#evolution data-seconds="45"}

@@ -12,6 +12,7 @@
 - Neither comparison reached 1098; stronger initial fitness did not establish superior full-run efficiency.
 - Dense case remains separate: reference matched after one call at 16.091s, three-call run 56.602s.
 # Decisions
+- Keep benchmark sizes and unproven reference targets in experiment/demo setup; the Signed Max-Cut frame first explains conflicting preferences and score calculation.
 - Keep the main sequence on solver programs, numerical algorithms, initialization, three demos and their evidence; architecture/API details move to the appendix.
 - Reserve 3min + 3min + 4min for the three demos, within 21:40 main content + 0:45 reserve; optional appendix adds 2:35.
 - Report primary median, stronger all-trial criterion, numerical effort and continued three-call cost separately.

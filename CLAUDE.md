@@ -247,6 +247,9 @@ and notes Divs (detailed document/site explanations, hidden in presentation).
 `just slides` creates a 22-frame handout (19 main frames, then 3 optional appendix frames); `just overlays` creates all
 85 reveal states (73 main, 12 appendix). Main navigation stops at the conclusion; an explicit Appendix control opens the architecture/API frames. `just presentation` derives the browser bundle and notes from
 the same source. The generated browser bundle and teaching PDFs are included for student machines
-without Pandoc; authors regenerate it when changing the shared prose. The local
+without Pandoc. With Pandoc installed, the live server rebuilds saved prose and
+updates open presentation tabs while preserving frame/reveal and demo state.
+Invalid drafts retain the last successful bundle. Authors use `just build` for
+PDF exports; `just presentation` remains a manual browser-bundle build. The local
 server, not the static site, hosts presentation/demo/algorithm/exchange pages.
 Private practice aids under demo/rehearsal/ and SPEAKER_NOTES.md are ignored.

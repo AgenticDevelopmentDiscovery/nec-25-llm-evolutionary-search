@@ -33,4 +33,66 @@ $('saveTiming').addEventListener('click',()=>{if(!timing)return;record('save');c
 setInterval(()=>{if(timing){const seconds=Math.floor((performance.now()-timing.started)/1000);$('timingStatus').textContent=`Aloud rehearsal ${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')} / 25:00 · timing only`; }},500);
 window.addEventListener('message',event=>{if(event.origin===location.origin&&event.source===$('demoFrame').contentWindow&&event.data?.type==='return-to-presentation')showView('present');});
 window.addEventListener('resize',fit);window.addEventListener('hashchange',()=>{if(deck){locationState();render();}});
-(async()=>{deck=await(await fetch('/presentation.json')).json();const main=document.createElement('optgroup'),appendix=document.createElement('optgroup');main.label='Main presentation';appendix.label='Optional appendix';$('frames').append(main,appendix);for(const [i,f]of deck.frames.entries()){const option=document.createElement('option');option.value=i;option.textContent=`${f.appendix?'A'+(i-mainCount()+1):i+1}. ${f.title}`;(f.appendix?appendix:main).append(option);}if(!location.hash){try{const saved=JSON.parse(sessionStorage.getItem('maxcut-presentation'));if(saved){const n=deck.frames.findIndex(f=>f.id===saved.id);if(n>=0){frameIndex=n;step=Math.max(0,Math.min(saved.step,deck.frames[n].reveals-1));}}}catch{}}else locationState();render();})();
+function populateFrames(){
+  $('frames').replaceChildren();
+  const main=document.createElement('optgroup'),appendix=document.createElement('optgroup');
+  main.label='Main presentation';appendix.label='Optional appendix';$('frames').append(main,appendix);
+  for(const [i,f]of deck.frames.entries()){
+    const option=document.createElement('option');option.value=i;
+    option.textContent=`${f.appendix?'A'+(i-mainCount()+1):i+1}. ${f.title}`;
+    (f.appendix?appendix:main).append(option);
+  }
+}
+let sourceBusy=false,sourceError=null,sourceNoticeTimer=null;
+function showSourceNotice(message,error=false){
+  clearTimeout(sourceNoticeTimer);
+  $('sourceNotice').textContent=message;$('sourceNotice').dataset.error=String(error);$('sourceNotice').hidden=false;
+  if(!error)sourceNoticeTimer=setTimeout(()=>$('sourceNotice').hidden=true,3500);
+}
+async function readDeck(){
+  const response=await fetch('/presentation.json',{cache:'no-store'});
+  if(!response.ok)throw Error('Presentation could not be read.');
+  return response.json();
+}
+function applyDeck(updated){
+  const id=deck.frames[frameIndex].id,oldIndex=frameIndex,oldStep=step;
+  const returnId=mainReturn?deck.frames[mainReturn.index]?.id:null;
+  deck=updated;
+  const found=deck.frames.findIndex(f=>f.id===id);
+  frameIndex=found>=0?found:Math.min(oldIndex,deck.frames.length-1);
+  step=Math.min(oldStep,deck.frames[frameIndex].reveals-1);
+  if(mainReturn){const n=deck.frames.findIndex(f=>f.id===returnId&&!f.appendix);mainReturn=n>=0?{index:n,reveal:Math.min(mainReturn.reveal,deck.frames[n].reveals-1)}:null;}
+  populateFrames();render();
+  if(view==='demo')$('returnToFrame').textContent=`← Return to ${frameLabel(frameIndex)}: ${deck.frames[frameIndex].title}`;
+  record('source-update');
+}
+async function checkSource(){
+  if(!deck||sourceBusy||document.hidden)return;
+  sourceBusy=true;
+  try{
+    const response=await fetch('/api/presentation',{cache:'no-store'});
+    if(response.status===404)return; // Older servers still support manual rebuild/refresh.
+    if(!response.ok)throw Error('Source preview is unavailable.');
+    const status=await response.json();
+    if(status.error){
+      if(status.error!==sourceError)showSourceNotice(`Saved prose could not be built. Showing the last successful frames.\n${status.error}`,true);
+      sourceError=status.error;return;
+    }
+    if(status.source_sha256&&status.source_sha256!==deck.source_sha256){
+      applyDeck(await readDeck());showSourceNotice('Frames updated from saved prose.');
+    }else if(sourceError)showSourceNotice('Saved prose is valid.');
+    sourceError=null;
+  }catch(error){
+    const message='Preview disconnected. Existing frames remain available; updates resume when the server returns.';
+    if(sourceError!==message)showSourceNotice(message,true);
+    sourceError=message;
+  }finally{sourceBusy=false;}
+}
+(async()=>{
+  try{
+    deck=await readDeck();populateFrames();
+    if(!location.hash){try{const saved=JSON.parse(sessionStorage.getItem('maxcut-presentation'));if(saved){const n=deck.frames.findIndex(f=>f.id===saved.id);if(n>=0){frameIndex=n;step=Math.max(0,Math.min(saved.step,deck.frames[n].reveals-1));}}}catch{}}
+    else locationState();
+    render();checkSource();setInterval(checkSource,2000);
+  }catch(error){showSourceNotice('Presentation unavailable. Check the server terminal and saved prose.',true);}
+})();

@@ -107,7 +107,8 @@ deploy:
 clean:
     rm -rf {{outdir}} {{site}}
 
-# Local interactive demo; static-site serving remains `just serve`.
+# Local interactive demo: auto-preview saved prose; reuse this repo’s running server.
+# Static-site serving remains `just serve`.
 demo port="8766":
     python3 demo/server.py --port {{port}}
 

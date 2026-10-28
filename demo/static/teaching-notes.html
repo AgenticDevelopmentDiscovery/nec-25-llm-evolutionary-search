@@ -1,10 +1,9 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teaching notes · evolutionary search</title><link rel="stylesheet" href="/notes.css"><link rel="stylesheet" href="/brand.css"></head><body><nav><a href="/">Presentation hub</a> · <a href="/document.pdf">PDF notes</a> · <a href="/handout.pdf">Frame handout</a></nav><main><h1>LLM-driven evolutionary search</h1><p>The questions, mechanisms and detailed explanations share the presentation source. Course connection: Chapter 10, Definition 10.2 and Figures 10.1–10.2.</p><section id="title"><h2>1. Evolutionary search with a language-model mutator</h2><div class="question title-only">
 <p><strong>Evolving solver programs through measured feedback</strong></p>
 <p>ENGR 689 · Texas A&amp;M University · Fall 2026</p>
-<p>How can we improve the algorithm that performs the search?</p>
 </div>
 </section><section id="optimization"><h2>2. Optimization as search</h2><div class="question">
-<p><strong>When the best candidate is unknown, what can we do besides guess once?</strong></p>
+<p><strong>When the best candidate is unknown, what can we do?</strong></p>
 </div>
 <div class="block">
 <p>Define a candidate space <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝒜</mi><annotation encoding="application/x-tex">\mathcal A</annotation></semantics></math> and a measurable objective <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>. Seek</p>
@@ -22,16 +21,20 @@
 <p><strong>Why keep several candidates instead of only the current champion?</strong></p>
 </div>
 <div class="block">
-<p>A population stores alternative structures. Fitness measures each candidate under a declared evaluation protocol.</p>
+<p>Fitness measures how well a candidate performs now. A different candidate may offer changes that the champion’s structure does not readily suggest.</p>
 </div>
 <div class="block">
-<p>Illustrative scores: A = 5, B = 7, C = 6. Keeping B and C preserves two starting points for the next variation step.</p>
+<p>Hypothetical example, equal mutation budgets:</p>
+<p>A: current fitness <strong>7</strong> → best tested child <strong>8</strong>.<br />
+B: current fitness <strong>6</strong> → best tested child <strong>9</strong>.</p>
 </div>
 <div class="answer">
-<p><strong>A population supplies material for inheritance and exploration.</strong> Its size and selection rule determine what information survives.</p>
+<p><strong>Keep promising alternatives because a lower-scoring parent can lead to a better descendant.</strong> Multiple parents preserve several paths for future search.</p>
 </div>
-<p>The numbers here are an illustrative maximization example, not Max-Cut measurements. A population retains candidates together with evidence about their quality. Selection can preserve a champion and other useful alternatives. Population size alone does not guarantee diversity: several programs may implement nearly the same behavior.</p>
-<p>In the classroom controller the population cap is three and ranking is deterministic. There is no reserved diversity slot, island migration or tournament sampling. Those are possible design choices, not hidden features of the example. The population contains solver programs; a later execution of a solver produces a separate solution witness.</p>
+<p>Pause after the question and let students argue for keeping only the champion: it has the highest measured fitness, so why spend effort elsewhere? The missing information is how good the candidates’ descendants could be. Current fitness evaluates a candidate under a declared protocol; it does not evaluate every possible mutation of that candidate or of its competitors.</p>
+<p>The numbers are a hypothetical maximization example, not Max-Cut measurements or predictions. Suppose A and B have different structures, and we give each the same mutation and evaluation budget. A currently scores 7 and its best tested child scores 8; B currently scores 6 and its best tested child scores 9. Keeping only A would discard B as a direct starting point before discovering that child. B’s lower current score therefore does not make it useless for future search. The mechanism is that inherited structure affects which changes are available or likely under the variation operator. A search from A might eventually rediscover B’s structure; retaining B keeps that route directly available.</p>
+<p>A population reduces dependence on descendants of a single parent, but it costs evaluations and does not guarantee improvement. Several nearly identical programs may offer little useful variety. The benefit depends on their behavioral differences, the variation operator, selection and the available budget. This example motivates retaining promising alternatives; it does not justify retaining every weak candidate.</p>
+<p>In the classroom controller the population contains solver programs, with a cap of three complete evaluated survivors and deterministic fitness ranking. Up to three survivors enter Luna’s context as potential parents; a later execution of a solver produces a separate solution witness. There is no reserved diversity slot, island migration or tournament sampling. The controller preserves highly ranked alternatives when available, but it does not explicitly enforce structural or behavioral diversity, and a potentially useful lower-ranked program can still be discarded.</p>
 </section><section id="evolution"><h2>4. Variation, evaluation and selection</h2><div class="question">
 <p><strong>What turns repeated candidate generation into an evolutionary algorithm?</strong></p>
 </div>
@@ -67,34 +70,72 @@
 <p><strong>What changes if the variation operator can read programs and measured feedback?</strong></p>
 </div>
 <div class="block">
-<p>A large language model reads selected programs, trial outcomes and allowed edits, then proposes a motivated mutation.</p>
+<ol type="1">
+<li><strong>Retain vector optimization:</strong> adjust one vector per vertex to improve a continuous cut objective.</li>
+<li><strong>Round:</strong> convert the optimized vectors into a two-group partition.</li>
+</ol>
 </div>
 <div class="block">
-<p>For example: retain a vector-relaxation stage, then append local search to improve the rounded assignment. The proposal is a hypothesis.</p>
+<ol start="3" type="1">
+<li><strong>Luna proposes an extension:</strong> append local search, starting from that partition.</li>
+<li><strong>Evaluate the child:</strong> compare it with the parent using identical trials and the same total time limit per trial.</li>
+</ol>
 </div>
 <div class="answer">
-<p><strong>The LLM supplies context-conditioned variation. The harness still supplies fitness.</strong> Its weights are not trained during this run.</p>
+<p><strong>The child inherits vector optimization and adds local search.</strong> Whether the extension helps is a hypothesis tested by numerical evaluation.</p>
 </div>
+<p>Present the numbered example as a hypothetical mutation, not a claim about a particular recorded Luna response. The candidate being changed is a solver program. Its execution produces a partition, which the evaluator uses to measure the program’s quality.</p>
+<p>Step 1 retains the parent’s vector method. Instead of immediately choosing one of two groups for each vertex, the Burer–Monteiro method optimizes continuously adjustable vectors using an objective related to the cut value. Our implementation uses two-dimensional unit vectors. This is a numerical search over a continuous surrogate; it does not certify the global Max-Cut optimum.</p>
+<p>Step 2 rounds the vectors into a feasible partition. A direction through the vector space determines which side each vector falls on, assigning each graph vertex to one of two groups. Vector optimization and rounding are internal operations of the existing Burer–Monteiro kernel, not two independently editable strategy stages.</p>
+<p>Step 3 is the proposed program mutation. Luna reads selected parent programs, measured trial results and the allowed edits, then may propose appending a trusted local-search kernel. That kernel receives the partition produced by the first stage and explores changes such as moving vertices between groups. The parent recipe is vector optimization followed by rounding. The child recipe retains both operations and adds local search. The numerical kernels execute these operations after the proposal has passed validation.</p>
+<p>Step 4 tests the complete child program against the parent under the declared evaluation protocol: the same graph, seeds, raw starting partitions and numerical limits. Each program has the same total time allowance per trial; the child shares its allowance across its stages. Appending local search does not grant extra evaluation time. The evaluator independently rescores the original graph and aggregates complete trials into fitness. The added stage might help, offer no improvement, or reduce performance within the fixed allowance. The proposal is a hypothesis because those outcomes must be measured rather than inferred from a plausible explanation.</p>
 <p>The model replaces one part of the evolutionary algorithm: the variation operator. It does not replace the artifact representation, objective, evaluator, selection rule or external population memory. Between calls, the controller changes the context; it does not update model weights. The same selected structure and failure record can make the next proposal more informed than an independent guess.</p>
 <p>Chapter 10 connects context engineering to mutation and evaluation to fitness. FunSearch is a primary program-search example <span class="citation" data-cites="funsearch2024">(Romera-Paredes et al. 2024)</span>. The classroom system uses a narrower interpreter over existing numerical kernels. Its proposals can change configurations and compositions but cannot invent arbitrary executable Python or modify the objective. Better proposals are possible, never guaranteed.</p>
 </section><section id="problem"><h2>7. Signed Max-Cut</h2><div class="question">
-<p><strong>How should vertices be partitioned when some edges prefer separation and others prefer agreement?</strong></p>
-</div>
-<div class="block visual">
-<figure>
-<img src="/figures/signed-four-vertex.svg" style="width:65.0%" alt="Four-vertex illustration of signed edge preferences." />
-<figcaption aria-hidden="true">Four-vertex illustration of signed edge preferences.</figcaption>
-</figure>
+<p><strong>Can every edge preference be satisfied at once?</strong></p>
 </div>
 <div class="block">
-<p>Positive edge: prefer different sides. Negative edge: prefer the same side.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mi>G</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>s</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munder><mo>∑</mo><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><mi>E</mi></mrow></munder><msub><mi>w</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mfrac><mrow><mn>1</mn><mo>−</mo><msub><mi>s</mi><mi>i</mi></msub><msub><mi>s</mi><mi>j</mi></msub></mrow><mn>2</mn></mfrac><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>s</mi><mi>i</mi></msub><mo>∈</mo><mo stretchy="false" form="prefix">{</mo><mo>−</mo><mn>1</mn><mo>,</mo><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">C_G(s)=\sum_{(i,j)\in E}w_{ij}\frac{1-s_i s_j}{2},\quad s_i\in\{-1,+1\}.</annotation></semantics></math></p>
+<p>Illustrative triangle: <strong>A–B = +3; A–C = −2; B–C = −2.</strong></p>
+<p>Positive weights reward separation. Negative weights penalize separation.</p>
+</div>
+<div class="block">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Partition</th>
+<th style="text-align: left;">Crossing contributions</th>
+<th style="text-align: right;">Cut value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A, B, C together</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A alone; B with C</td>
+<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo><mn>3</mn><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">+3-2</annotation></semantics></math></td>
+<td style="text-align: right;"><strong>1</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C alone; A with B</td>
+<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2-2</annotation></semantics></math></td>
+<td style="text-align: right;">−4</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="answer">
-<p><strong>Maximize the original signed cut.</strong> The comparison uses 1,000 vertices, 5,043 signed edges and reference 1098.</p>
+<p><strong>Edge preferences can conflict. Maximize their total crossing weight.</strong> Separating A and B forces at least one negative edge to cross.</p>
 </div>
-<p>A solution witness is one integer sign per vertex in original order. A crossing contributes its signed weight; an uncut edge contributes zero. Thus leaving a negative edge uncut avoids a penalty rather than earning an extra positive reward. Complementing every sign gives the same objective. The four-vertex picture is an illustration; the live comparison uses the supplied sparse random signed graph.</p>
-<p>Both initialization experiments use the same 1,000-vertex graph, 5,043 edges and raw random assignments for seeds 3, 4 and 5. Its supplied reference is 1098. The separate dense stress case has 100 vertices, 4950 real-valued signed edges and reference 402.5209. It tests another numerical structure; fewer vertices and greater density do not imply a universal hardness ordering. Neither reference is a certified optimum. The earlier 100-vertex torus recordings are historical and remain preserved.</p>
+<p>The purpose of this frame is to establish a conflict that requires a global tradeoff before introducing the objective’s notation. This three-vertex triangle is a hypothetical teaching example, not an instance measurement from the live demonstration. There is an edge between every pair: A–B has weight +3, and A–C and B–C each have weight −2. A partition assigns every vertex to one of two groups; a group may be empty.</p>
+<p>Show the question, pause, and invite students to try satisfying all three preferences. The positive edge asks for A and B to be separated. Both negative edges ask for C to remain with their respective endpoints. C cannot be in the same group as both A and B while those two vertices are separated. Individual edge preferences therefore cannot all be satisfied at once.</p>
+<p>Reveal the table and compute each row aloud. Keeping all three vertices together cuts no edges, giving 0. Separating A while keeping B and C together cuts A–B and A–C: +3 minus 2 equals 1. Separating C while keeping A and B together cuts both negative edges: −2 minus 2 equals −4. Separating B gives the symmetric score 1. Together with exchanging the two group names, these exhaust the possible partitions, so 1 is the optimum for this small illustrative triangle. That direct enumeration does not certify either live benchmark’s reference value.</p>
+<p>Conclude: a solver must account for the whole graph because a single vertex’s placement affects several edges. A crossing contributes its signed weight; an uncut edge contributes zero. Keeping a negative edge uncut avoids a penalty rather than earning an extra positive reward. Maximizing the total crossing weight balances the incompatible preferences.</p>
+<p>For the formal definition, encode the two group memberships by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub><mo>∈</mo><mo stretchy="false" form="prefix">{</mo><mo>−</mo><mn>1</mn><mo>,</mo><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">s_i\in\{-1,+1\}</annotation></semantics></math>. Equal labels have product <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub><msub><mi>s</mi><mi>j</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">s_i s_j=1</annotation></semantics></math>, so the crossing indicator <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mi>s</mi><mi>i</mi></msub><msub><mi>s</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">(1-s_i s_j)/2</annotation></semantics></math> is 0. Opposite labels have product −1, so the indicator is 1. Thus</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mi>G</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>s</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munder><mo>∑</mo><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><mi>E</mi></mrow></munder><msub><mi>w</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mfrac><mrow><mn>1</mn><mo>−</mo><msub><mi>s</mi><mi>i</mi></msub><msub><mi>s</mi><mi>j</mi></msub></mrow><mn>2</mn></mfrac><mo>,</mo><mspace width="2.0em"></mspace><munder><mo>max</mo><mrow><mi>s</mi><mo>∈</mo><mo stretchy="false" form="prefix">{</mo><mo>−</mo><mn>1</mn><mo>,</mo><mo>+</mo><mn>1</mn><msup><mo stretchy="false" form="postfix">}</mo><mrow><mo stretchy="true" form="prefix">|</mo><mi>V</mi><mo stretchy="true" form="postfix">|</mo></mrow></msup></mrow></munder><msub><mi>C</mi><mi>G</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>s</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">C_G(s)=\sum_{(i,j)\in E}w_{ij}\frac{1-s_i s_j}{2},\qquad \max_{s\in\{-1,+1\}^{|V|}}C_G(s).</annotation></semantics></math></p>
+<p>Complementing every sign exchanges the group names without changing the cut value. The demonstration evaluates each solver’s returned partition by independently summing the original graph’s edge contributions. This gives external numerical feedback for evolving solver programs. Graph size, trial conditions and unproven reference values are introduced with the experiment setup, after students understand what a score means.</p>
 </section><section id="move"><h2>8. Local moves and feasible witnesses</h2><div class="question">
 <p><strong>Can the search move to a worse state while keeping a better result?</strong></p>
 </div>
@@ -168,13 +209,14 @@
 <div class="answer">
 <p><strong>Declare the success criterion before comparing runs.</strong> The third graph is a separate dense real-weight stress case.</p>
 </div>
+<p>The first two experiments use the same 1,000-vertex signed graph with 5,043 edges and supplied reference 1098. The third uses a separate 100-vertex dense graph with 4,950 real-valued signed edges and supplied reference 402.5209. Neither reference is a certified optimum. Earlier torus records remain historical evidence rather than substitutes for these cases.</p>
 <p>Primary fitness is median cut across three complete trials. Matching the reference median is weaker than matching it in every trial; the latter additionally requires the minimum to meet the reference. The comparison page exposes both milestones. It reports calls and time to target separately from all calls spent in a fixed three-round teaching run.</p>
 <p>These are bounded classroom observations with a stochastic model, not repeated research estimates. Larger seed suites consume more initial numerical effort. Human prior knowledge and its development cost are not captured by the run clock. Changing graph structure and weight distribution in demo three prevents a causal speed comparison with the first two; it tests whether the same architecture still operates on a denser signed problem. Three calls are permitted by the server; the replacement rehearsal has two successful-call slots per case after two network-restricted attempts, all counted within the authorized allowance.</p>
 </section><section id="demo-limited"><h2>13. Demo 1: a limited initialization</h2><div class="question">
 <p><strong>Can local-search seeds recover a useful relaxation method through mutation?</strong></p>
 </div>
 <div class="block">
-<p>Use the 1,000-vertex signed graph, seed 3, <strong>Tabu Search and Simulated Annealing</strong>. The initial best median is 975; reference 1098 is unproven.</p>
+<p>Use the <strong>1,000-vertex signed graph (5,043 edges)</strong>, seed 3, <strong>Tabu Search and Simulated Annealing</strong>. The initial best median is 975; reference 1098 is unproven.</p>
 </div>
 <div class="block">
 <p>All four kernels remain available. Inspect parent programs, the actual request, public proposals and complete measured child fitness.</p>

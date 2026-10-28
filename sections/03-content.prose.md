@@ -100,6 +100,8 @@ Report initial median, calls and time to the median target, all-trial robustness
 :::
 
 ::: {.notes}
+The first two experiments use the same 1,000-vertex signed graph with 5,043 edges and supplied reference 1098. The third uses a separate 100-vertex dense graph with 4,950 real-valued signed edges and supplied reference 402.5209. Neither reference is a certified optimum. Earlier torus records remain historical evidence rather than substitutes for these cases.
+
 Primary fitness is median cut across three complete trials. Matching the reference median is weaker than matching it in every trial; the latter additionally requires the minimum to meet the reference. The comparison page exposes both milestones. It reports calls and time to target separately from all calls spent in a fixed three-round teaching run.
 
 These are bounded classroom observations with a stochastic model, not repeated research estimates. Larger seed suites consume more initial numerical effort. Human prior knowledge and its development cost are not captured by the run clock. Changing graph structure and weight distribution in demo three prevents a causal speed comparison with the first two; it tests whether the same architecture still operates on a denser signed problem. Three calls are permitted by the server; the replacement rehearsal has two successful-call slots per case after two network-restricted attempts, all counted within the authorized allowance.
@@ -112,7 +114,7 @@ These are bounded classroom observations with a stochastic model, not repeated r
 :::
 
 ::: {.block}
-Use the 1,000-vertex signed graph, seed 3, **Tabu Search and Simulated Annealing**. The initial best median is 975; reference 1098 is unproven.
+Use the **1,000-vertex signed graph (5,043 edges)**, seed 3, **Tabu Search and Simulated Annealing**. The initial best median is 975; reference 1098 is unproven.
 :::
 
 ::: {.block}

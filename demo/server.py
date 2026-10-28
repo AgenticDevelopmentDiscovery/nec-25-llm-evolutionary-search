@@ -1,17 +1,41 @@
 """Loopback-only classroom server. Run: python demo/server.py"""
 import argparse
+import errno
 import hashlib
+import http.client
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
 import secrets
 import signal
+import os
+import sys
 import threading
 from urllib.parse import urlsplit, parse_qs
 
 import backend as b
 from controller import Manager, HERE, PROFILE, live_access, TERMINAL
 from experiments import SCENARIOS
+from preview import PresentationPreview
+
+SERVICE = 'engr689-maxcut-demo'
+WORKSPACE = hashlib.sha256(str(HERE.parent.resolve()).encode()).hexdigest()
+
+
+def existing_server(port):
+    """Identify only this repository's service; never stop or replace a listener."""
+    connection = http.client.HTTPConnection('127.0.0.1', port, timeout=1)
+    try:
+        connection.request('GET', '/api/server-info')
+        response = connection.getresponse()
+        if response.status != 200: return None
+        info = json.loads(response.read(8192))
+        if not isinstance(info,dict) or type(info.get('pid')) is not int: return None
+        return info if info.get('service')==SERVICE and info.get('workspace')==WORKSPACE else None
+    except (OSError, ValueError, http.client.HTTPException):
+        return None
+    finally:
+        connection.close()
 
 
 def verify_snapshot():
@@ -36,13 +60,14 @@ def instance(name=None):
 
 class DemoServer(ThreadingHTTPServer):
     daemon_threads = True
-    def __init__(self, address=('127.0.0.1', 8766), manager=None):
+    def __init__(self, address=('127.0.0.1', 8766), manager=None, preview=None):
         if address[0] != '127.0.0.1': raise ValueError('only 127.0.0.1 is supported')
+        super().__init__(address, Handler)
         self.manager = manager or Manager(instance=PROFILE['instance'])
+        self.preview = preview or PresentationPreview()
         self.bootstrap = secrets.token_urlsafe(32)
         self.tokens = {}
         self.route_lock = threading.RLock()
-        super().__init__(address, Handler)
 
     def register(self, run):
         token = secrets.token_urlsafe(32)
@@ -77,6 +102,10 @@ class Handler(BaseHTTPRequestHandler):
             self.headers_ok()
             url = urlsplit(self.path)
             path = url.path
+            if path == '/api/server-info':
+                return self.reply({'service':SERVICE,'workspace':WORKSPACE,'pid':os.getpid(),'rounds':PROFILE['max_rounds'],'auto_rebuild':self.server.preview.available})
+            if path == '/api/presentation': return self.reply(self.server.preview.ensure())
+            if path in ('/presentation.json','/notes'): self.server.preview.ensure()
             if path == '/api/instance': return self.reply(instance(parse_qs(url.query).get('instance', [self.server.manager.instance])[0]))
             if path == '/api/comparisons': return self.reply(self.server.manager.comparisons())
             if path == '/api/activity': return self.reply(self.server.manager.activity())
@@ -120,26 +149,26 @@ class Handler(BaseHTTPRequestHandler):
             filename, mime = static[path]
             asset = HERE / 'static' / filename
             if not asset.is_file(): return self.reply({'error': 'asset not built; run just build'}, 404)
-            size = asset.stat().st_size
-            start, end = 0, size - 1
-            partial = False
-            if mime == 'video/mp4' and self.headers.get('Range'):
-                import re
-                match = re.fullmatch(r'bytes=(\d+)-(\d*)', self.headers['Range'])
-                if not match: return self.reply({'error': 'unsupported byte range'}, 416)
-                start, end = int(match[1]), min(int(match[2]) if match[2] else end, end)
-                if start > end: return self.reply({'error': 'range outside video'}, 416)
-                partial = True
-            self.send_response(206 if partial else 200)
-            self.send_header('Content-Type', mime + ('; charset=utf-8' if mime.startswith('text/') else ''))
-            self.send_header('Content-Length', str(end - start + 1))
-            if mime == 'video/mp4': self.send_header('Accept-Ranges', 'bytes')
-            if partial: self.send_header('Content-Range', f'bytes {start}-{end}/{size}')
-            self.send_header('Cache-Control', 'no-store')
-            self.send_header('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; frame-src 'self'; media-src 'self'; object-src 'none'; frame-ancestors 'self'")
-            self.send_header('X-Content-Type-Options', 'nosniff')
-            self.end_headers()
             with asset.open('rb') as stream:
+                size = os.fstat(stream.fileno()).st_size
+                start, end = 0, size - 1
+                partial = False
+                if mime == 'video/mp4' and self.headers.get('Range'):
+                    import re
+                    match = re.fullmatch(r'bytes=(\d+)-(\d*)', self.headers['Range'])
+                    if not match: return self.reply({'error': 'unsupported byte range'}, 416)
+                    start, end = int(match[1]), min(int(match[2]) if match[2] else end, end)
+                    if start > end: return self.reply({'error': 'range outside video'}, 416)
+                    partial = True
+                self.send_response(206 if partial else 200)
+                self.send_header('Content-Type', mime + ('; charset=utf-8' if mime.startswith('text/') else ''))
+                self.send_header('Content-Length', str(end - start + 1))
+                if mime == 'video/mp4': self.send_header('Accept-Ranges', 'bytes')
+                if partial: self.send_header('Content-Range', f'bytes {start}-{end}/{size}')
+                self.send_header('Cache-Control', 'no-store')
+                self.send_header('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; frame-src 'self'; media-src 'self'; object-src 'none'; frame-ancestors 'self'")
+                self.send_header('X-Content-Type-Options', 'nosniff')
+                self.end_headers()
                 stream.seek(start)
                 remaining = end - start + 1
                 while remaining:
@@ -219,20 +248,36 @@ def main():
     verified = verify_snapshot()
     if args.check:
         print(json.dumps({'vendored_files_verified': verified, 'live': live_access(), 'recursive_agent_calls': False})); return
-    import shutil
-    if shutil.which("pandoc"):
-        from build_presentation import build
-        build()
-    elif not (HERE/"static/presentation.json").is_file():
-        parser.error("presentation bundle missing: generate with python demo/build_presentation.py on the author machine")
-    server = DemoServer(('127.0.0.1', args.port))
+    url = f'http://127.0.0.1:{args.port}/'
+    try:
+        server = DemoServer(('127.0.0.1', args.port))
+    except OSError as error:
+        if error.errno != errno.EADDRINUSE: raise
+        info = existing_server(args.port)
+        if info:
+            print(f'Already running: {url} (PID {info["pid"]}). Open or refresh that page; no second server started.')
+            print('The existing Python environment and server settings remain in use.')
+            if info.get('auto_rebuild'): print('Save prose to update open presentation tabs automatically.')
+            if info.get('rounds') != args.rounds:
+                print(f'Existing server uses {info["rounds"]} rounds. Stop it first to change that setting.')
+            return 0
+        print(f'Port {args.port} is already in use by another or older service. No process was stopped.\n'
+              f'Open {url} if it is your tutorial server, or use: just demo 8767', file=sys.stderr)
+        return 2
+    preview = server.preview.ensure()
+    if not (HERE/'static/presentation.json').is_file():
+        server.manager.close();server.server_close()
+        print('Presentation unavailable: '+str(preview['error']),file=sys.stderr)
+        return 1
+    if preview['error']: print('Showing the last built frames. Prose error: '+preview['error'],file=sys.stderr)
     def shutdown(*_):
         threading.Thread(target=server.shutdown, daemon=True).start()
     signal.signal(signal.SIGINT, shutdown); signal.signal(signal.SIGTERM, shutdown)
     print(f'Max-Cut demo: http://127.0.0.1:{server.server_address[1]} (local only)', flush=True)
+    print('Save sections/*.prose.md to update browser frames automatically. PDFs: just build.' if preview['auto_rebuild'] else 'Serving bundled frames. Install Pandoc to rebuild edited prose.',flush=True)
     try: server.serve_forever(poll_interval=0.1)
     finally:
         server.manager.close(); server.server_close()
 
 
-if __name__ == '__main__': main()
+if __name__ == '__main__': raise SystemExit(main())
