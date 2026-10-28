@@ -242,10 +242,10 @@ Before the first round, in this order:
 ## Current browser presentation adaptation
 
 The presenter requested sequential block reveals and an integrated local demo.
-Shared sections now use question/block/answer Divs (four overlay slides per teaching frame, with a single-state title)
-and notes Divs (detailed document/site explanations, hidden in presentation).
-`just slides` creates a 22-frame handout (19 main frames, then 3 optional appendix frames); `just overlays` creates all
-85 reveal states (73 main, 12 appendix). Main navigation stops at the conclusion; an explicit Appendix control opens the architecture/API frames. `just presentation` derives the browser bundle and notes from
+Shared sections use question/block/answer Divs, revealing each one present in source order. Questions and answers are optional; shorter demo frames and additional blocks are supported. Plain Markdown or a heading-only frame has one presentation state.
+Notes Divs provide detailed document/site explanations, hidden in presentation.
+`just slides` creates a final-state frame handout; `just overlays` creates all
+reveal states. Frame/reveal counts and planned times are derived from the saved source rather than fixed at the original 19 main frames. Main navigation stops at the conclusion; an explicit Appendix control opens the architecture/API frames. `just presentation` derives the browser bundle and notes from
 the same source. The generated browser bundle and teaching PDFs are included for student machines
 without Pandoc. With Pandoc installed, the live server rebuilds saved prose and
 updates open presentation tabs while preserving frame/reveal and demo state.

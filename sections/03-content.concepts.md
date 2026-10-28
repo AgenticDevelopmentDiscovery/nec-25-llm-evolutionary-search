@@ -1,4 +1,6 @@
 # Claims
+- Retained downstream Burer–Monteiro stages lift/perturb/refine the incoming partition; initial/fresh Burer–Monteiro calls remain unchanged. Older replays preserve original behavior.
+- Replacing a solver starts a new program from common raw labels; composing retained stages passes partitions within that program's trial.
 - Programs comprise one to three trusted stages with configuration, work and start rules.
 - Tabu Search, Simulated Annealing, Breakout Local Search and rank-two Burer–Monteiro use distinct mechanisms and work units.
 - Checkboxes choose only the initial population; all four kernels remain available to Luna.

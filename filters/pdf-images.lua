@@ -9,26 +9,40 @@ if FORMAT:match('latex') or FORMAT:match('beamer') then
   end
 end
 if FORMAT:match('latex') then
+  local minipage_open = false
+  local function close_minipage()
+    minipage_open=false
+    return pandoc.RawBlock('latex','\\end{minipage}\\par\\medskip')
+  end
   function Header(header)
-    if header.identifier == 'title' then return {} end
+    local result={}
+    if header.level<=2 and minipage_open then result[#result+1]=close_minipage() end
+    if header.identifier == 'title' then return result end
     if header.classes:includes('appendix-section') then
-      return {pandoc.RawBlock('latex', '\\appendix\\Needspace{14\\baselineskip}'), header}
+      result[#result+1]=pandoc.RawBlock('latex','\\appendix\\Needspace{14\\baselineskip}')
+    elseif header.level<=2 then
+      result[#result+1]=pandoc.RawBlock('latex','\\Needspace{14\\baselineskip}')
     end
-    if header.level <= 2 then
-      return {pandoc.RawBlock('latex', '\\Needspace{14\\baselineskip}'), header}
-    end
+    result[#result+1]=header
+    return result
   end
   function Div(div)
     if div.classes:includes('title-only') then return {} end
-    if div.classes:includes('question') then
-      local result={pandoc.RawBlock('latex','\\begin{minipage}{\\linewidth}')}
-      for _,block in ipairs(div.content) do result[#result+1]=block end
-      return result
-    elseif div.classes:includes('answer') then
+    if div.classes:includes('notes') then
+      if minipage_open then return {close_minipage(),div} end
+    elseif div.classes:includes('question') or div.classes:includes('block') or div.classes:includes('answer') then
       local result={}
+      if not minipage_open then
+        result[#result+1]=pandoc.RawBlock('latex','\\begin{minipage}{\\linewidth}')
+        minipage_open=true
+      end
       for _,block in ipairs(div.content) do result[#result+1]=block end
-      result[#result+1]=pandoc.RawBlock('latex','\\end{minipage}\\par\\medskip')
+      if div.classes:includes('answer') then result[#result+1]=close_minipage() end
       return result
     end
+  end
+  function Pandoc(doc)
+    if minipage_open then doc.blocks:insert(close_minipage()) end
+    return doc
   end
 end

@@ -93,10 +93,12 @@ class Run:
         self.current = b.score_labels(self.initial if self.initial is not None else b.seed_labels(seed, self.instance), self.instance)
         save(self.path / 'request.json', {'seed': seed, 'mode': mode, 'initial': self.initial,
                                          'graph_sha256': self.spec['sha256'], 'instance':self.instance, 'replay': replay, 'speed': speed, 'initial_solvers':initial_solvers, 'scenario':scenario})
-        save(self.path / 'config.json', {**PROFILE, 'trial_seeds': self.seeds, 'initial_solvers':initial_solvers, 'scenario':scenario, 'population_protocol':'shared_raw' if self.population_protocol else 'legacy_frozen_parent', 'live_access': live_access()})
+        save(self.path / 'config.json', {**PROFILE, 'trial_seeds': self.seeds, 'initial_solvers':initial_solvers, 'scenario':scenario, 'population_protocol':'shared_raw' if self.population_protocol else 'legacy_frozen_parent', 'live_access': live_access(),
+                                      'execution_version':b.EXECUTION_VERSION if mode != 'replay' else 'recorded-source'})
         self.emit('run_created', initial_solvers=initial_solvers, scenario=scenario, population_protocol='shared_raw' if self.population_protocol else 'legacy_frozen_parent', seed=seed, trial_seeds=self.seeds, initial=self.current,
                   graph_sha256=self.spec['sha256'], instance=self.instance, total_seconds=PROFILE['total_seconds'], strategy_scope='interpreted trusted-kernel stages',
-                  selection='top 3, median then minimum then fewer stages then stable ID; no diversity slot')
+                  selection='top 3, median then minimum then fewer stages then stable ID; no diversity slot',
+                  execution_version=b.EXECUTION_VERSION if mode != 'replay' else 'recorded-source')
 
     def elapsed(self):
         return (self.ended or time.monotonic()) - self.started if self.started else 0.0

@@ -161,12 +161,14 @@ B: current fitness <strong>6</strong> → best tested child <strong>9</strong>.<
 </div>
 <div class="block">
 <p>Execute a program → obtain signs → recompute the original cut → summarize three trials → rank the program.</p>
+<p>Retained <strong>Tabu Search → Burer–Monteiro</strong> lifts and perturbs the incoming partition before vector refinement.</p>
 </div>
 <div class="answer">
 <p><strong>Evolve the solver; evaluate its witness.</strong> Trusted kernels execute the stages. Unchecked algorithms remain available to the mutator.</p>
 </div>
 <p>The identifiers bm and bls denote the rank-two Burer–Monteiro method and Breakout Local Search. The displayed composition was proposed in the earlier genuine dense-graph rehearsal. Each schema stage contains backend, config, max_work and fresh. Missing defaults are normalized before hashing so equivalent encodings cannot receive separate evaluations merely by omitting a default.</p>
 <p>A retained stage receives a copy of the best witness from preceding work in the same trial. A fresh stage uses a seeded random exploratory start; the interpreter retains an older better witness if the new stage is worse. Remaining numerical time is allocated among remaining stages, with unused time carried forward. The model supplies data describing this bounded interpreter, not shell commands or arbitrary source code.</p>
+<p>Distinguish replacement from composition. A child containing only Tabu Search replaces a Burer–Monteiro parent as a program and starts from the same raw trial labels as its competitors. It does not consume that previously evaluated parent’s final partition. A child containing Burer–Monteiro followed by retained Tabu Search passes the best partition between its own stages. In the reverse retained order, the classroom adapter embeds the incoming Tabu partition as vector angles 0 or pi, adds seeded uniform offsets in [-0.35, 0.35] radians, optimizes those vectors, then rounds and polishes. It keeps the incoming partition if the new result is worse. This changes the complete solver recipe; it does not rewrite Tabu Search’s internal algorithm. First-stage and fresh Burer–Monteiro stages keep their original independent vector search. Older recorded replays preserve their original execution behavior and do not demonstrate this new downstream refinement.</p>
 </section><section id="kernels"><h2>10. Four numerical algorithms</h2><div class="question">
 <p><strong>Which mechanism changes when we choose a different solver stage?</strong></p>
 </div>
@@ -212,63 +214,23 @@ B: current fitness <strong>6</strong> → best tested child <strong>9</strong>.<
 <p>The first two experiments use the same 1,000-vertex signed graph with 5,043 edges and supplied reference 1098. The third uses a separate 100-vertex dense graph with 4,950 real-valued signed edges and supplied reference 402.5209. Neither reference is a certified optimum. Earlier torus records remain historical evidence rather than substitutes for these cases.</p>
 <p>Primary fitness is median cut across three complete trials. Matching the reference median is weaker than matching it in every trial; the latter additionally requires the minimum to meet the reference. The comparison page exposes both milestones. It reports calls and time to target separately from all calls spent in a fixed three-round teaching run.</p>
 <p>These are bounded classroom observations with a stochastic model, not repeated research estimates. Larger seed suites consume more initial numerical effort. Human prior knowledge and its development cost are not captured by the run clock. Changing graph structure and weight distribution in demo three prevents a causal speed comparison with the first two; it tests whether the same architecture still operates on a denser signed problem. Three calls are permitted by the server; the replacement rehearsal has two successful-call slots per case after two network-restricted attempts, all counted within the authorized allowance.</p>
-</section><section id="demo-limited"><h2>13. Demo 1: a limited initialization</h2><div class="question">
-<p><strong>Can local-search seeds recover a useful relaxation method through mutation?</strong></p>
-</div>
-<div class="block">
+</section><section id="demo-limited"><h2>13. Demo 1: a limited initialization</h2><div class="block">
 <p>Use the <strong>1,000-vertex signed graph (5,043 edges)</strong>, seed 3, <strong>Tabu Search and Simulated Annealing</strong>. The initial best median is 975; reference 1098 is unproven.</p>
-</div>
-<div class="block">
-<p>All four kernels remain available. Inspect parent programs, the actual request, public proposals and complete measured child fitness.</p>
-</div>
-<div class="answer">
-<p><strong>A limited suite defines a starting point, not a permanent restriction.</strong> Follow improvement, reference gap, numerical effort and model calls.</p>
 </div>
 <p>Use the first named preset and confirm two checked algorithms. The server verifies graph, seed and selection metadata. Start evaluates only those programs. At each gate inspect the selected parents and explicitly send their context. A two-parent population supplies two actual parents; no manufactured copies are added to make three.</p>
 <p>The earlier BM-only torus demonstration was an algorithm-recovery control, not a recommendation to initialize every task with Burer–Monteiro. That easy graph saturated near its reference and obscured differences. The replacement screen uses unchanged seed configurations and identical raw seeds. Burer–Monteiro is actually the strongest initial program here, so excluding it from this limited suite tests whether mutation can introduce a useful absent mechanism. Recovery and reference matching are hypotheses, never scripted outcomes. The genuine replacement run completed two Luna rounds in 24.003 seconds. Its eligible median improved from 975 to 1008; its best witness was 1031. No reference match occurred. Luna refined the two existing mechanisms rather than introducing Burer–Monteiro, even though all kernels remained available.</p>
-</section><section id="demo-informed"><h2>14. Demo 2: a researcher-selected suite</h2><div class="question">
-<p><strong>What changes when measured domain knowledge supplies stronger starting programs?</strong></p>
-</div>
-<div class="block">
+</section><section id="demo-informed"><h2>14. Demo 2: a researcher-selected suite</h2><div class="block">
 <p>Keep graph, seeds and caps fixed. Select <strong>Tabu Search, Breakout Local Search and rank-two Burer–Monteiro</strong>.</p>
-</div>
-<div class="block">
-<p>The initial best median is 1012, compared with 975 for the limited suite. The reference gap falls from 123 to 86 before any model call.</p>
-</div>
-<div class="answer">
-<p><strong>Researcher knowledge improves this starting population.</strong> Evaluate later gains and costs; a stronger start does not guarantee a faster run.</p>
 </div>
 <p>The initial medians come from complete numerical trials on common raw starts. The four full seed-program medians are 921, 975, 992 and 1012 for Simulated Annealing, Tabu Search, Breakout Local Search and Burer–Monteiro respectively. Including the stronger relaxation and escape mechanism improves this initial population. No kernel definition or hidden work cap changes between the two scenarios.</p>
 <p>More initial programs cost more numerical evaluations and alter the context supplied to Luna. Prior researcher design effort is also a real cost even though it is absent from the run clock. Compare complete-program fitness, best-witness quality, model calls and numerical time. A fluent proposal, an incomplete high-scoring trial or a favorable single run does not establish a general advantage. The genuine replacement run made two model calls in 66.589 seconds. Burer–Monteiro followed by longer Breakout Local Search produced witnesses up to 1060, but its trials were incomplete, so the best eligible median stayed 1012. The second response referred to an ineligible parent and validation stopped the run. Replay labels this source FAILED. This is evidence of the validation and completeness rules, not a successful reference-matching run.</p>
-</section><section id="comparison"><h2>15. Comparing the evidence</h2><div class="question">
-<p><strong>If every method eventually reaches the same target, how should we compare them?</strong></p>
-</div>
-<div class="block">
-<p>Compare initial fitness, complete-program improvement, reference gap and calls or time to a declared target. Retain unsuccessful and censored proposals.</p>
-</div>
-<div class="block">
-<p>Initial medians: <strong>921 / 975 / 992 / 1012</strong>. These distinguish the four configured solvers on the replacement graph; reference <strong>1098</strong> is unproven.</p>
-</div>
-<div class="answer">
-<p><strong>A common final score can hide different search costs.</strong> An unreached reference must remain visibly unreached.</p>
-</div>
-<p>The torus ceiling effect motivated a new instance screen rather than a fabricated failure. Five public graphs were screened using the same four initial configurations and seeds 3/4/5. The 1,000-vertex signed random graph gives a 91-cut spread between initial program medians, compared with two cut units on the old torus. The graph choice is informed by this numerical screen, so these three seeds are teaching evidence, not a held-out generalization test.</p>
-<p>The two-call replacement results are: limited suite 975 → 1008 eligible median, best witness 1031, 24.003 seconds; informed suite 1012 → 1012 eligible median, best witness 1060, 66.589 seconds, terminated after an invalid parent reference. Neither matched 1098. The stronger starting population did not deliver the intended efficient-win narrative in these observations. Use the measured comparison table and genuine exact exchanges for actual model outcomes. Distinguish the primary median target from the stronger all-trial target and the separate best witness. A run that finishes its budget short of the reference still demonstrates mutation, evaluation and selection; it does not demonstrate successful reference attainment. Stored torus records remain labeled with their original graph and scenario, never substituted for replacement runs.</p>
-</section><section id="demo-harder"><h2>16. Demo 3: a dense real-weight stress case</h2><div class="question">
-<p><strong>Will the same architecture work when interactions are dense and weights are real-valued?</strong></p>
-</div>
-<div class="block">
+</section><section id="demo-harder"><h2>15. Demo 3: a dense real-weight stress case</h2><div class="block">
 <p>Use <strong>100 vertices, 4950 real-valued signed edges</strong>, all four initial solvers and supplied reference <strong>402.5209</strong>, unproven.</p>
 </div>
 <div class="block">
 <p>Eight numerical seconds per trial; three Luna calls maximum. Inspect composition, rejection, completeness and the actual surviving programs.</p>
 </div>
-<div class="answer">
-<p><strong>Evaluate the dense case on its own evidence.</strong> A reference match is a feasible result; it is not a proof of optimality or broad model superiority.</p>
-</div>
-<p>The dense Gaussian-weight graph comes from the supplied public assignment instances. Only graph input and scalar reference metadata were copied; no assignment solution vectors or private campaign records were imported. The dense case has 100 vertices and 4950 edges; the comparison graph has 1000 vertices and 5043 edges. Thus edge counts are similar while average degree, density and weight distribution differ sharply. Both allow eight seconds per trial. This is a structural transfer case, not a justified universal ranking of instance difficulty.</p>
-<p>The initial algorithms are the same disclosed configurations used elsewhere. All children share the same raw starts within this case. A previous two-call recording matched the reference with a Burer–Monteiro → Breakout Local Search composition and excluded a later time-limited extension. The current three-call rehearsal reached three complete reference matches after one model call at 16.091 seconds and finished at 56.602 seconds. It is recorded separately. Use the live comparison table and exact exchange to inspect its actual outcomes rather than substituting the old result.</p>
-</section><section id="harder-evidence"><h2>17. Reading solver evidence</h2><div class="question">
+</section><section id="harder-evidence"><h2>16. Reading solver evidence</h2><div class="question">
 <p><strong>Which record proves that a solver improved: the graph, the hypothesis or the completed trials?</strong></p>
 </div>
 <div class="block">
@@ -282,7 +244,7 @@ B: current fitness <strong>6</strong> → best tested child <strong>9</strong>.<
 </div>
 <p>A valid witness answers a feasibility-and-quality question for one execution. A complete candidate ranking answers how its program performed across the declared trials. Neither the model’s hypothesis nor an attractive partition drawing supplies fitness. Incomplete programs receive no eligible median/minimum ranking entry, even if all returned witnesses happen to match the reference.</p>
 <p>Changing work limits can trade quality against completion risk. The exact-exchange and comparison pages expose requested programs, measured execution time, actual token usage where supplied, invalid proposals and survivor decisions. Calls after a target has already been achieved are visible as teaching continuation. No extra activity or artificial solver motion is fabricated to fill the allotted demonstration window.</p>
-</section><section id="definition"><h2>18. The agentic evolutionary framework</h2><div class="question">
+</section><section id="definition"><h2>17. The agentic evolutionary framework</h2><div class="question">
 <p><strong>Can we now name the five choices we implemented?</strong></p>
 </div>
 <div class="block">
@@ -292,13 +254,10 @@ B: current fitness <strong>6</strong> → best tested child <strong>9</strong>.<
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Q</mi><mi>t</mi></msub><mo>∼</mo><mi>μ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo>∣</mo><msub><mi>P</mi><mi>t</mi></msub><mo>,</mo><msub><mi>H</mi><mi>t</mi></msub><mo>,</mo><msub><mi>B</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>P</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo>∪</mo><mi>E</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>Q</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">Q_t\sim\mu(\cdot\mid P_t,H_t,B_t),\quad P_{t+1}=\sigma(P_t\cup E(Q_t)).</annotation></semantics></math></p>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>t</mi></msub><annotation encoding="application/x-tex">H_t</annotation></semantics></math>: measured history. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding="application/x-tex">B_t</annotation></semantics></math>: remaining budget. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>: validation and complete evaluation.</p>
 </div>
-<div class="answer">
-<p><strong>The LLM is the mutation operator inside an externally measured evolutionary loop.</strong> For the course minimization convention, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><msub><mo>median</mo><mi>j</mi></msub><msub><mi>C</mi><mi>G</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>A</mi><mi>a</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>G</mi><mo>,</mo><msub><mi>z</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(a)=-\operatorname{median}_j C_G(A_a(G,z_j))</annotation></semantics></math>.</p>
-</div>
 <p>This instantiates Chapter 10, Definition 10.2, after the audience has encountered both ordinary evolutionary search and the LLM variant. The artifact space contains validated programs of one to three trusted stages. Its interpreter maps graph G and shared raw start z_j into signs under the seeded numerical protocol. Negative median cut turns maximization into the course’s lower-is-better fitness convention. The implementation supplements that primary scalar with minimum cut, stage count and stable identity tie-breaks.</p>
 <p>The chapter presents an artifact-to-artifact mutation operator. The operational notation here makes context, stochasticity and budget explicit: one tool-free call may refer to up to three selected parents and return at most two children. Q_t is the proposed set; E(Q_t) retains only admitted, completely evaluated children. Selected programs and their measured histories inform the next request. The model’s parameters remain fixed; learning during the run is carried by external context and population memory.</p>
 <p>Elitism preserves observed measured strategies under this protocol, not global optimality, diversity or unseen-instance quality. Initial population design and allowed artifact-space design are separate levers. In this tutorial all checked and unchecked trusted kernels remain available to mutation in every comparison.</p>
-</section><section id="transfer"><h2>19. Applying the framework to research</h2><div class="question">
+</section><section id="transfer"><h2>18. Applying the framework to research</h2><div class="question">
 <p><strong>Which component would be hardest to supply honestly for your own research problem?</strong></p>
 </div>
 <div class="block">

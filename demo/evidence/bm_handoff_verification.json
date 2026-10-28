@@ -1,0 +1,427 @@
+{
+  "mode": "numerical_only",
+  "model_calls": 0,
+  "execution_version": "retained-bm-refinement-v1",
+  "instance": "rand_pm_1000_s23.txt",
+  "seeds": [
+    3,
+    4,
+    5
+  ],
+  "trial_seconds": 8,
+  "programs": {
+    "Tabu Search": {
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 980.0,
+          "complete": true,
+          "elapsed_seconds": 0.3650556349894032,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 980.0,
+              "runtime_seconds": 0.33858233597129583,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed",
+              "initialization": "retained",
+              "incoming_cut": -81.0,
+              "retained_cut": 980.0,
+              "allocated_seconds": 7.999998184037395
+            }
+          ]
+        },
+        {
+          "seed": 4,
+          "cut": 975.0,
+          "complete": true,
+          "elapsed_seconds": 0.3679892868967727,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 975.0,
+              "runtime_seconds": 0.3408359060995281,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed",
+              "initialization": "retained",
+              "incoming_cut": -111.0,
+              "retained_cut": 975.0,
+              "allocated_seconds": 7.999998065060936
+            }
+          ]
+        },
+        {
+          "seed": 5,
+          "cut": 964.0,
+          "complete": true,
+          "elapsed_seconds": 0.41720576607622206,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 964.0,
+              "runtime_seconds": 0.3874103679554537,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed",
+              "initialization": "retained",
+              "incoming_cut": -74.0,
+              "retained_cut": 964.0,
+              "allocated_seconds": 7.999998176004738
+            }
+          ]
+        }
+      ],
+      "median": 975.0
+    },
+    "Burer\u2013Monteiro": {
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1012.0,
+          "complete": true,
+          "elapsed_seconds": 0.250791982980445,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1012.0,
+              "runtime_seconds": 0.22177573200315237,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed",
+              "initialization": "independent_vector_search",
+              "incoming_cut": -81.0,
+              "retained_cut": 1012.0,
+              "allocated_seconds": 7.9999983119778335
+            }
+          ]
+        },
+        {
+          "seed": 4,
+          "cut": 1012.0,
+          "complete": true,
+          "elapsed_seconds": 0.2541248199995607,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1012.0,
+              "runtime_seconds": 0.22471692692488432,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed",
+              "initialization": "independent_vector_search",
+              "incoming_cut": -111.0,
+              "retained_cut": 1012.0,
+              "allocated_seconds": 7.999998225946911
+            }
+          ]
+        },
+        {
+          "seed": 5,
+          "cut": 1007.0,
+          "complete": true,
+          "elapsed_seconds": 0.2510479149641469,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1007.0,
+              "runtime_seconds": 0.22247638495173305,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed",
+              "initialization": "independent_vector_search",
+              "incoming_cut": -74.0,
+              "retained_cut": 1007.0,
+              "allocated_seconds": 7.999998396961018
+            }
+          ]
+        }
+      ],
+      "median": 1012.0
+    },
+    "Burer\u2013Monteiro \u2192 Tabu Search": {
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1033.0,
+          "complete": true,
+          "elapsed_seconds": 0.3099950810428709,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1012.0,
+              "runtime_seconds": 0.22344444796908647,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed",
+              "initialization": "independent_vector_search",
+              "incoming_cut": -81.0,
+              "retained_cut": 1012.0,
+              "allocated_seconds": 3.9999992235098034
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 1033.0,
+              "runtime_seconds": 0.04210759699344635,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed",
+              "initialization": "retained",
+              "incoming_cut": 1012.0,
+              "retained_cut": 1033.0,
+              "allocated_seconds": 7.760348160983995
+            }
+          ]
+        },
+        {
+          "seed": 4,
+          "cut": 1026.0,
+          "complete": true,
+          "elapsed_seconds": 0.3039492239477113,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1012.0,
+              "runtime_seconds": 0.22021729894913733,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed",
+              "initialization": "independent_vector_search",
+              "incoming_cut": -111.0,
+              "retained_cut": 1012.0,
+              "allocated_seconds": 3.99999923852738
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 1026.0,
+              "runtime_seconds": 0.038615721045061946,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed",
+              "initialization": "retained",
+              "incoming_cut": 1012.0,
+              "retained_cut": 1026.0,
+              "allocated_seconds": 7.763015770004131
+            }
+          ]
+        },
+        {
+          "seed": 5,
+          "cut": 1034.0,
+          "complete": true,
+          "elapsed_seconds": 0.25666330207604915,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "bm",
+              "cut": 1007.0,
+              "runtime_seconds": 0.17880488105583936,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed",
+              "initialization": "independent_vector_search",
+              "incoming_cut": -74.0,
+              "retained_cut": 1007.0,
+              "allocated_seconds": 3.99999940849375
+            },
+            {
+              "stage": 1,
+              "backend": "tabu",
+              "cut": 1034.0,
+              "runtime_seconds": 0.040287418058142066,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed",
+              "initialization": "retained",
+              "incoming_cut": 1007.0,
+              "retained_cut": 1034.0,
+              "allocated_seconds": 7.807647789013572
+            }
+          ]
+        }
+      ],
+      "median": 1033.0
+    },
+    "Tabu Search \u2192 Burer\u2013Monteiro": {
+      "trials": [
+        {
+          "seed": 3,
+          "cut": 1027.0,
+          "complete": true,
+          "elapsed_seconds": 0.5882575169671327,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 980.0,
+              "runtime_seconds": 0.33842591603752226,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed",
+              "initialization": "retained",
+              "incoming_cut": -81.0,
+              "retained_cut": 980.0,
+              "allocated_seconds": 3.9999992765369825
+            },
+            {
+              "stage": 1,
+              "backend": "bm",
+              "cut": 1027.0,
+              "runtime_seconds": 0.20668119401670992,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed",
+              "initialization": "retained_partition_lift_perturb_refine",
+              "incoming_cut": 980.0,
+              "retained_cut": 1027.0,
+              "allocated_seconds": 7.645898807095364
+            }
+          ]
+        },
+        {
+          "seed": 4,
+          "cut": 995.0,
+          "complete": true,
+          "elapsed_seconds": 0.5974157860036939,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 975.0,
+              "runtime_seconds": 0.3537517540389672,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed",
+              "initialization": "retained",
+              "incoming_cut": -111.0,
+              "retained_cut": 975.0,
+              "allocated_seconds": 3.999999024963472
+            },
+            {
+              "stage": 1,
+              "backend": "bm",
+              "cut": 995.0,
+              "runtime_seconds": 0.19991000008303672,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed",
+              "initialization": "retained_partition_lift_perturb_refine",
+              "incoming_cut": 975.0,
+              "retained_cut": 995.0,
+              "allocated_seconds": 7.629476123955101
+            }
+          ]
+        },
+        {
+          "seed": 5,
+          "cut": 1033.0,
+          "complete": true,
+          "elapsed_seconds": 0.5913083080668002,
+          "stage_results": [
+            {
+              "stage": 0,
+              "backend": "tabu",
+              "cut": 964.0,
+              "runtime_seconds": 0.34996870206668973,
+              "work_counters": {
+                "iterations": 800,
+                "flips": 800,
+                "waits": 0,
+                "restarts": 0,
+                "aspiration_moves": 0
+              },
+              "execution_status": "completed",
+              "initialization": "retained",
+              "incoming_cut": -74.0,
+              "retained_cut": 964.0,
+              "allocated_seconds": 3.999999273510184
+            },
+            {
+              "stage": 1,
+              "backend": "bm",
+              "cut": 1033.0,
+              "runtime_seconds": 0.19912728504277766,
+              "work_counters": {
+                "passes": 1
+              },
+              "execution_status": "completed",
+              "initialization": "retained_partition_lift_perturb_refine",
+              "incoming_cut": 964.0,
+              "retained_cut": 1033.0,
+              "allocated_seconds": 7.634687804034911
+            }
+          ]
+        }
+      ],
+      "median": 1027.0
+    }
+  },
+  "initial_screen_unchanged": true,
+  "all_trials_complete": true,
+  "elapsed_seconds": 6.776564071071334,
+  "scope": "Fixed-seed numerical validation; not a new Luna rehearsal or general algorithm ranking.",
+  "offline_regression_tests": 40,
+  "vendor_files_verified": 133,
+  "browser_numerical_handoff_verified": true,
+  "browser_model_calls": 0,
+  "recorded_replays_unchanged": true
+}

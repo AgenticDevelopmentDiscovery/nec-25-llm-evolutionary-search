@@ -17,6 +17,8 @@ bm(max_sweeps=20, rounding_count=8); retained
 
 ::: {.block}
 Execute a program → obtain signs → recompute the original cut → summarize three trials → rank the program.
+
+Retained **Tabu Search → Burer–Monteiro** lifts and perturbs the incoming partition before vector refinement.
 :::
 
 ::: {.answer}
@@ -27,6 +29,8 @@ Execute a program → obtain signs → recompute the original cut → summarize 
 The identifiers bm and bls denote the rank-two Burer–Monteiro method and Breakout Local Search. The displayed composition was proposed in the earlier genuine dense-graph rehearsal. Each schema stage contains backend, config, max_work and fresh. Missing defaults are normalized before hashing so equivalent encodings cannot receive separate evaluations merely by omitting a default.
 
 A retained stage receives a copy of the best witness from preceding work in the same trial. A fresh stage uses a seeded random exploratory start; the interpreter retains an older better witness if the new stage is worse. Remaining numerical time is allocated among remaining stages, with unused time carried forward. The model supplies data describing this bounded interpreter, not shell commands or arbitrary source code.
+
+Distinguish replacement from composition. A child containing only Tabu Search replaces a Burer–Monteiro parent as a program and starts from the same raw trial labels as its competitors. It does not consume that previously evaluated parent's final partition. A child containing Burer–Monteiro followed by retained Tabu Search passes the best partition between its own stages. In the reverse retained order, the classroom adapter embeds the incoming Tabu partition as vector angles 0 or pi, adds seeded uniform offsets in [-0.35, 0.35] radians, optimizes those vectors, then rounds and polishes. It keeps the incoming partition if the new result is worse. This changes the complete solver recipe; it does not rewrite Tabu Search's internal algorithm. First-stage and fresh Burer–Monteiro stages keep their original independent vector search. Older recorded replays preserve their original execution behavior and do not demonstrate this new downstream refinement.
 :::
 
 ## Four numerical algorithms {#kernels data-seconds="70"}
@@ -109,21 +113,11 @@ These are bounded classroom observations with a stochastic model, not repeated r
 
 ## Demo 1: a limited initialization {#demo-limited data-seconds="180"}
 
-::: {.question}
-**Can local-search seeds recover a useful relaxation method through mutation?**
-:::
 
 ::: {.block}
 Use the **1,000-vertex signed graph (5,043 edges)**, seed 3, **Tabu Search and Simulated Annealing**. The initial best median is 975; reference 1098 is unproven.
 :::
 
-::: {.block}
-All four kernels remain available. Inspect parent programs, the actual request, public proposals and complete measured child fitness.
-:::
-
-::: {.answer}
-**A limited suite defines a starting point, not a permanent restriction.** Follow improvement, reference gap, numerical effort and model calls.
-:::
 
 ::: {.notes}
 Use the first named preset and confirm two checked algorithms. The server verifies graph, seed and selection metadata. Start evaluates only those programs. At each gate inspect the selected parents and explicitly send their context. A two-parent population supplies two actual parents; no manufactured copies are added to make three.
@@ -133,21 +127,13 @@ The earlier BM-only torus demonstration was an algorithm-recovery control, not a
 
 ## Demo 2: a researcher-selected suite {#demo-informed data-seconds="180"}
 
-::: {.question}
-**What changes when measured domain knowledge supplies stronger starting programs?**
-:::
+
 
 ::: {.block}
 Keep graph, seeds and caps fixed. Select **Tabu Search, Breakout Local Search and rank-two Burer–Monteiro**.
 :::
 
-::: {.block}
-The initial best median is 1012, compared with 975 for the limited suite. The reference gap falls from 123 to 86 before any model call.
-:::
 
-::: {.answer}
-**Researcher knowledge improves this starting population.** Evaluate later gains and costs; a stronger start does not guarantee a faster run.
-:::
 
 ::: {.notes}
 The initial medians come from complete numerical trials on common raw starts. The four full seed-program medians are 921, 975, 992 and 1012 for Simulated Annealing, Tabu Search, Breakout Local Search and Burer–Monteiro respectively. Including the stronger relaxation and escape mechanism improves this initial population. No kernel definition or hidden work cap changes between the two scenarios.
@@ -155,35 +141,9 @@ The initial medians come from complete numerical trials on common raw starts. Th
 More initial programs cost more numerical evaluations and alter the context supplied to Luna. Prior researcher design effort is also a real cost even though it is absent from the run clock. Compare complete-program fitness, best-witness quality, model calls and numerical time. A fluent proposal, an incomplete high-scoring trial or a favorable single run does not establish a general advantage. The genuine replacement run made two model calls in 66.589 seconds. Burer–Monteiro followed by longer Breakout Local Search produced witnesses up to 1060, but its trials were incomplete, so the best eligible median stayed 1012. The second response referred to an ineligible parent and validation stopped the run. Replay labels this source FAILED. This is evidence of the validation and completeness rules, not a successful reference-matching run.
 :::
 
-## Comparing the evidence {#comparison data-seconds="50"}
-
-::: {.question}
-**If every method eventually reaches the same target, how should we compare them?**
-:::
-
-::: {.block}
-Compare initial fitness, complete-program improvement, reference gap and calls or time to a declared target. Retain unsuccessful and censored proposals.
-:::
-
-::: {.block}
-Initial medians: **921 / 975 / 992 / 1012**. These distinguish the four configured solvers on the replacement graph; reference **1098** is unproven.
-:::
-
-::: {.answer}
-**A common final score can hide different search costs.** An unreached reference must remain visibly unreached.
-:::
-
-::: {.notes}
-The torus ceiling effect motivated a new instance screen rather than a fabricated failure. Five public graphs were screened using the same four initial configurations and seeds 3/4/5. The 1,000-vertex signed random graph gives a 91-cut spread between initial program medians, compared with two cut units on the old torus. The graph choice is informed by this numerical screen, so these three seeds are teaching evidence, not a held-out generalization test.
-
-The two-call replacement results are: limited suite 975 → 1008 eligible median, best witness 1031, 24.003 seconds; informed suite 1012 → 1012 eligible median, best witness 1060, 66.589 seconds, terminated after an invalid parent reference. Neither matched 1098. The stronger starting population did not deliver the intended efficient-win narrative in these observations. Use the measured comparison table and genuine exact exchanges for actual model outcomes. Distinguish the primary median target from the stronger all-trial target and the separate best witness. A run that finishes its budget short of the reference still demonstrates mutation, evaluation and selection; it does not demonstrate successful reference attainment. Stored torus records remain labeled with their original graph and scenario, never substituted for replacement runs.
-:::
 
 ## Demo 3: a dense real-weight stress case {#demo-harder data-seconds="240"}
 
-::: {.question}
-**Will the same architecture work when interactions are dense and weights are real-valued?**
-:::
 
 ::: {.block}
 Use **100 vertices, 4950 real-valued signed edges**, all four initial solvers and supplied reference **402.5209**, unproven.
@@ -193,15 +153,6 @@ Use **100 vertices, 4950 real-valued signed edges**, all four initial solvers an
 Eight numerical seconds per trial; three Luna calls maximum. Inspect composition, rejection, completeness and the actual surviving programs.
 :::
 
-::: {.answer}
-**Evaluate the dense case on its own evidence.** A reference match is a feasible result; it is not a proof of optimality or broad model superiority.
-:::
-
-::: {.notes}
-The dense Gaussian-weight graph comes from the supplied public assignment instances. Only graph input and scalar reference metadata were copied; no assignment solution vectors or private campaign records were imported. The dense case has 100 vertices and 4950 edges; the comparison graph has 1000 vertices and 5043 edges. Thus edge counts are similar while average degree, density and weight distribution differ sharply. Both allow eight seconds per trial. This is a structural transfer case, not a justified universal ranking of instance difficulty.
-
-The initial algorithms are the same disclosed configurations used elsewhere. All children share the same raw starts within this case. A previous two-call recording matched the reference with a Burer–Monteiro → Breakout Local Search composition and excluded a later time-limited extension. The current three-call rehearsal reached three complete reference matches after one model call at 16.091 seconds and finished at 56.602 seconds. It is recorded separately. Use the live comparison table and exact exchange to inspect its actual outcomes rather than substituting the old result.
-:::
 
 ## Reading solver evidence {#harder-evidence data-seconds="45"}
 

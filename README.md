@@ -1,6 +1,10 @@
 ## Local classroom presentation
 
-Run `python demo/server.py --port 8766 --rounds 2`, then open
+Start with **[Student and agent setup](STUDENT_SETUP.md)** for clone commands,
+dependencies, private TAMU keys, numerical-only verification, and an agent prompt.
+
+For an already configured checkout, activate `demo/.venv` and run
+`python demo/server.py --port 8766 --rounds 3`, then open
 [the presentation hub](http://127.0.0.1:8766/) on this computer. Keep the terminal
 running. The same server hosts the solver demo, algorithm examples, exact Luna
 exchange, detailed notes and derived handout. Student key setup is in

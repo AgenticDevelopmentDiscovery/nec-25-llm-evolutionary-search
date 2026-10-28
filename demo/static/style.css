@@ -3,3 +3,5 @@
 .embedded main{padding:9px 16px}.embedded .teachingNav,.embedded .eyebrow{display:none}.embedded header{margin-bottom:8px}.embedded h1{font-size:24px}.embedded .tableScroll{max-height:202px}#publicProposal{max-height:220px;min-height:150px}#rejections{padding:7px 10px;border-left:3px solid var(--orange);font-size:12px;color:var(--orange);margin-top:8px}#witnessDetails>summary{font-size:13px;color:var(--teal)}
 
 tr.evaluating{box-shadow:inset 4px 0 #ffb17e;animation:evaluation-pulse 1.2s ease-in-out infinite}@keyframes evaluation-pulse{50%{background:#35504c}}@media(prefers-reduced-motion:reduce){tr.evaluating{animation:none}}
+
+#findCutSource{font-size:11px;padding:4px 7px;align-self:flex-start}#cutSource{overflow-wrap:anywhere}tr.displayed{box-shadow:inset 4px 0 #500000}tr.displayed td:first-child::after{content:" · displayed partition";font-size:10px;font-weight:400}

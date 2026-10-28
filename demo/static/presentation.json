@@ -1,5 +1,5 @@
 {
-  "source_sha256": "9d8c20d176b0003da5922e3d06de7b93b1b5b56954458577c10d374d0927acf8",
+  "source_sha256": "1fc5f60801c62579e22e77d97a24da2c243d7a291754b6c8eb0f1cb430781fc5",
   "title": "LLM-driven evolutionary search",
   "chapter": "Chapter 10: Agentic Evolutionary Frameworks",
   "frames": [
@@ -72,7 +72,7 @@
       "title": "Solver programs",
       "seconds": 45,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>What can Luna edit if the assignment itself is not the evolving artifact?</strong></p>\n</div>\n<div class=\"block\">\n<p>A program has one to three stages: algorithm, configuration, work cap and start rule.</p>\n<pre class=\"text\"><code>bm(max_sweeps=20, rounding_count=8); retained\n→ bls(max_work=9000); retained</code></pre>\n</div>\n<div class=\"block\">\n<p>Execute a program → obtain signs → recompute the original cut → summarize three trials → rank the program.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Evolve the solver; evaluate its witness.</strong> Trusted kernels execute the stages. Unchecked algorithms remain available to the mutator.</p>\n</div>\n",
+      "html": "<div class=\"question\">\n<p><strong>What can Luna edit if the assignment itself is not the evolving artifact?</strong></p>\n</div>\n<div class=\"block\">\n<p>A program has one to three stages: algorithm, configuration, work cap and start rule.</p>\n<pre class=\"text\"><code>bm(max_sweeps=20, rounding_count=8); retained\n→ bls(max_work=9000); retained</code></pre>\n</div>\n<div class=\"block\">\n<p>Execute a program → obtain signs → recompute the original cut → summarize three trials → rank the program.</p>\n<p>Retained <strong>Tabu Search → Burer–Monteiro</strong> lifts and perturbs the incoming partition before vector refinement.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Evolve the solver; evaluate its witness.</strong> Trusted kernels execute the stages. Unchecked algorithms remain available to the mutator.</p>\n</div>\n",
       "reveals": 4
     },
     {
@@ -104,32 +104,24 @@
       "title": "Demo 1: a limited initialization",
       "seconds": 180,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>Can local-search seeds recover a useful relaxation method through mutation?</strong></p>\n</div>\n<div class=\"block\">\n<p>Use the <strong>1,000-vertex signed graph (5,043 edges)</strong>, seed 3, <strong>Tabu Search and Simulated Annealing</strong>. The initial best median is 975; reference 1098 is unproven.</p>\n</div>\n<div class=\"block\">\n<p>All four kernels remain available. Inspect parent programs, the actual request, public proposals and complete measured child fitness.</p>\n</div>\n<div class=\"answer\">\n<p><strong>A limited suite defines a starting point, not a permanent restriction.</strong> Follow improvement, reference gap, numerical effort and model calls.</p>\n</div>\n",
-      "reveals": 4
+      "html": "<div class=\"block\">\n<p>Use the <strong>1,000-vertex signed graph (5,043 edges)</strong>, seed 3, <strong>Tabu Search and Simulated Annealing</strong>. The initial best median is 975; reference 1098 is unproven.</p>\n</div>\n",
+      "reveals": 1
     },
     {
       "id": "demo-informed",
       "title": "Demo 2: a researcher-selected suite",
       "seconds": 180,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>What changes when measured domain knowledge supplies stronger starting programs?</strong></p>\n</div>\n<div class=\"block\">\n<p>Keep graph, seeds and caps fixed. Select <strong>Tabu Search, Breakout Local Search and rank-two Burer–Monteiro</strong>.</p>\n</div>\n<div class=\"block\">\n<p>The initial best median is 1012, compared with 975 for the limited suite. The reference gap falls from 123 to 86 before any model call.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Researcher knowledge improves this starting population.</strong> Evaluate later gains and costs; a stronger start does not guarantee a faster run.</p>\n</div>\n",
-      "reveals": 4
-    },
-    {
-      "id": "comparison",
-      "title": "Comparing the evidence",
-      "seconds": 50,
-      "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>If every method eventually reaches the same target, how should we compare them?</strong></p>\n</div>\n<div class=\"block\">\n<p>Compare initial fitness, complete-program improvement, reference gap and calls or time to a declared target. Retain unsuccessful and censored proposals.</p>\n</div>\n<div class=\"block\">\n<p>Initial medians: <strong>921 / 975 / 992 / 1012</strong>. These distinguish the four configured solvers on the replacement graph; reference <strong>1098</strong> is unproven.</p>\n</div>\n<div class=\"answer\">\n<p><strong>A common final score can hide different search costs.</strong> An unreached reference must remain visibly unreached.</p>\n</div>\n",
-      "reveals": 4
+      "html": "<div class=\"block\">\n<p>Keep graph, seeds and caps fixed. Select <strong>Tabu Search, Breakout Local Search and rank-two Burer–Monteiro</strong>.</p>\n</div>\n",
+      "reveals": 1
     },
     {
       "id": "demo-harder",
       "title": "Demo 3: a dense real-weight stress case",
       "seconds": 240,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>Will the same architecture work when interactions are dense and weights are real-valued?</strong></p>\n</div>\n<div class=\"block\">\n<p>Use <strong>100 vertices, 4950 real-valued signed edges</strong>, all four initial solvers and supplied reference <strong>402.5209</strong>, unproven.</p>\n</div>\n<div class=\"block\">\n<p>Eight numerical seconds per trial; three Luna calls maximum. Inspect composition, rejection, completeness and the actual surviving programs.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Evaluate the dense case on its own evidence.</strong> A reference match is a feasible result; it is not a proof of optimality or broad model superiority.</p>\n</div>\n",
-      "reveals": 4
+      "html": "<div class=\"block\">\n<p>Use <strong>100 vertices, 4950 real-valued signed edges</strong>, all four initial solvers and supplied reference <strong>402.5209</strong>, unproven.</p>\n</div>\n<div class=\"block\">\n<p>Eight numerical seconds per trial; three Luna calls maximum. Inspect composition, rejection, completeness and the actual surviving programs.</p>\n</div>\n",
+      "reveals": 2
     },
     {
       "id": "harder-evidence",
@@ -144,8 +136,8 @@
       "title": "The agentic evolutionary framework",
       "seconds": 60,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>Can we now name the five choices we implemented?</strong></p>\n</div>\n<div class=\"block\">\n<p><math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>𝒜</mi><mo>,</mo><mi>f</mi><mo>,</mo><mi>μ</mi><mo>,</mo><mi>σ</mi><mo>,</mo><msub><mi>P</mi><mn>0</mn></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><annotation encoding=\"application/x-tex\">(\\mathcal A,f,\\mu,\\sigma,P_0)</annotation></semantics></math>: artifact space, fitness, mutation, selection and initial population. Checkboxes choose <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding=\"application/x-tex\">P_0</annotation></semantics></math>; they do not change <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mi>𝒜</mi><annotation encoding=\"application/x-tex\">\\mathcal A</annotation></semantics></math>.</p>\n</div>\n<div class=\"block\">\n<p><math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>Q</mi><mi>t</mi></msub><mo>∼</mo><mi>μ</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mo>⋅</mo><mo>∣</mo><msub><mi>P</mi><mi>t</mi></msub><mo>,</mo><msub><mi>H</mi><mi>t</mi></msub><mo>,</mo><msub><mi>B</mi><mi>t</mi></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo>,</mo><mspace width=\"1.0em\"></mspace><msub><mi>P</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>σ</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo>∪</mo><mi>E</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>Q</mi><mi>t</mi></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mi>.</mi></mrow><annotation encoding=\"application/x-tex\">Q_t\\sim\\mu(\\cdot\\mid P_t,H_t,B_t),\\quad P_{t+1}=\\sigma(P_t\\cup E(Q_t)).</annotation></semantics></math></p>\n<p><math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>H</mi><mi>t</mi></msub><annotation encoding=\"application/x-tex\">H_t</annotation></semantics></math>: measured history. <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding=\"application/x-tex\">B_t</annotation></semantics></math>: remaining budget. <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mi>E</mi><annotation encoding=\"application/x-tex\">E</annotation></semantics></math>: validation and complete evaluation.</p>\n</div>\n<div class=\"answer\">\n<p><strong>The LLM is the mutation operator inside an externally measured evolutionary loop.</strong> For the course minimization convention, <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>f</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>a</mi><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo>=</mo><mo>−</mo><msub><mo>median</mo><mi>j</mi></msub><msub><mi>C</mi><mi>G</mi></msub><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>A</mi><mi>a</mi></msub><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>G</mi><mo>,</mo><msub><mi>z</mi><mi>j</mi></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow></mrow><annotation encoding=\"application/x-tex\">f(a)=-\\operatorname{median}_j C_G(A_a(G,z_j))</annotation></semantics></math>.</p>\n</div>\n",
-      "reveals": 4
+      "html": "<div class=\"question\">\n<p><strong>Can we now name the five choices we implemented?</strong></p>\n</div>\n<div class=\"block\">\n<p><math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>𝒜</mi><mo>,</mo><mi>f</mi><mo>,</mo><mi>μ</mi><mo>,</mo><mi>σ</mi><mo>,</mo><msub><mi>P</mi><mn>0</mn></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><annotation encoding=\"application/x-tex\">(\\mathcal A,f,\\mu,\\sigma,P_0)</annotation></semantics></math>: artifact space, fitness, mutation, selection and initial population. Checkboxes choose <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding=\"application/x-tex\">P_0</annotation></semantics></math>; they do not change <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mi>𝒜</mi><annotation encoding=\"application/x-tex\">\\mathcal A</annotation></semantics></math>.</p>\n</div>\n<div class=\"block\">\n<p><math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>Q</mi><mi>t</mi></msub><mo>∼</mo><mi>μ</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mo>⋅</mo><mo>∣</mo><msub><mi>P</mi><mi>t</mi></msub><mo>,</mo><msub><mi>H</mi><mi>t</mi></msub><mo>,</mo><msub><mi>B</mi><mi>t</mi></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo>,</mo><mspace width=\"1.0em\"></mspace><msub><mi>P</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>σ</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo>∪</mo><mi>E</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>Q</mi><mi>t</mi></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mi>.</mi></mrow><annotation encoding=\"application/x-tex\">Q_t\\sim\\mu(\\cdot\\mid P_t,H_t,B_t),\\quad P_{t+1}=\\sigma(P_t\\cup E(Q_t)).</annotation></semantics></math></p>\n<p><math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>H</mi><mi>t</mi></msub><annotation encoding=\"application/x-tex\">H_t</annotation></semantics></math>: measured history. <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding=\"application/x-tex\">B_t</annotation></semantics></math>: remaining budget. <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mi>E</mi><annotation encoding=\"application/x-tex\">E</annotation></semantics></math>: validation and complete evaluation.</p>\n</div>\n",
+      "reveals": 3
     },
     {
       "id": "transfer",
@@ -180,9 +172,9 @@
       "reveals": 4
     }
   ],
-  "main_frame_count": 19,
-  "main_reveals": 73,
-  "prepared_seconds": 1300,
+  "main_frame_count": 18,
+  "main_reveals": 60,
+  "prepared_seconds": 1250,
   "appendix_seconds": 155,
   "reserve_seconds": 45
 }

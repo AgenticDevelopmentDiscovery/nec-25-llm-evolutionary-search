@@ -102,6 +102,24 @@ assignment from another competitor. Within a multistage program, however,
 `fresh=true` starts that stage's own seeded exploratory state while protecting the
 old best if it remains better.
 
+Execution version `retained-bm-refinement-v1` makes a retained Burer–Monteiro
+stage after stage one consume the incoming partition as a geometric starting
+point: map signs to angles 0 or pi, add reproducible uniform angular offsets
+in [-0.35, 0.35] radians, then use the unchanged vector optimization, rounding
+and local-polish primitives. Retain the better incoming or returned partition.
+Thus Burer–Monteiro → Tabu Search passes a partition to discrete search;
+Tabu Search → Burer–Monteiro now genuinely refines vectors around the retained
+partition. `demo/bm_refinement.py` owns this adaptation; the vendor snapshot is
+unchanged. First-stage and fresh Burer–Monteiro calls retain their original
+independent vector search, preserving the measured initial solver screen.
+
+Replacing a parent with a one-stage child is a different operation: that child
+starts from the common raw trial labels, not the previously evaluated parent's
+output. The execution version and start rules enter new run records and Luna's
+context. Stage results expose initialization, incoming/retained cut and allocated
+seconds. Earlier replays retain their original behavior and are not evidence for
+this newly added warm refinement.
+
 Numerical allowance is 8 seconds per current comparison or dense-case trial.
 The historical torus retains its 1.5-second allowance. That clock covers all stages of one program. Remaining time is divided
 among remaining stages; unused time carries forward. Process startup has a

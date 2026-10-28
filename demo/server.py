@@ -103,7 +103,7 @@ class Handler(BaseHTTPRequestHandler):
             url = urlsplit(self.path)
             path = url.path
             if path == '/api/server-info':
-                return self.reply({'service':SERVICE,'workspace':WORKSPACE,'pid':os.getpid(),'rounds':PROFILE['max_rounds'],'auto_rebuild':self.server.preview.available})
+                return self.reply({'service':SERVICE,'workspace':WORKSPACE,'pid':os.getpid(),'rounds':PROFILE['max_rounds'],'auto_rebuild':self.server.preview.available,'execution_version':b.EXECUTION_VERSION})
             if path == '/api/presentation': return self.reply(self.server.preview.ensure())
             if path in ('/presentation.json','/notes'): self.server.preview.ensure()
             if path == '/api/instance': return self.reply(instance(parse_qs(url.query).get('instance', [self.server.manager.instance])[0]))

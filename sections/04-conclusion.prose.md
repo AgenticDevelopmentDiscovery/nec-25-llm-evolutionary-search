@@ -16,9 +16,7 @@ $$Q_t\sim\mu(\cdot\mid P_t,H_t,B_t),\quad P_{t+1}=\sigma(P_t\cup E(Q_t)).$$
 $H_t$: measured history. $B_t$: remaining budget. $E$: validation and complete evaluation.
 :::
 
-::: {.answer}
-**The LLM is the mutation operator inside an externally measured evolutionary loop.** For the course minimization convention, $f(a)=-\operatorname{median}_j C_G(A_a(G,z_j))$.
-:::
+
 
 ::: {.notes}
 This instantiates Chapter 10, Definition 10.2, after the audience has encountered both ordinary evolutionary search and the LLM variant. The artifact space contains validated programs of one to three trusted stages. Its interpreter maps graph G and shared raw start z_j into signs under the seeded numerical protocol. Negative median cut turns maximization into the course's lower-is-better fitness convention. The implementation supplements that primary scalar with minimum cut, stage count and stable identity tie-breaks.

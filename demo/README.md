@@ -1,5 +1,8 @@
 # Local solver-evolution classroom
 
+For first-time setup, follow **[Student and agent setup](../STUDENT_SETUP.md)**.
+It includes a copyable agent prompt and a zero-model-call verification path.
+
 Use Linux (or WSL) with Python 3.11 or newer. Owned-process cancellation uses
 Linux process start ticks; no native solver build is needed. Start from the repository root:
 
@@ -32,6 +35,12 @@ check every two seconds and update the current frame without resetting its revea
 or the mounted demo. No browser refresh or restart is required for prose edits.
 Refresh an already-open Notes tab to read its newly built HTML.
 
+Frames may have any number of question/block/answer Divs. Those present reveal
+in source order; questions and answers are optional. Plain Markdown or a heading
+alone has one presentation state. Deleting a frame or simplifying a demo frame
+does not require filling it back out to four reveals. Keep the `##` heading's
+stable ID and `data-seconds` attribute for navigation and planned timing.
+
 If a draft fails validation, the last successful frames remain visible and a
 notice explains the error. Correct and save the source to recover. Pandoc is
 needed for authoring; unchanged bundled frames still work on student machines
@@ -49,6 +58,12 @@ If another repository or an unrecognized service occupies the port, use
 - `/demo`: solver population, measured trials, top-three context, public proposal
   stream, mutation diff, admission/rejection and selection. The hub keeps this
   page mounted while you present, preserving the run and exact return frame.
+
+The displayed partition cut identifies its source: initial partition before any
+solver, a verified solver trial with program/trial/seed, or a retained best
+witness. **Find source in solver table** locates and highlights the originating
+program, including a program that is no longer selected. Initial partition cuts
+are not solver trial results. Censored trial values remain marked incomplete.
 - `/algorithms`: full algorithm names, mechanisms, pseudocode, configurations and
   worked examples. A four-vertex flip example and annealing acceptance slider run
   locally without an API call.
@@ -116,6 +131,13 @@ Search), 992 (Breakout Local Search), and 1012 (Burer–Monteiro). Burer–Monte
 not chosen as a universally weak or required parent: it is strongest in this screen.
 The current limited preset uses two local-search algorithms, not BM alone.
 
+“Informed” means pilot-screen-informed: Demo 2 selects the three highest medians
+among these four configured programs on this graph and seeds 3/4/5. It includes
+vector optimization, adaptive breakout perturbations and tabu-memory search.
+This is not an independent held-out selection study or evidence of a universally
+best suite. Its three initial programs require nine trials, versus six for the
+limited suite, so initial evaluation effort must accompany efficiency claims.
+
 The dense case has 100 vertices, 4950 signed real-valued edges and unproven
 reference 402.5209. Similar edge counts do not make these graphs equally difficult;
 density, degree and weight distribution differ. It is a separate structural stress
@@ -126,6 +148,15 @@ available as historical evidence.
 All current programs and children receive copies of identical raw starts for
 seeds 3/4/5. A partition is a **feasible witness**. The population consists of solver
 programs; the harness independently rescores original edges and supplies fitness.
+
+Retained stages pass their best partition within the same trial. Burer–Monteiro
+→ Tabu Search uses that partition as Tabu Search's starting state. In new runs,
+Tabu Search → Burer–Monteiro lifts its partition to vectors, adds fixed seeded
+angular perturbations, then optimizes and rounds while protecting the incumbent.
+First-stage and fresh Burer–Monteiro behavior is unchanged. A replacement-only
+child starts from the common raw trial labels. All stages share the same trial
+allowance. Existing recorded replays preserve the earlier execution semantics;
+they do not demonstrate this new downstream warm refinement.
 
 1. Evaluate the checked algorithms and inspect up to three complete survivors.
 2. Press **Send N parents to Luna**; watch actual context and public chunks.

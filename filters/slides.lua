@@ -1,12 +1,14 @@
--- Questions, then two blocks, then answers. Notes remain in article/site only.
+-- Reveal the visible Divs present, in order. Notes remain in article/site only.
 if FORMAT:match('beamer') then
   local columns_open = false
   local appendix_frame = 0
+  local revealed = false
   function Meta(meta)
     meta.title=nil; meta.subtitle=nil; meta.author=nil; meta.date=nil
     return meta
   end
   function Header(header)
+    if header.level==2 then revealed=false end
     if header.level==1 then
       return {}
     end
@@ -19,6 +21,12 @@ if FORMAT:match('beamer') then
   end
   function Div(div)
     if div.identifier=='refs' or div.classes:includes('notes') then return {} end
+    local visible = div.classes:includes('question') or div.classes:includes('block') or div.classes:includes('answer')
+    local prefix = ''
+    if visible then
+      if revealed then prefix='\\pause' end
+      revealed=true
+    end
     if div.classes:includes('visual') then
       local source = pandoc.utils.stringify(div.content)
       local is_partition = false
@@ -30,15 +38,16 @@ if FORMAT:match('beamer') then
         if image.src:match('architecture%-overview') then is_architecture=true end
       end})
       if is_architecture then
-        return pandoc.RawBlock('beamer','\\pause\\begin{center}\\includegraphics[width=\\textwidth]{figures/architecture-overview.png}\\end{center}')
+        return pandoc.RawBlock('beamer',prefix..'\\begin{center}\\includegraphics[width=\\textwidth]{figures/architecture-overview.png}\\end{center}')
       end
       if is_partition then
         columns_open = true
-        return {pandoc.RawBlock('beamer', '\\pause\\begin{columns}[T]\\begin{column}{.35\\textwidth}\\centering\\includegraphics[height=2.8cm]{figures/'..picture..'.png}\\end{column}\\begin{column}{.61\\textwidth}')}
+        return {pandoc.RawBlock('beamer', prefix..'\\begin{columns}[T]\\begin{column}{.35\\textwidth}\\centering\\includegraphics[height=2.8cm]{figures/'..picture..'.png}\\end{column}\\begin{column}{.61\\textwidth}')}
       end
     end
-    if div.classes:includes('block') or div.classes:includes('answer') then
-      local result={pandoc.RawBlock('beamer','\\pause')}
+    if visible then
+      local result={}
+      if prefix~='' then result[#result+1]=pandoc.RawBlock('beamer',prefix) end
       if div.classes:includes('answer') and columns_open then
         table.insert(result, 1, pandoc.RawBlock('beamer','\\end{column}\\end{columns}'))
         columns_open = false

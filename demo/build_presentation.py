@@ -27,6 +27,19 @@ def atomic_write(path, content):
 def pandoc(args, source=None):
     return subprocess.run(['pandoc', *args], input=source, text=True, capture_output=True, check=True, cwd=ROOT).stdout
 
+def reveal_count(blocks):
+    """Match the browser's reveal Divs; questions and answers are optional."""
+    def count(node):
+        if isinstance(node, list):
+            return sum(count(item) for item in node)
+        if not isinstance(node, dict):
+            return 0
+        reveal = node.get('t') == 'Div' and any(
+            name in node['c'][0][1] for name in ('question', 'block', 'answer'))
+        return int(reveal) + sum(count(value) for value in node.values())
+    # Plain Markdown or a heading-only frame has one presentation state.
+    return max(1, count(blocks))
+
 def build():
     initial_hash = source_hash()
     files = sorted((ROOT/'sections').glob('*.prose.md'))
@@ -49,8 +62,7 @@ def build():
             else: visible.append(block)
         render=lambda blocks:pandoc(['-f','json','-t','html5','--mathml','--wrap=none'],json.dumps({**doc,'meta':{},'blocks':blocks}))
         html=render(visible).replace('src="figures/','src="/figures/')
-        count=sum(block['t']=='Div' and any(x in block['c'][0][1] for x in ['question','block','answer']) for block in visible)
-        if count!=(1 if group['id']=='title' else 4): raise ValueError(f'{group["id"]}: expected question, two blocks, answer')
+        count=reveal_count(visible)
         if group['appendix']:
             appendix_count+=1
             if appendix_count==1: notes.append('<h1 id="appendix">Appendix: architecture and API</h1><p>Optional implementation detail, outside the main presentation schedule.</p>')

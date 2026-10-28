@@ -18,7 +18,16 @@ VENDOR = HERE / 'vendor/maxcut'
 sys.path.insert(0, str(VENDOR))
 from bm_solver import cut_value, load_graph, validate_signs
 from solver_portfolio import solve
+from bm_refinement import refine_partition
 import evaluate
+
+EXECUTION_VERSION = 'retained-bm-refinement-v1'
+STAGE_START_RULES = {
+    'retained': 'fresh=false passes the best partition within this trial; discrete kernels use it as their starting state',
+    'bm_retained_after_stage_one': 'lift incoming signs to angles 0/pi, perturb by seeded uniform offsets in [-0.35,0.35] radians, optimize, round and polish; retain the better input/output',
+    'bm_first_or_fresh': 'original independent vector search; first retained stage also protects the raw starting partition',
+    'replacement': 'a replacement-only child starts from the common raw trial labels, not a previously evaluated parent solution',
+}
 
 INSTANCE = HERE / 'data/torus_pm_10_s11.txt'
 GRAPH_SHA256 = 'b57a871c1c196bd417b651ef3f9a9998d4a77076a93928deafee193e7e149704'
@@ -164,19 +173,29 @@ def run_strategy(strategy, seed, initial=None, seconds=1.5, instance=None):
         config = stage['config'].copy()
         if stage['backend'] == 'bm':
             config = {'max_sweeps': 60, 'rounding_count': 16, **config}
-        candidate = solve(graph, config, (seed + index) % 2**32,
-            {'seconds': remaining / (len(strategy['stages']) - index), 'max_work': stage['max_work']},
-            None if stage['fresh'] else best.copy(), solver=stage['backend'])
+        stage_seed = (seed + index) % 2**32
+        budget = {'seconds': remaining / (len(strategy['stages']) - index), 'max_work': stage['max_work']}
+        incoming_cut = cut_value(graph, best)
+        if index > 0 and stage['backend'] == 'bm' and not stage['fresh']:
+            candidate = refine_partition(graph, config, stage_seed, budget, best.copy())
+        else:
+            candidate = solve(graph, config, stage_seed, budget,
+                              None if stage['fresh'] else best.copy(), solver=stage['backend'])
         checked = score_labels(candidate['assignment'], instance)
         if checked['cut'] > cut_value(graph, best):
             best = np.array(checked['assignment'], dtype=np.int8)
         observations.append({'stage': index, 'backend': stage['backend'], 'cut': checked['cut'],
                              'runtime_seconds': candidate['runtime_seconds'],
                              'work_counters': candidate['work_counters'],
-                             'execution_status': candidate['execution_status']})
+                             'execution_status': candidate['execution_status'],
+                             'initialization': candidate.get('initialization',
+                                 'independent_vector_search' if stage['backend'] == 'bm' else 'fresh' if stage['fresh'] else 'retained'),
+                             'incoming_cut': incoming_cut, 'retained_cut': cut_value(graph, best),
+                             'allocated_seconds': budget['seconds']})
     complete = len(observations) == len(strategy['stages']) and all(o['execution_status'] == 'completed' for o in observations)
     return {**score_labels(best, instance), 'seed': seed, 'strategy': strategy, 'complete': complete,
-            'elapsed_seconds': perf_counter() - started, 'stage_results': observations}
+            'elapsed_seconds': perf_counter() - started, 'stage_results': observations,
+            'execution_version': EXECUTION_VERSION}
 
 
 def main():

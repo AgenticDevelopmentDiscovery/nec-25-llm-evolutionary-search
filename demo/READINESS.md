@@ -5,6 +5,23 @@ the repository root with `python demo/server.py --port 8766 --rounds 3` and keep
 that terminal running. This is loopback access, not a publicly deployed server.
 Port 8765 belongs to another application and has been left alone.
 
+## Current retained-stage correction
+
+New executions use `retained-bm-refinement-v1`: a retained Burer–Monteiro stage
+after stage one embeds the incoming partition, applies fixed seeded angular
+perturbations, and optimizes/rounds while retaining the better input or output.
+Initial and fresh Burer–Monteiro behavior is unchanged. Existing recordings keep
+their original semantics; no new live Luna rehearsal was performed for this fix.
+
+All 40 offline regression tests passed, including five handoff/retention/deadline
+checks. Twelve bounded numerical worker trials on the 1,000-vertex graph with
+seeds 3/4/5 completed and independently rescored: original Tabu Search median 975,
+original Burer–Monteiro median 1012, Burer–Monteiro → Tabu Search median 1033,
+and Tabu Search → Burer–Monteiro median 1027. These fixed-seed checks establish
+operation of the handoff, not general superiority. The isolated browser check
+showed incoming/retained scores for all three warm refinements and zero model
+calls. See `evidence/bm_handoff_verification.json`. All 133 vendor hashes match.
+
 ## Current teaching materials
 
 - 19 main frames / 73 reveals: title, evolutionary algorithms, LLM mutation,

@@ -67,7 +67,8 @@ def validate_proposal(value, round_id, parents):
 
 
 def context(round_id, parents, seen, failures):
-    return {'round_id': round_id, 'parents': parents, 'previous_genome_ids': seen,
+    return {'round_id': round_id, 'execution_version': b.EXECUTION_VERSION, 'stage_start_rules': b.STAGE_START_RULES,
+            'parents': parents, 'previous_genome_ids': seen,
             'actual_failures': failures, 'algorithm_names':{'tabu':'Tabu Search','annealing':'Simulated Annealing','bls':'Breakout Local Search','bm':'rank-two Burer–Monteiro method'}, 'allowed_defaults': b.DEFAULT_CONFIG,
             'config_bounds': {
                 'tenure':[0,1000], 'restart_after':[0,1000], 'jump':[1,1000], 'stagnation':[1,1000],
@@ -86,4 +87,7 @@ use the disclosed defaults for unchanged fields. All stage work caps are per sta
 Use the measured runtimes to choose work caps; incomplete candidates cannot be ranked.
 All candidates start from the same frozen labels (raw seeded starts in the solver-population demo) for each of three RNG seeds. Fresh stages discard their
 starting labels; retained stages use the best-so-far labels. Fitness is independently recomputed by the evaluator.
+For Burer–Monteiro, a retained stage AFTER stage one lifts the incoming partition to vectors, adds fixed seeded
+angular perturbations, and refines it. A first or fresh Burer–Monteiro stage keeps the original independent vector search.
+Replacing a parent algorithm does not inherit that parent's previously evaluated solution; composition passes state within one trial.
 Give a short testable hypothesis; a plateau or failed mutation is acceptable. Do not claim an improvement before testing.'''

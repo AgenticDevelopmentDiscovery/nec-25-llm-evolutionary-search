@@ -1,5 +1,11 @@
 # Current handoff: 25-minute solver-evolution classroom
 
+Current numerical fix: `demo/bm_refinement.py` makes retained Burer–Monteiro
+stages after stage one lift/perturb/refine the incoming partition. First-stage
+and fresh calls preserve the initial benchmark behavior; old replays are unchanged.
+New records/context carry `retained-bm-refinement-v1`. This is an offline-tested
+adapter change, not a new live Luna rehearsal. Do not spend additional model calls.
+
 The current instructions supersede the historical initial handoff below. Read `demo/READINESS.md`, `demo/PRESENTATION_PLAN.md` and `demo/ARCHITECTURE.md` first. The server, checked initial populations, exact exchange and three genuine three-call recordings now exist. All nine original revision calls and six additional attempts are used; do not start more without a new allowance. The first two current cases use the 1000-vertex signed random graph and two real rounds each; one source terminated after invalid parent validation. See READINESS.md for exact outcomes. Checkboxes choose P0 only, while Luna may use all kernels. The current deck has 19 main frames / 73 reveals focused on content and three demos, followed by 3 optional architecture/API appendix frames / 12 reveals. Main content is 21:40 plus 45s reserve; the optional appendix adds 2:35. Use the Appendix button or frame-picker group; normal advancing ends at the main conclusion. Preserve earlier work, old rounds and the 133-file vendor snapshot. Do not commit, push, deploy or invoke the reviewer panel.
 
 The current private script is complete at `/rehearsal` and `/rehearsal-script`. Voice and video generation are deferred at the user’s request; offline TTS is not the requested future voice. Presenter aloud timing remains distinct from synthetic narration. Helping materials stay under ignored `demo/rehearsal/`.
