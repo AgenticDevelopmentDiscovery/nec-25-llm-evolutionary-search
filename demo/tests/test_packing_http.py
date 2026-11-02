@@ -1,6 +1,8 @@
 """Current teaching routes, tokens and reconnect; never releases a model gate."""
 from pathlib import Path
 import json
+import shutil
+import subprocess
 import sys
 import tempfile
 import threading
@@ -11,6 +13,14 @@ import urllib.error
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from server import DemoServer
 from packing_controller import PackingManager
+
+
+class PackingClientAuthTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which('node'), 'Node required for client recovery checks')
+    def test_rejected_writes_recover_once_without_retrying_ambiguous_failures(self):
+        result=subprocess.run(['node',str(Path(__file__).with_name('test_packing_auth.js'))],
+                              capture_output=True,text=True,timeout=10)
+        self.assertEqual(result.returncode,0,result.stdout+result.stderr)
 
 
 class PackingHTTPTests(unittest.TestCase):
@@ -38,7 +48,13 @@ class PackingHTTPTests(unittest.TestCase):
                 _,raw=request('/api/packing/runs',{'mode':'numerical','n':32},access['write_token'])
                 created=json.loads(raw);rid=created['run_id'];token=created['write_token']
                 self.assertEqual(created['snapshot']['model_calls'],0)
+                _,raw=request(f'/api/packing/runs/{rid}/claim',{},access['write_token'])
+                self.assertEqual(json.loads(raw)['write_token'],token)
+                self.assertEqual(manager.get(rid).status,'created')
                 self.assertEqual(request(f'/api/packing/runs/{rid}/start',{})[0],403)
+                self.assertEqual(request(f'/api/packing/runs/{rid}/validate',{})[0],403)
+                self.assertEqual(request(f'/api/packing/runs/{rid}/validate',{},token)[0],400)
+                self.assertEqual(request(f'/api/packing/runs/{rid}/validation-stop',{},token)[0],400)
                 _,raw=request(f'/api/packing/runs/{rid}/stop',{},token)
                 self.assertEqual(json.loads(raw)['status'],'stopped')
                 _,raw=request(f'/api/packing/runs/{rid}/events?after=0')
@@ -46,6 +62,24 @@ class PackingHTTPTests(unittest.TestCase):
                 self.assertEqual(request('/.env')[0],404)
                 self.assertEqual(request('/runs/private')[0],404)
                 self.assertEqual(request('/api/packing/runs/nope')[0],404)
+                if not access['sandbox']['available']: return
+                _,raw=request('/api/packing/runs',{'mode':'numerical','initial_solvers':['grid']},access['write_token'])
+                fresh=json.loads(raw);rid=fresh['run_id'];token=fresh['write_token']
+                self.assertEqual(request(f'/api/packing/runs/{rid}/start',{},token)[0],200)
+                manager.get(rid).thread.join(15)
+                status,raw=request(f'/api/packing/runs/{rid}/validate',{},token)
+                self.assertEqual(status,200);validation=json.loads(raw)
+                self.assertEqual(request(f'/api/packing/runs/{rid}/validate',{},token)[0],200)
+                manager.get(validation['id']).thread.join(15)
+                state=json.loads(request(f'/api/packing/runs/{rid}')[1])['validation']
+                self.assertEqual(state['status'],'finished');self.assertEqual(state['model_calls'],0)
+                self.assertEqual(state['roles'][state['candidates'][0]['id']],['initial','final'])
+                self.assertEqual(request(f'/api/packing/runs/{rid}/claim',{})[0],403)
+                _,raw=request(f'/api/packing/runs/{rid}/claim',{},access['write_token'])
+                claimed=json.loads(raw)
+                self.assertEqual(claimed['write_token'],token)
+                self.assertEqual(request(f'/api/packing/runs/{rid}/validate',{},claimed['write_token'])[0],200)
+                self.assertEqual(request(f'/api/packing/runs/{rid}/validate',{},token)[0],200)
             finally:manager.close();server.shutdown();server.server_close();thread.join()
 
 

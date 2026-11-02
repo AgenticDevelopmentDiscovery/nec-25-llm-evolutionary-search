@@ -1,5 +1,5 @@
 {
-  "source_sha256": "bb5e7b3157eed8ac9192f0e49f6bbb0b5720e4ccc6bbbcfdd9c11f1c3b8694f7",
+  "source_sha256": "e3ea5b76bec5d36cb2ea5198834df26a9b82404e9c6a73268816c011ee5b8998",
   "title": "LLM-driven evolutionary search",
   "chapter": "Chapter 10: Agentic Evolutionary Frameworks",
   "frames": [
@@ -136,7 +136,7 @@
       "title": "Read the first run’s evidence",
       "seconds": 45,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>What improved: one packing, the program’s measured fitness, or both?</strong></p>\n</div>\n<div class=\"block\">\n<p>A witness proves one feasible construction. Three complete trials rank a program on one declared bank. A source diff explains what changed; it does not prove an improvement.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Keep construction progress and program comparison separate.</strong> Report the actual outcome, calls and numerical effort.</p>\n</div>\n",
+      "html": "<div class=\"question\">\n<p><strong>What improved: one packing, the program’s measured fitness, or both?</strong></p>\n</div>\n<div class=\"block\">\n<p>A witness shows one feasible packing. After evolution, compare the frozen initial and final programs on the original starting bank. Three complete trials supply each median.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Keep construction progress and program comparison separate.</strong> Report the actual outcome, calls and numerical effort.</p>\n</div>\n",
       "reveals": 3
     },
     {

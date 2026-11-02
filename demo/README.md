@@ -26,6 +26,13 @@ demo and returns to your frame. `just demo 8767` uses another port if needed.
 Never kill an unidentified listener. Python backend changes require restarting
 your server; saved prose updates automatically when Pandoc is available.
 
+If an older open tab reports **write token required**, hard-refresh it once
+(Ctrl+Shift+R) to load the current client. This is the local server's control
+token, separate from your Luna API key. Reconnecting tabs now share a stable
+run token. The client refreshes expired credentials after a server restart and
+retries only a write explicitly rejected before execution. Completed runs and
+their comparisons remain available; reconnect never starts a model request.
+
 ## Your own private key
 
 Copy `.env.example` to ignored `.env` inside demo/, then edit locally. Select

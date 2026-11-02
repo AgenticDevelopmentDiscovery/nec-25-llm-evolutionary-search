@@ -21,11 +21,11 @@ PROFILE = task.PROFILE
 
 
 class PackingRun(BaseRun):
-    def __init__(self, manager, options):
+    def __init__(self, manager, options, restored=None):
         self.manager, self.options = manager, options
-        self.id = uuid.uuid4().hex
+        self.id = restored['id'] if restored else uuid.uuid4().hex
         self.path = manager.root/self.id
-        self.path.mkdir(parents=True)
+        self.path.mkdir(parents=True, exist_ok=restored is not None)
         self.mode, self.seed = options['mode'], options['seed']
         self.n = options['n']
         self.seeds = [(self.seed+i) % 2**32 for i in range(3)]
@@ -41,16 +41,38 @@ class PackingRun(BaseRun):
         self.frozen = [task.start_centers(s,self.n) for s in self.seeds]
         self.trial_best = [None]*3
         self.bank_id = self.bank_hash()
+        self.validation_run = None
+        self.validation_programs = None
+        self.validation_roles = {}
+        if restored:
+            for field in ('status','phase','population','candidates','current','best'):
+                setattr(self,field,restored[field])
+            self.calls=restored['model_calls']
+            self.ended=time.monotonic();self.started=self.ended-restored['elapsed']
+            self.events=[json.loads(line) for line in (self.path/'events.jsonl').read_text().splitlines()]
+            self.validation_roles=restored.get('validation_roles',{})
+            if restored.get('is_validation'): self.validation_programs=[]
+            return
         save(self.path/'config.json', dict(options=options, task=task.specification(self.n), seeds=self.seeds))
         self.emit('run_created', options=options, task=task.specification(self.n), seeds=self.seeds)
 
     def snapshot(self):
         with self.lock:
+            validation = self.validation_run
             return copy.deepcopy(dict(id=self.id, mode=self.mode, status=self.status,
                 phase=self.phase, elapsed=self.elapsed(), model_calls=self.calls,
                 waiting_round=self.waiting_round, population=self.population,
                 candidates=self.candidates, current=self.current, best=self.best,
-                options=self.options, seeds=self.seeds, events=self.events))
+                options=self.options, seeds=self.seeds, events=self.events,
+                is_validation=self.validation_programs is not None,
+                validation_roles=self.validation_roles,
+                validation=None if validation is None else validation.validation_snapshot()))
+
+    def validation_snapshot(self):
+        with self.lock:
+            return copy.deepcopy(dict(id=self.id, status=self.status, phase=self.phase,
+                elapsed=self.elapsed(), model_calls=self.calls, bank_id=self.bank_id,
+                seeds=self.seeds, candidates=self.candidates, roles=self.validation_roles))
 
     def bank_hash(self):
         return hashlib.sha256(json.dumps(self.frozen,sort_keys=True).encode()).hexdigest()[:12]
@@ -278,6 +300,12 @@ class PackingRun(BaseRun):
                     if event['type'] == 'candidate_ranked': self.candidates.append(data['candidate'])
             else:
                 if not availability()['available']: raise ValueError(availability()['reason'])
+                if self.validation_programs is not None:
+                    self.phase = 'original-bank numerical validation'
+                    for program in self.validation_programs:
+                        self.evaluate(program['source'], [], 0, program['name'])
+                    self.finish('finished', 'original-bank comparison complete; zero model calls; no evolution or selection')
+                    return
                 self.phase = 'initial evaluation'
                 for program in task.initial_programs():
                     if program['key'] in self.options['initial_solvers']:
@@ -330,6 +358,57 @@ class PackingManager(BaseManager):
         self.root=Path(root or HERE/'runs'/'packing')
         self.root.mkdir(parents=True,exist_ok=True)
         self.lock=threading.RLock();self.runs={};self.active=None
+
+    def get(self, identity):
+        with self.lock:
+            if identity not in self.runs:
+                if len(identity)!=32 or any(c not in '0123456789abcdef' for c in identity):
+                    raise KeyError('unknown run ID')
+                path=self.root/identity/'final.json'
+                if not path.is_file(): raise KeyError('unknown or unfinished run ID')
+                final=json.loads(path.read_text())
+                if final['id']!=identity or final['status'] not in TERMINAL:
+                    raise ValueError('invalid stored completed run')
+                run=PackingRun(self,final['options'],restored=final)
+                self.runs[identity]=run
+                link=run.path/'validation-link.json'
+                if link.is_file():
+                    try: run.validation_run=self.get(json.loads(link.read_text())['run_id'])
+                    except KeyError: pass  # An interrupted server does not resume numerical work.
+            return self.runs[identity]
+
+    def validate_original(self, source):
+        """Freeze source and rerun initial/final programs in a separate bounded run."""
+        with self.lock:
+            if source.validation_run is not None:
+                return source.validation_run  # Repeated clicks never launch more work.
+            if source.status != 'finished' or source.mode == 'replay' or source.validation_programs is not None:
+                raise ValueError('finish a live or numerical evolution run before validation')
+            if self.active is not None:
+                raise ValueError('another run is active; finish or stop it before validation')
+            programs = {}
+            roles = {}
+            initial = [c for c in source.candidates if c['round_id'] == 0]
+            for role, candidates in (('initial', initial), ('final', source.population)):
+                for candidate in candidates:
+                    programs.setdefault(candidate['id'], dict(id=candidate['id'],
+                        name=candidate['name'], source=candidate['source']))
+                    roles.setdefault(candidate['id'], []).append(role)
+            if not programs or not source.population:
+                raise ValueError('no evaluated initial programs or final survivors')
+            options = {**source.options, 'mode': 'numerical', 'starts': 'fixed'}
+            validation = self.create(options)
+            validation.validation_programs = copy.deepcopy(list(programs.values()))
+            validation.validation_roles = roles
+            save(validation.path/'validation.json', dict(source_run_id=source.id,
+                bank_id=validation.bank_id, roles=roles, programs=validation.validation_programs,
+                protocol='original centers, same seeds and limits; no feedback into evolution'))
+            source.validation_run = validation
+            save(source.path/'validation-link.json', {'run_id':validation.id})
+            source.emit('validation_started', validation_run_id=validation.id,
+                        bank_id=validation.bank_id, program_ids=list(programs))
+            self.start(validation)
+            return validation
 
     def create(self, body):
         if not isinstance(body, dict) or set(body)-{'mode','seed','rounds','origin','context','initial_solvers','replay','n','starts'}:

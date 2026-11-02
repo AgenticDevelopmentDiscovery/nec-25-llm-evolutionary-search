@@ -15,6 +15,8 @@
 - Define the problem in the opening pair; begin Demo 1 with the source/evaluation sequence rather than repeating its definition.
 - Compare programs within a common frozen packing bank; archive cumulative construction progress separately.
 
+- After each completed demo, an explicit numerical-only comparison freezes initial/final source and reruns the deduplicated union on original starts. Same seeds/limits; separate initial/final tables and 240-second task; no evolutionary feedback. Original starts are not held-out validation.
+
 ## Open questions
 
 - Which actual proposals improve or plateau in the bounded live run? Record results; do not predict them.

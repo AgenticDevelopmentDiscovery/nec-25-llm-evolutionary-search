@@ -134,3 +134,7 @@ The browser holds write tokens in its same-origin session. Host/origin validatio
 and tokens protect mutations. Static routes are explicitly allowlisted. No route
 serves .env, arbitrary repository paths or raw private run directories. Another
 account must supply its own ignored credentials after cloning.
+
+## Post-search original-bank comparison
+
+After a live or numerical run finishes, the explicit comparison action freezes the initial programs and final survivors. PackingManager.validate_original creates a separate NUMERICAL ONLY task with original centers, the same three seeds and numerical limits, and a fresh 240-second task deadline. Identical source is evaluated once and displayed in each applicable table: initial programs and final survivors. The parent run exposes a separate comparison snapshot; its evolution population, fitness history and construction curve remain unchanged. Stop/Reset cancels owned comparison workers. Repeated comparison requests return the same task rather than launching another evaluation. No provider request or evolutionary feedback occurs. Original starts are familiar conditions, not a held-out test.

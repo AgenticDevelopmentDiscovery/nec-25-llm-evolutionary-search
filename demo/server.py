@@ -66,8 +66,8 @@ class DemoServer(ThreadingHTTPServer):
         self.route_lock = threading.RLock()
 
     def register(self, run):
-        token = secrets.token_urlsafe(32)
-        self.tokens[run.id] = token
+        # Reconnecting another tab must not revoke the original tab's control.
+        token = self.tokens.setdefault(run.id, secrets.token_urlsafe(32))
         return {'run_id': run.id, 'write_token': token, 'snapshot': run.snapshot()}
 
 
@@ -208,10 +208,20 @@ class Handler(BaseHTTPRequestHandler):
                     if not secrets.compare_digest(token,self.server.bootstrap): raise PermissionError('write token required')
                     run = self.server.packing.reset(body) if parts[-1]=='reset' else self.server.packing.create(body)
                     return self.reply(self.server.register(run),201)
-                if len(parts)==5 and parts[:3]==['api','packing','runs'] and parts[-1] in ('start','stop','continue'):
+                if len(parts)==5 and parts[:3]==['api','packing','runs'] and parts[-1] in ('start','stop','continue','validate','validation-stop','claim'):
                     run = self.server.packing.get(parts[3])
+                    if parts[-1]=='claim':
+                        if not secrets.compare_digest(token,self.server.bootstrap): raise PermissionError('write token required')
+                        if body != {}: raise ValueError('run actions require an empty object')
+                        return self.reply(self.server.register(run))
                     if not secrets.compare_digest(token,self.server.tokens.get(run.id,'invalid')): raise PermissionError('run write token required')
                     if body != {}: raise ValueError('run actions require an empty object')
+                    if parts[-1]=='validate':
+                        return self.reply(self.server.packing.validate_original(run).validation_snapshot())
+                    if parts[-1]=='validation-stop':
+                        if run.validation_run is None: raise ValueError('no validation run')
+                        run.validation_run.stop()
+                        return self.reply(run.validation_run.validation_snapshot())
                     if parts[-1]=='continue': return self.reply({'continued':run.continue_round()})
                     if parts[-1]=='start':
                         return self.reply({'started':self.server.packing.start(run)})

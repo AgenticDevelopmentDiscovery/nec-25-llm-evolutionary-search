@@ -116,3 +116,24 @@ and inspected. At that stage, exports retained 17 main / 3 appendix frames and 7
 reveal slides, before the problem-first opening revision described above.
 The production survivor rule, model transport and original six genuine requests are
 unchanged. The original six calls remain spent, with zero remaining allowance.
+
+## Original-bank comparison — November 2, 2026
+
+Implemented an explicit post-run numerical comparison of frozen initial programs and final survivors. It uses the original centers, identical seeds/limits, deduplicated source and a separate 240-second task with Stop, idempotent launch and completed-run reconnect. No provider requests or feedback into evolution occur. Separate initial-program and final-survivor tables report three trials, median and minimum. Shared programs appear in both tables using the same measured evaluation. Original starts are not held-out validation.
+
+For completed live run `01842f4fc4b64196a8373bf2660a6667`, comparison `7d07eb64409a4b3f9292a9e6ac46d2d6` completed all 15 trials in 8.47 seconds, zero model calls, original bank `1caf33a35e15`. Best initial median: 2.095015 (Greedy Local Center Search). Best final median: 2.105475 (Luna child 3). Luna child 2 scored 2.077064, illustrating that inherited-bank selection does not guarantee stronger original-start performance. These are local observations, not generalization or optimality claims.
+
+Checks cover original-bank reconstruction, shared-source deduplication, failure exclusion, Stop process cleanup, idempotent launch, restored reports and HTTP write-token/reconnect behavior. Presentation/preview regressions pass; PDFs and private speaking guide rebuilt.
+
+### Reconnect control-token correction
+
+Run registration now returns the existing token for the server lifetime, so a
+second tab cannot revoke the first tab's control. Explicit writes rejected with
+an expired-token 403 refresh local credentials and retry once. Network errors,
+origin rejections and model failures are never retried. Reclaiming a run only
+returns control metadata; it does not start execution. HTTP regressions and seven
+mocked client recovery scenarios pass. On the running server, two reconnects to
+the existing completed live run retained the same token, both controls remained
+valid, no work restarted, and its original-bank report remained intact. Zero
+additional model calls were made. Older open tabs need one hard refresh to load
+the corrected client.

@@ -51,6 +51,65 @@ class PackingContractTests(unittest.TestCase):
 
 @unittest.skipUnless(availability()['available'],'real Bubblewrap/SciPy execution unavailable')
 class IsolatedPackingTests(unittest.TestCase):
+    def test_original_bank_validation_freezes_sources_and_excludes_failures(self):
+        with tempfile.TemporaryDirectory() as root:
+            manager=PackingManager(root)
+            run=manager.create({'mode':'numerical','initial_solvers':['grid']})
+            manager.start(run);run.thread.join(15)
+            original_candidates=json.dumps(run.candidates,sort_keys=True)
+            grid=run.population[0]
+            local=p.initial_programs()[1]
+            local_id,_=p.source_identity(local['source'])
+            bad='def solve(initial, seed, steps):\n    raise ValueError("validation failure fixture")\n'
+            bad_id,_=p.source_identity(bad)
+            run.population=[grid,dict(id=local_id,source=local['source'],name=local['name']),
+                            dict(id=bad_id,source=bad,name='Invalid final fixture')]
+            run.frozen=[p.start_centers(seed+100) for seed in run.seeds]
+            run.bank_id=run.bank_hash()
+            validation=manager.validate_original(run)
+            self.assertIs(manager.validate_original(run),validation)
+            validation.thread.join(25)
+            self.assertEqual(validation.status,'finished',validation.events[-1])
+            self.assertEqual(validation.calls,0)
+            self.assertEqual(validation.frozen,[p.start_centers(seed) for seed in run.seeds])
+            self.assertNotEqual(validation.bank_id,run.bank_id)
+            self.assertEqual(len(validation.candidates),3)  # Shared initial/final source once.
+            self.assertEqual(validation.validation_roles[grid['id']],['initial','final'])
+            failed=next(c for c in validation.candidates if c['id']==bad_id)
+            self.assertFalse(failed['complete']);self.assertIsNone(failed['median'])
+            self.assertTrue(all(c['bank_id']==validation.bank_id for c in validation.candidates))
+            self.assertEqual(json.dumps(run.candidates,sort_keys=True),original_candidates)
+            self.assertEqual(run.snapshot()['validation']['model_calls'],0)
+            manager.close()
+            restored=PackingManager(root)
+            report=restored.get(run.id).snapshot()['validation']
+            self.assertEqual(report['status'],'finished')
+            self.assertEqual(len(report['candidates']),3)
+            self.assertEqual(report['roles'][grid['id']],['initial','final'])
+            restored.close()
+
+    def test_stop_original_bank_validation_does_not_restart_it(self):
+        with tempfile.TemporaryDirectory() as root:
+            manager=PackingManager(root)
+            run=manager.create({'mode':'numerical','initial_solvers':['grid']})
+            manager.start(run);run.thread.join(15)
+            hanging='def solve(initial, seed, steps):\n    while True: pass\n'
+            identity,_=p.source_identity(hanging)
+            run.population=[dict(id=identity,source=hanging,name='Stop fixture')]
+            validation=manager.validate_original(run)
+            deadline=time.monotonic()+12
+            while not list(validation.path.glob(f'{identity}*/active_process.json')) and time.monotonic()<deadline:
+                time.sleep(.03)
+            records=list(validation.path.glob(f'{identity}*/active_process.json'))
+            self.assertTrue(records)
+            record=json.loads(records[0].read_text())
+            validation.stop()
+            self.assertEqual(validation.status,'stopped');self.assertIsNone(manager.active)
+            from portfolio_external import process_live
+            self.assertFalse(process_live(record['pid'],record['tick']))
+            self.assertIs(manager.validate_original(run),validation)
+            self.assertEqual(validation.calls,0);manager.close()
+
     def test_numerical_programs_complete_with_distinct_fitness(self):
         with tempfile.TemporaryDirectory() as root:
             manager=PackingManager(root)

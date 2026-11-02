@@ -35,7 +35,7 @@ After evaluation, compare all three trials and the actual top-three decision. Be
 :::
 
 ::: {.block}
-A witness proves one feasible construction. Three complete trials rank a program on one declared bank. A source diff explains what changed; it does not prove an improvement.
+A witness shows one feasible packing. After evolution, compare the frozen initial and final programs on the original starting bank. Three complete trials supply each median.
 :::
 
 ::: {.answer}
@@ -43,6 +43,8 @@ A witness proves one feasible construction. Three complete trials rank a program
 :::
 
 ::: {.notes}
+After the last round finishes, scroll to “Did the programs improve from the original starts?” and press “Compare initial and final programs on original starts.” This runs numerical trials only, with no Luna calls. Initial programs and final survivors receive the original three center arrays, the same seeds and the same limits. Initial programs and final survivors appear in separate tables. A source shared by both groups is tested once and appears in both tables with the same scores. Read each table by median and minimum; failures have no eligible median. The comparison has its own 240-second cap and Stop comparison control. It does not alter the evolutionary population or feed results back to Luna. Original starts were used during evolution, so this is an original-start comparison, not held-out validation. If time is short, start this comparison while explaining the evidence and let it finish before interpreting the scores.
+
 Ask students to point to the record supporting each claim. The circle view includes program identity, seed, validity and summed radii. The table includes complete or failed trials, medians and current-bank selection. The cumulative construction curve retains valid witnesses; it must not be mislabeled as a fixed-protocol program-fitness curve when banks change.
 
 Do not substitute expected improvements for measured outcomes. If an eligible child is worse than the champion, it can still enter another slot. If a trial fails, the program has no eligible median. Matching a historical literature score would still not prove optimality. A three-call classroom run cannot establish broad model or algorithm superiority. The guide’s separate numerical validation illustrates how to test frozen programs beyond the evolution starts, rather than treating geometric feasibility as proof of transfer.
