@@ -10,8 +10,9 @@ and initial methods are classroom implementations; AlphaEvolve’s engine is not
 released in its public results repository. Do not claim an exact engine or
 record-result reproduction.
 
-The main source follows Chapter 10.1–10.5 with 2/3/2/1/2 frames, plus a title
-and six frames supporting two demos. There are three optional architecture/API
+The main source opens with a title and two plain-language circle-packing problem
+frames, then follows Chapter 10.1–10.5 with 2/3/2/1/2 frames and five frames
+supporting two demos. There are three optional architecture/API
 appendix frames. Every active surface should describe circle packing. Historical
 sources, the previous server and all existing records are preserved separately.
 No publication or reviewer panel is authorized.

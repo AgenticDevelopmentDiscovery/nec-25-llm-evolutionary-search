@@ -5,6 +5,7 @@
 - The next generation depends on selected parents; independent repeated generation lacks this ancestry.
 - Inner selection chooses parents; outer selection prunes the pooled parents and children.
 - External population/history changes between calls; model weights remain fixed.
+- Define population, parent, child, mutation, selection and fitness after the packing problem is concrete.
 
 ## Decisions
 

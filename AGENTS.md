@@ -7,6 +7,8 @@ uses the two unit-square circle-packing cases in AlphaEvolve Appendix B.12:
 
 Follow Chapter 10 of `notes/agentic-development-notes.pdf`. Use exactly 2 frames
 for 10.1, 3 for 10.2, 2 for 10.3, 1 for 10.4 and 2 for 10.5; title separate.
+After the title, introduce circle-packing rules and the summed-radii objective
+in two content frames before using the evolutionary framework's terminology.
 The remaining main frames support two live demos. Keep architecture in the
 appendix, question/mechanism/answer reveals, detailed notes and Aggie Maroon.
 Keep `.prose.md` / `.concepts.md` pairs consistent.

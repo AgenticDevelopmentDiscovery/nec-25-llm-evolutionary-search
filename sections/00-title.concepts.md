@@ -3,6 +3,7 @@
 ## Claims
 
 - Evolving packing programs: teach the mechanism through a question, evidence and answer.
+- Explain the packing rules and objective in two opening content frames before introducing the framework.
 
 ## Decisions
 

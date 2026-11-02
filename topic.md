@@ -4,7 +4,7 @@
 - Capability: identify (A,f,mu,sigma,P0); explain classical versus LLM mutation,
   context feedback, elitism/selection pressure, fitness integrity and exploration.
 - Teaching arc: Chapter 10.1–10.5 in exactly 2/3/2/1/2 conceptual frames; separate
-  title; six frames for two published unit-square circle-packing demos; optional
+  title; two opening problem frames; five frames for two published unit-square circle-packing demos; optional
   architecture/API appendix. Questions precede mechanism and answer reveals.
 - Artifact: actual Python packing search programs, not final coordinate vectors.
 - Evidence: independent geometry and objective checks; three complete trials;

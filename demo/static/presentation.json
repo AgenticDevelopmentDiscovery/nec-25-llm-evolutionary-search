@@ -1,5 +1,5 @@
 {
-  "source_sha256": "d4470fa0ff243360820fad1e6a5a90e84db9025e096901268841eab0ae85813a",
+  "source_sha256": "c1e7cbe11d2765a7c43cbfbf29dd4c878fcb02aaa29d6e5033904fcab950cfed",
   "title": "LLM-driven evolutionary search",
   "chapter": "Chapter 10: Agentic Evolutionary Frameworks",
   "frames": [
@@ -8,15 +8,31 @@
       "title": "LLM-Driven Evolutionary Search: Evolving packing programs",
       "seconds": 20,
       "appendix": false,
-      "html": "<div class=\"question title-only\">\n<p><strong>How can a language model improve a search algorithm through measured feedback?</strong></p>\n<p>ENGR 689 · Chapter 10 · Texas A&amp;M University</p>\n</div>\n",
+      "html": "<div class=\"question title-only\">\n<p><strong>Can we improve the programs that find good circle packings?</strong></p>\n<p>ENGR 689 · Chapter 10 · Texas A&amp;M University</p>\n</div>\n",
       "reveals": 1
     },
     {
+      "id": "packing-26",
+      "title": "Circle packing: the problem",
+      "seconds": 45,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>What are we trying to arrange?</strong></p>\n</div>\n<div class=\"block\">\n<p>Place <strong>26 or 32 circles</strong> inside a square with side length 1. Choose each circle’s <strong>center</strong> (its location) and <strong>radius</strong> (half its width). The radii may differ.</p>\n</div>\n<div class=\"block\">\n<p>Every circle must stay inside the square. Circles may touch each other and the boundary, but they must <strong>not overlap</strong>.</p>\n</div>\n<div class=\"answer\">\n<p><strong>A valid packing satisfies these rules for every circle.</strong> The number of circles stays fixed within each problem.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
+      "id": "packing-goal",
+      "title": "Circle packing: the goal",
+      "seconds": 45,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>Which valid packing is better?</strong></p>\n</div>\n<div class=\"block\">\n<p>Maximize the <strong>sum of the radii</strong>: <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>S</mi><mo>=</mo><msub><mi>r</mi><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>r</mi><mi>N</mi></msub></mrow><annotation encoding=\"application/x-tex\">S=r_1+\\cdots+r_N</annotation></semantics></math>, where <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mi>N</mi><annotation encoding=\"application/x-tex\">N</annotation></semantics></math> is the number of circles. Compare packings with the same <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mi>N</mi><annotation encoding=\"application/x-tex\">N</annotation></semantics></math>.</p>\n</div>\n<div class=\"block\">\n<p>Four-circle illustration, with both arrangements valid:</p>\n<table>\n<thead>\n<tr class=\"header\">\n<th style=\"text-align: left;\">Arrangement</th>\n<th style=\"text-align: right;\">Radius of each circle</th>\n<th style=\"text-align: right;\">Sum of radii</th>\n</tr>\n</thead>\n<tbody>\n<tr class=\"odd\">\n<td style=\"text-align: left;\">A</td>\n<td style=\"text-align: right;\">0.15</td>\n<td style=\"text-align: right;\">0.60</td>\n</tr>\n<tr class=\"even\">\n<td style=\"text-align: left;\">B</td>\n<td style=\"text-align: right;\">0.25</td>\n<td style=\"text-align: right;\"><strong>1.00</strong></td>\n</tr>\n</tbody>\n</table>\n</div>\n<div class=\"answer\">\n<p><strong>B has the larger score.</strong> Circle positions limit how large the radii can be. We need a strategy to search for better packings.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
       "id": "evolution",
-      "title": "An external evolutionary loop",
+      "title": "Our strategy: evolve packing programs",
       "seconds": 60,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>What must survive between calls for the next attempt to build on the previous one?</strong></p>\n</div>\n<div class=\"block\">\n<p>Keep executable candidates, their measured results, and the changes already tried. Select survivors before proposing their descendants.</p>\n</div>\n<div class=\"block visual\">\n<figure>\n<img src=\"/figures/evolutionary-cycle.svg\" style=\"width:100.0%\" alt=\"Initialize once; evaluate, select and mutate repeatedly.\" />\n<figcaption aria-hidden=\"true\">Initialize once; evaluate, select and mutate repeatedly.</figcaption>\n</figure>\n</div>\n<div class=\"answer\">\n<p><strong>Evolution gives the next proposal ancestry and external memory.</strong> Repeated independent generation does not inherit the survivors.</p>\n</div>\n",
+      "html": "<div class=\"question\">\n<p><strong>How can we improve the method that finds the packings?</strong></p>\n</div>\n<div class=\"block\">\n<p>Run several Python programs to produce packings. Check their circles and record their scores. Keep useful programs as <strong>parents</strong>.</p>\n</div>\n<div class=\"block visual\">\n<figure>\n<img src=\"/figures/evolutionary-cycle.svg\" style=\"width:100.0%\" alt=\"Initialize once; evaluate, select and mutate repeatedly.\" />\n<figcaption aria-hidden=\"true\">Initialize once; evaluate, select and mutate repeatedly.</figcaption>\n</figure>\n</div>\n<div class=\"answer\">\n<p><strong>Luna writes changes to the parent programs.</strong> We test each new program before deciding whether to keep it.</p>\n</div>\n",
       "reveals": 4
     },
     {
@@ -24,7 +40,7 @@
       "title": "Five choices define the search",
       "seconds": 60,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>Which choices turn “try to improve this” into a reproducible procedure?</strong></p>\n</div>\n<div class=\"block\">\n<p><math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>𝒜</mi><mo>,</mo><mi>f</mi><mo>,</mo><mi>μ</mi><mo>,</mo><mi>σ</mi><mo>,</mo><msub><mi>P</mi><mn>0</mn></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><annotation encoding=\"application/x-tex\">(\\mathcal A,f,\\mu,\\sigma,P_0)</annotation></semantics></math>: program space, fitness, mutation, selection, and initial population.</p>\n</div>\n<div class=\"block\">\n<p><math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>P</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>σ</mi><mspace width=\"-0.167em\"></mspace><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo>∪</mo><mo stretchy=\"false\" form=\"prefix\">{</mo><mi>μ</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>a</mi><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo>:</mo><mi>a</mi><mo>∈</mo><mi>σ</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo stretchy=\"false\" form=\"postfix\">}</mo><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mi>.</mi></mrow><annotation encoding=\"application/x-tex\">P_{t+1}=\\sigma\\!\\left(P_t\\cup\\{\\mu(a):a\\in\\sigma(P_t)\\}\\right).</annotation></semantics></math></p>\n<p>Choose parents → mutate → pool parents and children → select survivors.</p>\n</div>\n<div class=\"answer\">\n<p><strong>The inner selection chooses parents; the outer selection forms the next generation.</strong> Every component is a design choice.</p>\n</div>\n",
+      "html": "<div class=\"question\">\n<p><strong>What must we define before running this search?</strong></p>\n</div>\n<div class=\"block\">\n<p><math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>𝒜</mi><mo>,</mo><mi>f</mi><mo>,</mo><mi>μ</mi><mo>,</mo><mi>σ</mi><mo>,</mo><msub><mi>P</mi><mn>0</mn></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><annotation encoding=\"application/x-tex\">(\\mathcal A,f,\\mu,\\sigma,P_0)</annotation></semantics></math>: allowed programs, measured performance (<strong>fitness</strong>), how programs change (<strong>mutation</strong>), which programs we keep (<strong>selection</strong>), and the starting group (<strong>initial population</strong>).</p>\n</div>\n<div class=\"block\">\n<p><math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>P</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>σ</mi><mspace width=\"-0.167em\"></mspace><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo>∪</mo><mo stretchy=\"false\" form=\"prefix\">{</mo><mi>μ</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><mi>a</mi><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo>:</mo><mi>a</mi><mo>∈</mo><mi>σ</mi><mrow><mo stretchy=\"true\" form=\"prefix\">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mo stretchy=\"false\" form=\"postfix\">}</mo><mo stretchy=\"true\" form=\"postfix\">)</mo></mrow><mi>.</mi></mrow><annotation encoding=\"application/x-tex\">P_{t+1}=\\sigma\\!\\left(P_t\\cup\\{\\mu(a):a\\in\\sigma(P_t)\\}\\right).</annotation></semantics></math></p>\n<p>Choose parents → mutate → pool parents and children → select survivors.</p>\n</div>\n<div class=\"answer\">\n<p><strong>New programs compete with the parents.</strong> A worse new program does not have to replace a useful parent.</p>\n</div>\n",
       "reveals": 4
     },
     {
@@ -92,14 +108,6 @@
       "reveals": 4
     },
     {
-      "id": "packing-26",
-      "title": "Demo 1: the 26-circle problem",
-      "seconds": 45,
-      "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>What exactly makes a packing valid, and what does “better” mean?</strong></p>\n</div>\n<div class=\"block\">\n<p>Place <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>N</mi><mo>=</mo><mn>26</mn></mrow><annotation encoding=\"application/x-tex\">N=26</annotation></semantics></math> variable-radius circles in the unit square and maximize <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mo>∑</mo><mi>i</mi></msub><msub><mi>r</mi><mi>i</mi></msub></mrow><annotation encoding=\"application/x-tex\">\\sum_i r_i</annotation></semantics></math>.</p>\n<p><math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub><mo>≥</mo><mn>0</mn><mo>,</mo><mspace width=\"1.0em\"></mspace><msub><mi>r</mi><mi>i</mi></msub><mo>≤</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>i</mi></msub><mo>≤</mo><mn>1</mn><mo>−</mo><msub><mi>r</mi><mi>i</mi></msub><mo>,</mo><mspace width=\"1.0em\"></mspace><mo stretchy=\"false\" form=\"postfix\">∥</mo><msub><mi>c</mi><mi>i</mi></msub><mo>−</mo><msub><mi>c</mi><mi>j</mi></msub><msub><mo stretchy=\"false\" form=\"postfix\">∥</mo><mn>2</mn></msub><mo>≥</mo><msub><mi>r</mi><mi>i</mi></msub><mo>+</mo><msub><mi>r</mi><mi>j</mi></msub><mi>.</mi></mrow><annotation encoding=\"application/x-tex\">r_i\\ge0,\\quad r_i\\le x_i,y_i\\le1-r_i,\\quad \\|c_i-c_j\\|_2\\ge r_i+r_j.</annotation></semantics></math></p>\n</div>\n<div class=\"answer\">\n<p><strong>These are AlphaEvolve’s published constraints and objective.</strong> We search live with Luna; the paper’s reported construction is a separate research result.</p>\n</div>\n",
-      "reveals": 3
-    },
-    {
       "id": "demo-circle-a",
       "title": "Demo 1: follow three mutations",
       "seconds": 210,
@@ -164,9 +172,9 @@
       "reveals": 4
     }
   ],
-  "main_frame_count": 17,
-  "main_reveals": 61,
-  "prepared_seconds": 1235,
+  "main_frame_count": 18,
+  "main_reveals": 66,
+  "prepared_seconds": 1280,
   "appendix_seconds": 155,
   "reserve_seconds": 45
 }

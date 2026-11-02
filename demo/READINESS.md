@@ -2,7 +2,8 @@
 
 The active tutorial, server teaching pages, setup, notes and PDF exports now use
 circle packing. Earlier sources and records are preserved as history, outside
-the active presentation. No commit, push, deployment or reviewer panel was run.
+the active presentation. The verification runs below did not deploy the site or
+invoke the reviewer panel.
 
 ## What was actually verified
 
@@ -57,10 +58,12 @@ No optimality or broad model-superiority claim is made.
 
 ## Presentation and remaining presenter actions
 
-Chapter 10.1–10.5 use exactly 2/3/2/1/2 conceptual frames, plus a separate title
-and six frames for two demo sequences: 17 main frames / 61 main reveals.
-Three optional architecture/API appendix frames add 11 reveals, for 72 total.
-Main plan: 20:35 + 0:45 reserve = 21:20. Optional appendix adds 2:35.
+The title is followed by two problem frames that explain the circle-packing
+rules and summed-radii objective before introducing the framework. Chapter
+10.1–10.5 retain 2/3/2/1/2 conceptual frames. Five frames support the two demo
+sequences: 18 main frames / 66 main reveals. Three optional architecture/API
+appendix frames add 11 reveals, for 77 total.
+Main plan: 21:20 + 0:45 reserve = 22:05. Optional appendix adds 2:35, making 24:40.
 
 Actual aloud delivery timing must still be measured by the presenter. The browser
 Rehearse aloud clock records frame/demo timings without making model requests.
@@ -107,7 +110,7 @@ evidence/packing_validation_sources.json. `validate_frozen_programs.py` reproduc
 the checks from the included frozen source without a key.
 
 The three changed browser frames fit 1600×900 and their PDF pages were rendered
-and inspected. Current exports retain 17 main / 3 appendix frames and 72 reveal
-slides. Main timing including reserve is 21:20; the optional appendix makes 23:55.
+and inspected. At that stage, exports retained 17 main / 3 appendix frames and 72
+reveal slides, before the problem-first opening revision described above.
 The production survivor rule, model transport and original six genuine requests are
 unchanged. The original six calls remain spent, with zero remaining allowance.

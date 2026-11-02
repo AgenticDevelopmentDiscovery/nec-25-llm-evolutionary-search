@@ -22,8 +22,8 @@ reference-section-title: References
 # but have never written code" is useful. "Technical readers" is not.
 
 audience: >-
-  ENGR 689 students who know Python, elementary optimization and evaluation
-  harnesses. In 20–25 minutes they should distinguish Python packing programs, circle
+  ENGR 689 students with mixed backgrounds. Introduce the packing rules, score
+  and evolutionary terms before formal notation. In 20–25 minutes they should distinguish Python packing programs, circle
   arrangements and verified fitness; trace LLM proposal, numerical evaluation and
   survivor selection; explain mutation, selection, fitness and diversity; inspect exact Luna
   exchanges; and identify live, numerical-only and recorded modes.

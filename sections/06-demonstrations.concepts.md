@@ -12,6 +12,7 @@
 - Programs are evolved; circle arrangements are evaluated witnesses.
 - Distinguish published problem formulations from our measured classroom results.
 - Use exactly two published unit-square cases: N=26 and N=32; three gated Luna requests per case.
+- Define the problem in the opening pair; begin Demo 1 with the source/evaluation sequence rather than repeating its definition.
 - Compare programs within a common frozen packing bank; archive cumulative construction progress separately.
 
 ## Open questions

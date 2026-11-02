@@ -1,25 +1,32 @@
 # Chapter 10 presentation plan
 
-The title is followed by the requested conceptual frame counts and six frames
-supporting exactly two demonstrations. A frame is a teaching unit. Each revealed
+The title is followed by two circle-packing problem frames, then the requested
+Chapter 10 conceptual frames and five frames supporting two demonstrations.
+The former pre-demo problem definition now belongs to the opening. A frame is a teaching unit. Each revealed
 question, mechanism block or answer is another overlay slide of that frame.
 Derive counts from sections/ and presentation.json; never enforce four reveals.
 
 | Portion | Frames | Planned seconds |
 | --- | ---: | ---: |
 | Title | 1 | 20 |
+| Circle-packing rules and objective | 2 | 90 |
 | 10.1 The evolutionary loop | 2 | 120 |
 | 10.2 Mutation operators | 3 | 180 |
 | 10.3 Selection and population management | 2 | 110 |
 | 10.4 Fitness design | 1 | 75 |
 | 10.5 Diversity and exploration | 2 | 130 |
-| Demo 1: 26 circles, including setup and evidence | 3 | 300 |
+| Demo 1: 26 circles, execution and evidence | 2 | 255 |
 | Demo 2: 32 circles, including setup and evidence | 3 | 300 |
 | Reserve | — | 45 |
 | Optional architecture/API appendix | 3 | 155 |
 
-Main: 17 frames, 20:35 planned + 0:45 reserve = 21:20. Optional appendix makes
-23:55 with reserve. Aloud timing remains to be measured by the presenter.
+Main: 18 frames, 21:20 planned + 0:45 reserve = 22:05. Optional appendix makes
+24:40 with reserve. Aloud timing remains to be measured by the presenter.
+
+Introduce center, radius, valid packing and summed-radii score before using
+them in the framework. The first strategy frame defines population, parent,
+child, mutation, selection and fitness in its notes. Keep the four-circle score
+example distinct from the measured 26- and 32-circle demonstrations.
 
 Every conceptual frame begins with a question, followed by mechanism and answer
 reveals. Ask, pause roughly five seconds, then reveal. Notes explain each step
@@ -39,7 +46,7 @@ From demo-circle-b stage N=32 and Stop/reset into a fresh run. Repeat the three
 rounds. Do not compare raw sums across circle counts. Use the final evidence
 frame to identify (A,f,mu,sigma,P0) in the actual run.
 
-Allow 3:30 of each five-minute demo sequence for computation and inspection.
+Allow 3:30 of each demo sequence for computation and inspection.
 Faster computation leaves time to read code and question students. Never add
 artificial delays. If using genuine replay, keep its label and source timing
 visible. A failed source run remains failed evidence.

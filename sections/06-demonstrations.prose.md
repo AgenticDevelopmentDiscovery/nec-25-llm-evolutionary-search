@@ -1,27 +1,5 @@
 # Two published circle-packing problems
 
-## Demo 1: the 26-circle problem {#packing-26 data-seconds="45"}
-
-::: {.question}
-**What exactly makes a packing valid, and what does “better” mean?**
-:::
-
-::: {.block}
-Place $N=26$ variable-radius circles in the unit square and maximize $\sum_i r_i$.
-
-$$r_i\ge0,\quad r_i\le x_i,y_i\le1-r_i,\quad \|c_i-c_j\|_2\ge r_i+r_j.$$
-:::
-
-::: {.answer}
-**These are AlphaEvolve’s published constraints and objective.** We search live with Luna; the paper’s reported construction is a separate research result.
-:::
-
-::: {.notes}
-Appendix B.12 of the AlphaEvolve report gives this unit-square, sum-of-radii problem for 26 and 32 circles [@alphaevolve2025]. This is variable-radius packing; it is not equal-radius packing and not maximization of covered area. Tangency and zero radii are allowed under our stated contract; zero-radius count remains visible. The paper reports historical construction scores, not certificates of optimality, and they are not hidden inputs to our search.
-
-Start the first demo with 26 selected in the instance control. Show the three initial Python programs in the guide: perturbed grid construction, greedy local center search, and simulated annealing of centers. The fixed-center radius allocator is common. The constructor intentionally spends less effort; compare actual numerical costs as well as quality. All programs in a round receive copies of the same packing bank for seeds 3, 4 and 5.
-:::
-
 ## Demo 1: follow three mutations {#demo-circle-a data-seconds="210"}
 
 ::: {.question}
@@ -42,6 +20,8 @@ Repeat for rounds 2 and 3. Inspect inherited packing-bank IDs, complete trial sc
 
 ::: {.notes}
 Open the integrated demo from this frame. Select LIVE LLM, 26 circles, three calls, mutation, evidence-rich context and inherited packings. Check the selected initial programs and evaluate them. This starts numerical work only; every model call waits at an explicit gate.
+
+Show the three starting programs in the guide: Perturbed Grid Constructor, Greedy Local Center Search and Simulated Annealing of Centers. Each uses the same procedure to choose radii once the centers are fixed. The grid constructor intentionally spends less effort. Compare actual numerical cost as well as quality. All programs in a round receive copies of the same starting packings for seeds 3, 4 and 5.
 
 At the first gate, point to the incoming packing bank: it contains the best valid construction found for each seed. Parents are re-evaluated from that bank before their scores enter the context. When sending a round, identify the actual provider request, public response and source string. Show who implemented the proposal: Luna wrote the Python; the isolated interpreter executes that exact admitted source. A live intermediate packing is independently verified, but it is not yet complete program fitness.
 

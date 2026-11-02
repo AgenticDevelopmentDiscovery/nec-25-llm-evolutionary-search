@@ -16,6 +16,8 @@ active presentation or expose private credentials/run logs.
   or equal-radius packing.
 - Keep questions first, sequential mechanism blocks, then answers; full presenter
   explanations in notes; Aggie Maroon with strong contrast; 20–25 minutes total.
+- Introduce packing rules and the summed-radii objective in two frames after the
+  title, before the framework. Define basic terms for students with mixed backgrounds.
 - Keep architecture/API detail in the appendix and a separate document.
 - Evolve actual program source; show what Luna receives, returns and changes.
 - Preserve historical work, all critique rounds and the unchanged vendor snapshot.
@@ -37,7 +39,7 @@ proof of a global optimum. Do not put a published answer into a hidden start.
 
 1. AGENTS.md and CLAUDE.md: preservation and paired-source method.
 2. This handoff, demo/CIRCLE_PACKING_DESIGN.md, demo/READINESS.md.
-3. Current topic.md, metadata.yaml and all eight source/concepts pairs in sections/.
+3. Current topic.md, metadata.yaml and all source/concepts pairs in sections/.
 4. demo/ARCHITECTURE.md and demo/PRESENTATION_PLAN.md.
 5. packing.py (contract/validator), packing_programs/ (initial source),
    packing_worker.py (radius LP + execution), packing_sandbox.py (isolation),
