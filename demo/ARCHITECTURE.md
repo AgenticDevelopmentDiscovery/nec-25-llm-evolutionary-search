@@ -7,6 +7,28 @@ methods are classroom implementations, not the unpublished AlphaEvolve engine.
 
 ![Server, model worker, isolated numerical execution and checked feedback.](../figures/system-architecture.svg){width=95%}
 
+## Search step, trial and evolutionary round
+
+A search step proposes a center change, reallocates valid radii, and applies a
+move acceptance rule. In Greedy Local Center Search, a move survives only when
+the sum of radii increases. The move scale controls the typical random coordinate
+change. It is not a fixed or maximum distance.
+
+A trial executes one unchanged program once: solve(initial, seed, steps). It
+receives one starting-center array, one numerical random seed, and an 80-step
+work request, with an eight-second hard wall-time cap. It can produce many
+intermediate packings before returning one final packing. With default seeds,
+trials 1, 2 and 3 use 3, 4 and 5. Every competing program receives copies of the
+same three starting packings, called the packing bank, with corresponding seeds
+and limits. The requested step count is not a guarantee of actual work.
+
+An evolutionary round compares parent programs, requests one new source program
+from Luna, evaluates it and selects survivors. A trial is numerical execution,
+not a model request. A full run includes initial evaluation and up to three such
+rounds. For three complete, valid trial scores S1, S2 and S3, the displayed primary
+fitness is F=median(S1,S2,S3), maximized. Chapter 10's minimized convention uses
+f=-F. Any invalid or incomplete trial makes the program ineligible.
+
 ## Ownership and modules
 
 | Module | Responsibility |

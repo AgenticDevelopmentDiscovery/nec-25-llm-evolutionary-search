@@ -11,3 +11,8 @@
 #frame[data-frame="packing-26"] .column:last-child{flex:0 0 38%}
 #frame[data-frame="packing-26"] img{height:280px}
 #frame[data-frame="packing-goal"] img{height:310px}
+
+/* Default trial-to-seed mapping is part of the explanation, not UI metadata. */
+#frame[data-frame="packing-trials"] table{border-collapse:collapse;width:70%;margin-top:16px}
+#frame[data-frame="packing-trials"] th,#frame[data-frame="packing-trials"] td{font-size:inherit;color:inherit;padding:9px 18px;border-bottom:1px solid var(--line);text-align:center}
+#frame[data-frame="packing-trials"] th:first-child,#frame[data-frame="packing-trials"] td:first-child{text-align:left}

@@ -36,6 +36,16 @@ Only the blank template belongs in the repository.
 
 ## Modes and controls
 
+A **trial** is one execution of one unchanged packing program, from one starting
+packing with a numerical random seed and limits. It can contain many **search
+steps**, each proposing a center change and deciding whether to keep it. Three
+trials use default seeds 3, 4 and 5. Every competing program receives the same
+three starts, seeds and limits. All three trials must complete and validate;
+their median score is the primary program fitness, with higher values preferred.
+A **model round** instead asks Luna for a new program and evaluates it. See
+/algorithms for the worked explanation of movement size, move acceptance and
+the distinction between a step, trial, round and full run.
+
 NUMERICAL ONLY is the default and evaluates disclosed source programs with zero
 API calls. LIVE LLM evaluates parents, then waits for an explicit button for
 each real Luna request. RECORDED REPLAY plays a verified genuine source run;

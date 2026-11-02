@@ -1,6 +1,6 @@
 # Handoff: Chapter 10 and the two circle-packing demonstrations
 
-Updated November 2, 2026. Branch: `demo/concept-aligned-experiments`.
+Updated November 2, 2026. Active branch: `main`, after the user merged the demo branch.
 This is the active cross-account/session entry point. Earlier teaching sources
 are preserved in `history/pre-circle-2026-11-02/`; do not restore them into the
 active presentation or expose private credentials/run logs.
@@ -18,6 +18,10 @@ active presentation or expose private credentials/run logs.
   explanations in notes; Aggie Maroon with strong contrast; 20–25 minutes total.
 - Introduce packing rules and the summed-radii objective in two frames after the
   title, before the framework. Define basic terms for students with mixed backgrounds.
+- Next explain a numerical packing program and a trial in two prerequisite frames.
+  Define move scale, move acceptance rule, search step, random seed and packing
+  bank before later frames depend on them. Main plan is 24:05 with reserve;
+  architecture appendix is backup material beyond the timed main talk.
 - Keep architecture/API detail in the appendix and a separate document.
 - Evolve actual program source; show what Luna receives, returns and changes.
 - Preserve historical work, all critique rounds and the unchanged vendor snapshot.

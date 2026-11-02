@@ -15,11 +15,11 @@ Run programs to produce packings. **Fitness:** the median (middle) score of thre
 :::
 
 ::: {.answer}
-**Luna writes changes to the parent programs.** We test each new program before deciding whether to keep it.
+**Luna, our language model, edits parent code.** Test each new program before keeping it.
 :::
 
 ::: {.notes}
-We now have a problem and a score. Our proposed strategy improves the programs used to search for packings. Start with a few Python programs. Run them, check that their returned circles obey the rules, and record the sums of radii. The group of programs is the population. Programs chosen for further changes are parents. Luna writes a modified program, called a child. That change is mutation. Running and checking the child tells us whether to keep it, which is selection. Fitness means the measured performance used in that decision; later we define how our three test runs produce it.
+We now have a problem, a numerical search method and a three-trial comparison protocol. Our proposed strategy improves the programs used to search for packings. The group of programs is the population. Programs chosen for further changes are parents. Luna is the language model used to write a modified program, called a child. That source change is mutation. Running the child's three trials and checking their results tells us whether to keep the program, which is selection. Fitness means the measured performance used in that decision: here it is the middle of three complete, valid packing scores. The later fitness frame works through the calculation and the chapter's equivalent negative-sign convention.
 
 Point through the diagram in order. Initialization happens once. Later rounds use selected programs and their results to propose changes. This is the Chapter 10.1 evolutionary loop: the next attempt builds on survivors rather than starting as an unrelated guess. The outside controller stores programs and measurements. Luna's model weights stay fixed, while the information sent in its next request changes. The checker supplies evidence beyond the model's explanation of its proposal.
 

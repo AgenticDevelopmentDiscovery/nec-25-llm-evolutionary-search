@@ -4,17 +4,16 @@ This repository serves a Chapter 10 tutorial and two circle-packing demos.
 The problems are N=26 and N=32 variable-radius circles in a unit square,
 maximizing summed radii. The implementation evolves Python search programs.
 
-## 1. Clone the instructor-published branch
+## 1. Clone the published main branch
 
 ```bash
 git clone https://github.com/AgenticDevelopmentDiscovery/nec-25-llm-evolutionary-search.git
 cd nec-25-llm-evolutionary-search
-# Only after the instructor publishes this branch:
-git switch demo/concept-aligned-experiments
+git switch main
 ```
 
-A local, uncommitted branch is not available to students until the instructor
-publishes it. Do not silently substitute an older branch and expect the new demos.
+The circle-packing tutorial and its current teaching revisions are published on
+main. Use that branch to keep the presentation, notes and demo guide consistent.
 
 ## 2. Create an environment
 
@@ -81,6 +80,14 @@ parents and child from that same bank. Fixed-start mode keeps original starts.
 Do not mix fitness from different banks. Stop cancels owned work; reset creates
 a new run; refresh reconnects without another paid call. Replay needs an existing
 genuine source recording and stays labeled RECORDED REPLAY.
+
+A **trial** is one execution of one unchanged packing program, using one starting
+packing, one random seed and numerical limits. It can contain many search steps.
+Default Trial 1/2/3 use seeds 3/4/5. Each competing program receives the same three
+starting packings and corresponding seeds. All three trials must complete and be
+valid; their median summed-radii score is the primary program fitness. A Luna
+request proposes a new program and is separate from these numerical trials.
+The server's Algorithms page explains the terms with examples.
 
 ## 6. Editing and an agent instruction
 

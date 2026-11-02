@@ -8,6 +8,9 @@
 
 ## Decisions
 
+- Define move scale, move acceptance rule, search step and trial in prerequisite frames before this section.
+- Replace unexplained acceptance-expression shorthand with the condition governing a center move; distinguish it from program selection.
+
 - Follow Chapter 10; preserve the shared Markdown, sequential reveals and Aggie Maroon design.
 - Programs are evolved; circle arrangements are evaluated witnesses.
 - Distinguish published problem formulations from our measured classroom results.

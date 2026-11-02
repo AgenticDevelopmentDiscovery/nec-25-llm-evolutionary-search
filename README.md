@@ -30,7 +30,11 @@ has a matching concepts sidecar. Saved prose updates browser frames and notes;
 `just build` regenerates document, final-state handout and site. `just overlays`
 exports every reveal. Keep architecture/API detail in the optional appendix.
 
-Chapter 10.1–10.5 use 2/3/2/1/2 conceptual frames, plus title and two demo sequences.
+Before the framework, four content frames explain the packing problem, one
+numerical search method and the meaning of trials, seeds and common starts.
+Chapter 10.1–10.5 then use 2/3/2/1/2 conceptual frames, plus two demo sequences.
+The main plan including reserve is 24:05; the appendix is backup material beyond
+the timed main talk.
 Past teaching sources, critiques, evidence and the hashed reference snapshot are
 preserved as history. Do not commit, push, deploy or invoke the reviewer panel
 without an explicit instruction. For a new session, read [the handoff](DEMO_REDESIGN_HANDOFF.md).

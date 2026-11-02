@@ -1,7 +1,8 @@
 # Chapter 10 presentation plan
 
-The title is followed by two circle-packing problem frames, then the requested
-Chapter 10 conceptual frames and five frames supporting two demonstrations.
+The title is followed by two circle-packing problem frames and two prerequisite
+frames explaining numerical search and trials, then the requested Chapter 10
+conceptual frames and five frames supporting two demonstrations.
 The former pre-demo problem definition now belongs to the opening. A frame is a teaching unit. Each revealed
 question, mechanism block or answer is another overlay slide of that frame.
 Derive counts from sections/ and presentation.json; never enforce four reveals.
@@ -10,6 +11,7 @@ Derive counts from sections/ and presentation.json; never enforce four reveals.
 | --- | ---: | ---: |
 | Title | 1 | 20 |
 | Circle-packing rules and objective | 2 | 90 |
+| How a program searches; what a trial means | 2 | 120 |
 | 10.1 The evolutionary loop | 2 | 120 |
 | 10.2 Mutation operators | 3 | 180 |
 | 10.3 Selection and population management | 2 | 110 |
@@ -20,11 +22,13 @@ Derive counts from sections/ and presentation.json; never enforce four reveals.
 | Reserve | — | 45 |
 | Optional architecture/API appendix | 3 | 155 |
 
-Main: 18 frames, 21:20 planned + 0:45 reserve = 22:05. Optional appendix makes
-24:40 with reserve. Aloud timing remains to be measured by the presenter.
+Main: 20 frames, 23:20 planned + 0:45 reserve = 24:05. Architecture/API appendix
+is backup material beyond the timed main talk. Showing all of it adds 2:35,
+making 26:40 with reserve. Aloud timing remains to be measured by the presenter.
 
-Introduce center, radius, valid packing and summed-radii score before using
-them in the framework. The first strategy frame defines population, parent,
+Introduce center, radius, valid packing, summed-radii score, numerical search
+step, move scale, move acceptance rule, trial, seed and packing bank before
+using them in the framework. The first strategy frame defines population, parent,
 child, mutation, selection and fitness in its notes. Keep the four-circle score
 example distinct from the measured 26- and 32-circle demonstrations.
 

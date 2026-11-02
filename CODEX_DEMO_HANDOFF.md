@@ -1,6 +1,6 @@
 # Active handoff — circle-packing tutorial, November 2, 2026
 
-Continue on `demo/concept-aligned-experiments`. Read AGENTS.md, CLAUDE.md,
+Continue on `main`, where the user merged the demo branch. Read AGENTS.md, CLAUDE.md,
 DEMO_REDESIGN_HANDOFF.md and demo/CIRCLE_PACKING_DESIGN.md.
 
 The user confirmed circle packing and requested the exact two unit-square
@@ -11,11 +11,16 @@ released in its public results repository. Do not claim an exact engine or
 record-result reproduction.
 
 The main source opens with a title and two plain-language circle-packing problem
-frames, then follows Chapter 10.1–10.5 with 2/3/2/1/2 frames and five frames
+frames, then two prerequisite frames explain numerical search and trials before
+Chapter 10.1–10.5 with 2/3/2/1/2 frames and five frames
 supporting two demos. There are three optional architecture/API
 appendix frames. Every active surface should describe circle packing. Historical
 sources, the previous server and all existing records are preserved separately.
 No publication or reviewer panel is authorized.
+
+Main pacing is 23:20 plus 0:45 reserve (24:05). The three architecture frames
+are backup material beyond the timed main talk. Define a trial as one unchanged
+program execution and distinguish it from a center-move step and a model call.
 
 All six approved rehearsal calls are spent: three genuine source-evolution
 rounds per case, both runs complete. No model-call allowance remains. See

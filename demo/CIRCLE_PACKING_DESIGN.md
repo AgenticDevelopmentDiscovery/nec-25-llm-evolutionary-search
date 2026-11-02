@@ -31,6 +31,16 @@ classroom baselines, not methods claimed to have been discovered by AlphaEvolve.
 
 ## Iterative refinement and fairness
 
+One trial is one execution of unchanged source through solve(initial, seed,
+steps), using one specified starting-center array and numerical seed. It may
+contain many search steps and progress reports. A search step proposes a center change,
+reallocates radii and applies a move acceptance rule; a model round instead
+proposes a changed program. Default trial indices 1/2/3 map to seeds 3/4/5.
+A seed initializes numerical randomness. The common set of three starting
+packings is the packing bank. A completed valid trial supplies one sum-of-radii
+score. All three must complete and validate before their median supplies the
+program's primary ranking value F (maximized), equivalent to f=-F (minimized).
+
 The default follows the paper’s described iterative construction refinement:
 retain the best valid packing per numerical seed. Freeze those centers as the
 incoming bank for the next round, re-evaluate the surviving programs on it,

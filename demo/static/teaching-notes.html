@@ -46,7 +46,60 @@
 <p>Ask students to add the radii before revealing the conclusion. Point to the visible space around A’s circles and then to the touching circles in B. Four times 0.15 is 0.60. Four times 0.25 is 1.00. Both drawings use centers (0.25,0.25), (0.75,0.25), (0.25,0.75) and (0.75,0.75). Arrangement B touches the boundary and neighboring circles, which the rules allow. These exact-coordinate drawings are teaching illustrations, not measured results from either demonstration or a claim about the best possible four-circle packing.</p>
 <p>The score is the sum of radii. Covered area would use π times the sum of squared radii, which is a different objective. We also keep the number of circles fixed when comparing scores. A raw sum for 32 circles cannot establish improvement over a run with 26 circles.</p>
 <p>This simple example improves by increasing radii at fixed centers. In a crowded arrangement, further changes can require moving centers: making room for one circle can reduce the room available for others. Finding a good arrangement therefore involves interacting choices. We will use an evolutionary framework to improve the Python programs that search for packings. A program is the method; a packing is the arrangement it produces. We check and score the arrangement to evaluate the method. This strategy can find better constructions without certifying a global optimum.</p>
-</section><section id="evolution"><h2>4. Our strategy: evolve packing programs</h2><div class="question">
+</section><section id="packing-search"><h2>4. How a packing program searches</h2><div class="question">
+<p><strong>What does a program do to improve one packing?</strong></p>
+</div>
+<div class="block">
+<p>Example: <strong>Greedy Local Center Search</strong>. Start with circle centers. <strong>Radius allocation</strong> chooses radii for those fixed centers to maximize their sum while satisfying the packing rules.</p>
+</div>
+<div class="block">
+<p>Propose a random change to one center. The <strong>move scale</strong> controls the typical size of that change.</p>
+</div>
+<div class="block">
+<p>Recalculate radii and score. The <strong>move acceptance rule</strong> keeps the proposed change only if the score increases. This cycle is one <strong>search step</strong>.</p>
+</div>
+<div class="answer">
+<p><strong>Repeat the steps, then return the best packing found.</strong> This loop changes a packing. Later, we will change the program itself.</p>
+</div>
+<p>Explain the numerical method before discussing edits to its code. This frame describes the disclosed Greedy Local Center Search program. It starts with the supplied centers. The helper radii(centers) solves a linear program for the radii: the centers and their pairwise distances are fixed, the radii are the unknowns, and every wall and pair imposes a linear bound. The helper maximizes the sum of radii under those bounds with the common numerical safety margin. Choosing good center positions remains the search problem.</p>
+<p>One search step copies the centers, randomly chooses one circle and proposes random changes to its x and y coordinates. The move scale is the standard deviation of each coordinate change before clipping centers to their allowed coordinate range. It controls typical displacement, not a fixed step length or a maximum distance. The implemented scale decreases during a run: scale = 0.04 × (1 − k/steps) + 0.002. Here k is the step index. The coefficient 0.04 controls the larger early movements and the added 0.002 keeps a small positive scale. Changing that coefficient to 0.02 reduces typical movement at the same step; it does not make every displacement exactly 0.02.</p>
+<p>The program reallocates radii after the proposed center move and computes the new sum. Its move acceptance rule is a condition in an if statement. If the current sum is 2.00 and the proposed sum is 2.03, the greedy program keeps the proposed centers. If the proposed sum is 1.98, it keeps the previous centers. These numbers are teaching examples. The separate Simulated Annealing of Centers program can accept a temporary score decrease with a controlled probability and retains its best packing separately. That is a different move acceptance rule, not permission to accept overlapping geometry.</p>
+<p>The program repeats numerical steps until it returns or its execution is stopped by a limit. We call one execution of the whole program a trial in the next frame. Keep the levels distinct: a center move changes an arrangement inside a program; a later mutation changes the program’s source; evolutionary selection compares whole programs after evaluation.</p>
+</section><section id="packing-trials"><h2>5. What is a trial?</h2><div class="question">
+<p><strong>What do Trial 1, Trial 2 and Trial 3 mean?</strong></p>
+</div>
+<div class="block">
+<p>A <strong>trial</strong> is one execution of an unchanged program from given centers. It may contain many search steps. Limits: <strong>80 requested steps</strong>, <strong>8 seconds maximum</strong>.</p>
+</div>
+<div class="block">
+<p>A <strong>random seed</strong> is a number that initializes the program’s random choices. Our defaults are:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Trial</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Random seed</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="answer">
+<p><strong>Use the same three starting packings and seeds for every program.</strong> This shared set of starting packings is the <strong>packing bank</strong>.</p>
+</div>
+<p>A trial is one call to solve(initial, seed, steps), executed in an isolated Python worker. The source stays unchanged during that execution. It receives a copy of one specified set of starting centers, one numerical random seed, and the requested step count. The program can make many proposed center moves before returning one final arrangement. A checked intermediate arrangement is progress within the trial, not another completed trial.</p>
+<p>The controller evaluates a program three times. With the default first seed of 3, Trial 1 uses seed 3, Trial 2 uses seed 4, and Trial 3 uses seed 5. These numbers are ordinary defaults, not special mathematical conditions. A random seed initializes a pseudo-random number generator, making its generated sequence repeatable for the same program and inputs. A changed program may consume random numbers differently, so equal seeds do not force two programs to make identical moves. Hard time limits and numerical execution conditions can also affect reproducibility. Numerical seeds do not control Luna’s wording.</p>
+<p>The three trials use three specified starting packings. Every competing program receives copies of the same bank, with the corresponding seed and limits. Eight seconds is a hard wall-time cap including worker startup; 80 is a requested number of search steps. A constructor may finish with fewer steps, and generated source may use the work request differently. Equal limits do not imply equal numerical effort. A timeout is an incomplete trial, not a successfully completed eight-second score.</p>
+<p>In the default refinement protocol, the bank for the next round comes from the best previous packing for each seed. Freeze those centers, re-evaluate parents and the new program from copies of that bank, and compare only their current-bank scores. The fixed-start option instead keeps the original bank. The next frame explains fitness: all three trials must complete and be valid, then their middle score ranks the program. One trial is a numerical execution, a model call proposes source code, and an evolutionary round coordinates proposal, evaluation and selection. They are different units of work.</p>
+</section><section id="evolution"><h2>6. Our strategy: evolve packing programs</h2><div class="question">
 <p><strong>How can we improve the method that finds the packings?</strong></p>
 </div>
 <div class="block">
@@ -59,12 +112,12 @@
 </figure>
 </div>
 <div class="answer">
-<p><strong>Luna writes changes to the parent programs.</strong> We test each new program before deciding whether to keep it.</p>
+<p><strong>Luna, our language model, edits parent code.</strong> Test each new program before keeping it.</p>
 </div>
-<p>We now have a problem and a score. Our proposed strategy improves the programs used to search for packings. Start with a few Python programs. Run them, check that their returned circles obey the rules, and record the sums of radii. The group of programs is the population. Programs chosen for further changes are parents. Luna writes a modified program, called a child. That change is mutation. Running and checking the child tells us whether to keep it, which is selection. Fitness means the measured performance used in that decision; later we define how our three test runs produce it.</p>
+<p>We now have a problem, a numerical search method and a three-trial comparison protocol. Our proposed strategy improves the programs used to search for packings. The group of programs is the population. Programs chosen for further changes are parents. Luna is the language model used to write a modified program, called a child. That source change is mutation. Running the child’s three trials and checking their results tells us whether to keep the program, which is selection. Fitness means the measured performance used in that decision: here it is the middle of three complete, valid packing scores. The later fitness frame works through the calculation and the chapter’s equivalent negative-sign convention.</p>
 <p>Point through the diagram in order. Initialization happens once. Later rounds use selected programs and their results to propose changes. This is the Chapter 10.1 evolutionary loop: the next attempt builds on survivors rather than starting as an unrelated guess. The outside controller stores programs and measurements. Luna’s model weights stay fixed, while the information sent in its next request changes. The checker supplies evidence beyond the model’s explanation of its proposal.</p>
 <p>A survivor is a program. Executing it produces a circle arrangement. Keeping a successful arrangement can also provide a numerical starting point for later programs, but that is separate from inheriting program source. Our default demonstration exposes both: program ancestry and a frozen bank of the previous best packings.</p>
-</section><section id="framework"><h2>5. Five choices define the search</h2><div class="question">
+</section><section id="framework"><h2>7. Five choices define the search</h2><div class="question">
 <p><strong>What must we define before running this search?</strong></p>
 </div>
 <div class="block">
@@ -79,27 +132,28 @@
 </div>
 <p>This is Chapter 10, Definition 10.2 and Equation 10.1. The course minimizes fitness f. For our maximization problem, use negative median verified sum of radii. The artifact space consists of Python packing programs with a fixed function interface and bounded execution. Mutation is a Luna request containing actual selected parent source. Selection retains at most three complete programs. Checkboxes choose the initial population; they do not restrict the source changes Luna may propose.</p>
 <p>The displayed recurrence is the chapter’s conceptual definition. Our controller sends up to three selected parents in one request and asks for one child, rather than making one request for every parent. It then evaluates that child and selects from parents plus child. This is a declared classroom choice, not a hidden implementation of every feature of AlphaEvolve. The chapter’s fixed fitness f corresponds directly to our fixed-start control. Default iterative refinement uses conditional fitness f(a | B_t), where the incoming packing bank is explicit evaluation state. Re-evaluating parents makes each round comparable; it does not make medians from different banks stationary program quality.</p>
-</section><section id="classical-mutation"><h2>6. Classical variation</h2><div class="question">
-<p><strong>How can we vary a program without understanding why it works?</strong></p>
+</section><section id="classical-mutation"><h2>8. Classical variation</h2><div class="question">
+<p><strong>How can we change the packing program’s code?</strong></p>
 </div>
 <div class="block">
-<p><strong>Point mutation:</strong> change a move scale, for example <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.04</mn><mo>→</mo><mn>0.02</mn></mrow><annotation encoding="application/x-tex">0.04\rightarrow0.02</annotation></semantics></math>. <strong>Subtree replacement:</strong> replace an acceptance expression. <strong>Crossover:</strong> inherit code from two parents.</p>
+<p><strong>Point mutation:</strong> edit one constant, such as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.04</mn><mo>→</mo><mn>0.02</mn></mrow><annotation encoding="application/x-tex">0.04\rightarrow0.02</annotation></semantics></math> for smaller center moves. <strong>Subtree replacement:</strong> replace the condition that decides whether to keep a proposed center move.</p>
 </div>
 <div class="block">
-<p>These edits create hypotheses. The evaluator determines whether each resulting program still runs and improves its measured fitness.</p>
+<p><strong>Crossover:</strong> combine code from two parents, such as one program’s starting construction with another’s move acceptance rule.</p>
 </div>
 <div class="answer">
-<p><strong>Classical variation changes structure; selection supplies direction.</strong> Small source edits can have large behavioral effects.</p>
+<p><strong>These edits change the program, not just one packing.</strong> Evaluate the resulting program with the same three-trial protocol before selecting it.</p>
 </div>
-<p>Chapter 10.2.1 introduces point mutation, subtree mutation and crossover using expression trees. Translate that vocabulary to the code students will see. A literal change is a point edit. Replacing an acceptance rule changes a component of the computation. Combining one parent’s constructor with another parent’s search schedule is inheritance from multiple programs. These are conceptual examples, not claims that our controller implements a classical genetic-programming engine.</p>
-<p>A move scale controls the distance of a proposed center displacement. Changing it does not by itself say whether a program is better. A smaller scale can help refine a packing but may impede escape from a basin. The complete program must be run and checked under the same trial conditions. This sets up the difference between blind variation and a mutator that reads numerical feedback.</p>
-</section><section id="llm-mutation"><h2>7. A language model writes the mutation</h2><div class="question">
+<p>Recall the earlier numerical-search frame before introducing these operators. It showed one unchanged program proposing center moves, allocating radii, and applying a move acceptance rule. We now edit the code defining those operations. Chapter 10.2.1 introduces point mutation, subtree mutation and crossover using expression trees. An expression tree represents an expression as nested operations and values. A subtree is one complete nested part, such as the condition in an if statement.</p>
+<p>A point mutation can change the coefficient controlling random center movements from 0.04 to 0.02. The actual program also decreases its scale with the step index, so this is an edit to the schedule’s coefficient, not a promise that every move has length 0.02. A subtree replacement can replace the strict-improvement condition with another compatible Boolean condition. A different acceptance rule might permit occasional score decreases while preserving valid geometry. Crossover can combine compatible source components from two parents. These examples translate the classical vocabulary to packing programs; the controller does not implement a hidden classical genetic-programming engine.</p>
+<p>Such edits are hypotheses about a better method. Smaller moves may refine an arrangement but explore less widely. Accepting some temporary losses may help exploration but can also waste work. Run each changed program using the same three starting conditions and limits as its competitors, then compare complete valid trial scores. Inner move acceptance decides which center positions a program keeps; outer evolutionary selection decides which programs survive. The next frame introduces Luna as the source-code mutator used in the demonstration.</p>
+</section><section id="llm-mutation"><h2>9. A language model writes the mutation</h2><div class="question">
 <p><strong>What can a mutator change when it reads the parent code and its results?</strong></p>
 </div>
 <div class="block">
 <ol type="1">
 <li>Retain the parent’s center search and radius allocator.</li>
-<li>Propose a different move scale, center subset, or acceptance schedule.</li>
+<li>Change center-move size, which centers move, or the move acceptance rule.</li>
 </ol>
 </div>
 <div class="block">
@@ -114,7 +168,7 @@
 <p>Chapter 10.2.2 replaces blind variation with knowledge-guided variation. For example, a parent may perturb one center at a time and stop improving. The mutator can hypothesize that coordinated moves or a restart schedule will escape that basin. It writes the new function; the local Python interpreter does not translate the prose hypothesis into an algorithm.</p>
 <p>Our response contains round_id, parent_ids, hypothesis and source. The source defines solve(initial, seed, steps). NumPy, math, a fixed-center radius allocator and a progress reporter are supplied. A source diff exposes what was retained and changed. The geometry checker and survivor rule are outside the editable source. Bubblewrap isolates generated code from credentials, private repository files and the host network. The model has no execution tools during its proposal call.</p>
 <p>AlphaEvolve evolves code and evaluates it externally <span class="citation" data-cites="alphaevolve2025">(AlphaEvolve team 2025)</span>. We use the published circle-packing tasks with our own small controller and TAMU Luna. The public results repository does not release the original discovery engine. Do not describe our initial numerical methods as the algorithms AlphaEvolve discovered.</p>
-</section><section id="context"><h2>8. Context joins the two course spines</h2><div class="question">
+</section><section id="context"><h2>10. Context joins the two course spines</h2><div class="question">
 <p><strong>Which evidence should the next mutation see?</strong></p>
 </div>
 <div class="block">
@@ -128,7 +182,7 @@
 </div>
 <p>These are the four context ingredients in Chapter 10.2.3 and the convergence of the two spines in Figure 10.2. Our domain knowledge includes the nonoverlap constraints and the fact that radius allocation is a linear program once centers are fixed. Source, scores, failures and tried IDs expose what the search already knows. The context labels the current packing bank, so scores from different starting conditions are not silently mixed.</p>
 <p>The server’s request panel shows the actual provider payload; the response panel shows the public stream. Authorization is added separately inside the model worker. Hidden reasoning is neither requested as teaching evidence nor displayed. Numerical seeds control starting packings and numerical moves. They do not determine Luna’s wording. The optional structure-only control withholds scores and history, but a rigorous context comparison must additionally freeze identical parent programs and histories across the two conditions.</p>
-</section><section id="elitism"><h2>9. Elitism protects measured progress</h2><div class="question">
+</section><section id="elitism"><h2>11. Elitism protects measured progress</h2><div class="question">
 <p><strong>If a mutation is worse, must the current champion disappear?</strong></p>
 </div>
 <div class="block">
@@ -142,7 +196,7 @@
 </div>
 <p>Chapter 10.3.1 describes carrying elite candidates forward. The lower-is-better course fitness is monotonically non-increasing when the same deterministic measured fitness is used. Equivalently, maximized observed quality is non-decreasing. This is a property of retaining a measured incumbent, not a theorem of global convergence or future quality on new instances.</p>
 <p>Our default uses inherited packing banks. At each round, freeze the same incoming packings for the parents and the child, re-evaluate the parents, and select within that bank. An old program median from a different bank is not directly comparable. The cumulative best valid construction is a separate monotone curve because its verified geometry is retained. A valid progress packing can survive in that archive even when a program later times out and receives no eligible fitness.</p>
-</section><section id="selection"><h2>10. Selection pressure and population collapse</h2><div class="question">
+</section><section id="selection"><h2>12. Selection pressure and population collapse</h2><div class="question">
 <p><strong>Why can keeping only the highest scores make search stagnate?</strong></p>
 </div>
 <div class="block">
@@ -156,7 +210,7 @@
 </div>
 <p>Chapter 10.3.2 compares top-k and tournament selection; 10.3.3 identifies population collapse. Our implemented rule is deterministic: all three trials must complete and pass geometry checks; then rank by median sum of radii, minimum sum, and stable source identity. A child below the champion may still survive if it belongs among the three best programs. Do not teach elitism as a rule that rejects every nonchampion.</p>
 <p>Programs with different IDs may have nearly identical behavior. Normalizing syntax prevents comments alone from creating another genome, but it is not a semantic diversity measure. Several schedules differing only in a constant can still explore the same region. The guide names our three initial mechanisms so students can inspect their differences before deciding whether the population is varied enough. Tournament selection is explained here but is not implemented as a hidden classroom feature.</p>
-</section><section id="fitness"><h2>11. Packing score and program fitness</h2><div class="question">
+</section><section id="fitness"><h2>13. Packing score and program fitness</h2><div class="question">
 <p><strong>How do we turn packing scores into a program’s fitness?</strong></p>
 </div>
 <div class="block">
@@ -177,7 +231,7 @@
 <p>A failed trial is not quietly dropped when calculating fitness. Any invalid or incomplete trial makes the whole program ineligible for selection. A valid intermediate packing remains a separate useful construction. Comparisons use one frozen bank; medians from different banks do not measure program quality under the same conditions. This distinction is essential for anytime numerical search.</p>
 <p>Feasibility checking does not establish algorithm transfer. Freeze program source before evaluating fresh numerical starts, exclude those validation results from mutation prompts and survivor decisions, and report them separately. The original runs used seeds 3, 4 and 5. A separate numerical-only check uses previously unused seeds 101, 102 and 103, common fixed starts, the same requested work and the same hard trial limit. The selection rule was fixed before seeing validation scores: compare the best initial program with the highest-ranked surviving new Luna program. The guide shows the actual results and source identities. This is a small post-search check, not a broad generalization study or a second live evolution.</p>
 <p>Returning a fixed valid construction can be a legitimate solution to a fixed packing problem; a hard-coded layout alone is not proof of reward gaming. The loophole here is accepting infeasible geometry. Overfitting claims concern performance outside the observed starts or problem instances and require a separate evaluation contract. Multiobjective quality and cost are developed in the exploration frame and guide. The changing center positions define a nonconvex landscape; the fixed-center radius linear program does not solve that whole problem.</p>
-</section><section id="islands"><h2>12. Preserve different search behaviors</h2><div class="question">
+</section><section id="islands"><h2>14. Preserve different search behaviors</h2><div class="question">
 <p><strong>How can useful alternatives survive beside the current champion?</strong></p>
 </div>
 <div class="block">
@@ -193,7 +247,7 @@
 <p>The Multi-dimensional Archive of Phenotypic Elites (MAP-Elites) organizes candidates by chosen behavior descriptors and keeps a high-quality representative in each bin <span class="citation" data-cites="mapelites2015">(Mouret and Clune 2015)</span>. For a packing-program archive, illustrative descriptors could measure the typical number of centers moved per proposal and the frequency of restarts. A one-center local search and a coordinated-move search could occupy different bins even if one currently has a lower verified sum. Their quality would still need comparable evaluation conditions. Those descriptors would require instrumentation; the present worker does not record them as a ready-made archive.</p>
 <p>Novelty search instead scores behavioral difference from previously observed behaviors <span class="citation" data-cites="novelty2011">(Lehman and Stanley 2011)</span>. A possible descriptor distance could use normalized numerical search statistics. It is not a measure of how unusual a program’s variable names sound, and novelty alone does not certify packing quality. These are alternative selection designs whose performance depends on the task and descriptors.</p>
 <p>Our controller retains the top three complete programs and rejects exact syntax duplicates. It has no islands, behavioral bins or novelty score. The guide works through the conceptual archive example so students can recognize both its purpose and its absence from the bounded demo.</p>
-</section><section id="exploration"><h2>13. Exploration, exploitation and cost</h2><div class="question">
+</section><section id="exploration"><h2>15. Exploration, exploitation and cost</h2><div class="question">
 <p><strong>When should we refine, explore—or stop spending?</strong></p>
 </div>
 <div class="block">
@@ -231,7 +285,7 @@
 <p>Chapter 10.8 expresses the corresponding minimization form as cost-adjusted fitness. Cost may mean marginal API dollars or a declared resource measure, with a coefficient that converts units. Generation cost belongs to the path that produced a program; it is not an intrinsic property of source code. Avoid double-counting shared preparation and distinguish per-program evaluation time from all model calls and numerical effort spent finding it. Source length is not automatically a good proxy for either runtime or algorithm quality.</p>
 <p>The implemented demo keeps quality primary and reports numerical effort and model usage separately. It does not apply the illustrative price, a complexity penalty or a Pareto archive. Three model calls, 35 seconds per call, eight seconds per trial and a 240-second run deadline bound work. An optional predeclared plateau stopping rule could save further requests; it is not the current automatic policy. The current run can continue its planned rounds after a plateau so students can inspect the mechanism.</p>
 <p>No number of calls is universally optimal. Three calls per demonstration are a teaching budget: the first child, a proposal informed by its evaluation, and another chance to inspect adaptation or plateau. This budget is far smaller than the research-scale searches in the AlphaEvolve report. A flat or failed run remains useful evidence. Do not add artificial motion or repeated requests to force a desired trajectory.</p>
-</section><section id="demo-circle-a"><h2>14. Demo 1: follow three mutations</h2><div class="question">
+</section><section id="demo-circle-a"><h2>16. Demo 1: follow three mutations</h2><div class="question">
 <p><strong>Which part of the parent survives, and does the changed program earn its place?</strong></p>
 </div>
 <div class="block">
@@ -247,7 +301,7 @@
 <p>Show the three starting programs in the guide: Perturbed Grid Constructor, Greedy Local Center Search and Simulated Annealing of Centers. Each uses the same procedure to choose radii once the centers are fixed. The grid constructor intentionally spends less effort. Compare actual numerical cost as well as quality. All programs in a round receive copies of the same starting packings for seeds 3, 4 and 5.</p>
 <p>At the first gate, point to the incoming packing bank: it contains the best valid construction found for each seed. Parents are re-evaluated from that bank before their scores enter the context. When sending a round, identify the actual provider request, public response and source string. Show who implemented the proposal: Luna wrote the Python; the isolated interpreter executes that exact admitted source. A live intermediate packing is independently verified, but it is not yet complete program fitness.</p>
 <p>After evaluation, compare all three trials and the actual top-three decision. Before sending the next call, show that the latest results have entered the context and the packing bank has been updated. Keep failures or plateaus visible. Use the remaining teaching time for questions and inspection if computation finishes early; no artificial delay is inserted. A genuine recording may be used when needed, with a persistent RECORDED REPLAY label.</p>
-</section><section id="packing-evidence-a"><h2>15. Read the first run’s evidence</h2><div class="question">
+</section><section id="packing-evidence-a"><h2>17. Read the first run’s evidence</h2><div class="question">
 <p><strong>What improved: one packing, the program’s measured fitness, or both?</strong></p>
 </div>
 <div class="block">
@@ -258,7 +312,7 @@
 </div>
 <p>Ask students to point to the record supporting each claim. The circle view includes program identity, seed, validity and summed radii. The table includes complete or failed trials, medians and current-bank selection. The cumulative construction curve retains valid witnesses; it must not be mislabeled as a fixed-protocol program-fitness curve when banks change.</p>
 <p>Do not substitute expected improvements for measured outcomes. If an eligible child is worse than the champion, it can still enter another slot. If a trial fails, the program has no eligible median. Matching a historical literature score would still not prove optimality. A three-call classroom run cannot establish broad model or algorithm superiority. The guide’s separate numerical validation illustrates how to test frozen programs beyond the evolution starts, rather than treating geometric feasibility as proof of transfer.</p>
-</section><section id="packing-32"><h2>16. Demo 2: the 32-circle problem</h2><div class="question">
+</section><section id="packing-32"><h2>18. Demo 2: the 32-circle problem</h2><div class="question">
 <p><strong>Does the same program-evolution mechanism still work when the number of circles changes?</strong></p>
 </div>
 <div class="block">
@@ -269,7 +323,7 @@
 </div>
 <p>Reset and select 32 circles. The problem fingerprint changes, as do the number of wall and pair constraints. The method signatures accept n=len(initial), so a program must not assume 26 rows. This is a second published mathematical problem, not an arbitrary graph substitution. Its score scale is different; do not compare raw sums between the two circle counts as though they measured the same instance.</p>
 <p>Use the same three disclosed initial methods and seeds so students can recognize the mechanism, but do not call this a controlled test of generalization. The programs are evolved with access to each task. The point is to observe the same Chapter 10 components operating on a changed instance. A separate withheld-size evaluation would be required for a transfer claim. A separate fixed-start check of already-frozen programs is now available in the algorithm guide. It used new seeds 101–103, zero additional model calls and no feedback into evolution. The initial baseline and a surviving new program were selected before inspecting those results. This small check concerns fresh starts at the same N; it is not an unseen-size transfer study.</p>
-</section><section id="demo-circle-b"><h2>17. Demo 2: inspect adaptation and limits</h2><div class="question">
+</section><section id="demo-circle-b"><h2>19. Demo 2: inspect adaptation and limits</h2><div class="question">
 <p><strong>Does Luna change its search after seeing the 32-circle trial evidence?</strong></p>
 </div>
 <div class="block">
@@ -283,7 +337,7 @@
 </div>
 <p>Follow the same procedure as demo one. Make the changed n visible in the request context and in the circle count of returned witnesses. A response that hard-codes the wrong number is invalid; the interpreter does not silently fix it. A source syntax error, duplicate, invalid packing or hard timeout remains part of the outcome and does not trigger an unannounced free retry.</p>
 <p>The class should see the proposal arrive, the function execute and the resulting geometry checked. Compare the child with parents evaluated from the same incoming packing bank. Inspect the actual next request rather than asserting that the model learned. Its weights remain unchanged; its context contains the search memory. If a recorded run is used, show its source identity and recorded timing, while making clear that no new request is being made.</p>
-</section><section id="packing-evidence-b"><h2>18. Name the framework we observed</h2><div class="question">
+</section><section id="packing-evidence-b"><h2>20. Name the framework we observed</h2><div class="question">
 <p><strong>Can you identify every Chapter 10 component in the live record?</strong></p>
 </div>
 <div class="block">

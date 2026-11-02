@@ -4,7 +4,8 @@
 - Capability: identify (A,f,mu,sigma,P0); explain classical versus LLM mutation,
   context feedback, elitism/selection pressure, fitness integrity and exploration.
 - Teaching arc: Chapter 10.1–10.5 in exactly 2/3/2/1/2 conceptual frames; separate
-  title; two opening problem frames; five frames for two published unit-square circle-packing demos; optional
+  title; two opening problem frames; two prerequisite frames for numerical search
+  and trials; five frames for two published unit-square circle-packing demos; optional
   architecture/API appendix. Questions precede mechanism and answer reveals.
 - Artifact: actual Python packing search programs, not final coordinate vectors.
 - Evidence: independent geometry and objective checks; three complete trials;
@@ -17,6 +18,8 @@
 - Concepts explained but not hidden features: tournament selection and islands.
 - Preserve all old work as history; no publication or reviewer panel requested.
 - Detailed notes, algorithms guide, architecture, handout and site share terms.
+- Explain numerical steps, move scale, move acceptance, trials, seeds and the
+  common packing bank before using them in the evolutionary discussion.
 - Private narration/script/video aids remain ignored; voice/video are deferred.
 
 - Instructor-suggested domain, as reported by the user: circle packing. Original

@@ -1,5 +1,5 @@
 {
-  "source_sha256": "6b4e8980d2085c594fd0694c2b84702a452cc499f40a07fc7b697a37f0c07bd7",
+  "source_sha256": "bb5e7b3157eed8ac9192f0e49f6bbb0b5720e4ccc6bbbcfdd9c11f1c3b8694f7",
   "title": "LLM-driven evolutionary search",
   "chapter": "Chapter 10: Agentic Evolutionary Frameworks",
   "frames": [
@@ -28,11 +28,27 @@
       "reveals": 4
     },
     {
+      "id": "packing-search",
+      "title": "How a packing program searches",
+      "seconds": 65,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>What does a program do to improve one packing?</strong></p>\n</div>\n<div class=\"block\">\n<p>Example: <strong>Greedy Local Center Search</strong>. Start with circle centers. <strong>Radius allocation</strong> chooses radii for those fixed centers to maximize their sum while satisfying the packing rules.</p>\n</div>\n<div class=\"block\">\n<p>Propose a random change to one center. The <strong>move scale</strong> controls the typical size of that change.</p>\n</div>\n<div class=\"block\">\n<p>Recalculate radii and score. The <strong>move acceptance rule</strong> keeps the proposed change only if the score increases. This cycle is one <strong>search step</strong>.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Repeat the steps, then return the best packing found.</strong> This loop changes a packing. Later, we will change the program itself.</p>\n</div>\n",
+      "reveals": 5
+    },
+    {
+      "id": "packing-trials",
+      "title": "What is a trial?",
+      "seconds": 55,
+      "appendix": false,
+      "html": "<div class=\"question\">\n<p><strong>What do Trial 1, Trial 2 and Trial 3 mean?</strong></p>\n</div>\n<div class=\"block\">\n<p>A <strong>trial</strong> is one execution of an unchanged program from given centers. It may contain many search steps. Limits: <strong>80 requested steps</strong>, <strong>8 seconds maximum</strong>.</p>\n</div>\n<div class=\"block\">\n<p>A <strong>random seed</strong> is a number that initializes the program’s random choices. Our defaults are:</p>\n<table>\n<thead>\n<tr class=\"header\">\n<th style=\"text-align: left;\">Trial</th>\n<th style=\"text-align: right;\">1</th>\n<th style=\"text-align: right;\">2</th>\n<th style=\"text-align: right;\">3</th>\n</tr>\n</thead>\n<tbody>\n<tr class=\"odd\">\n<td style=\"text-align: left;\">Random seed</td>\n<td style=\"text-align: right;\">3</td>\n<td style=\"text-align: right;\">4</td>\n<td style=\"text-align: right;\">5</td>\n</tr>\n</tbody>\n</table>\n</div>\n<div class=\"answer\">\n<p><strong>Use the same three starting packings and seeds for every program.</strong> This shared set of starting packings is the <strong>packing bank</strong>.</p>\n</div>\n",
+      "reveals": 4
+    },
+    {
       "id": "evolution",
       "title": "Our strategy: evolve packing programs",
       "seconds": 60,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>How can we improve the method that finds the packings?</strong></p>\n</div>\n<div class=\"block\">\n<p>Run programs to produce packings. <strong>Fitness:</strong> the median (middle) score of three complete, valid trials. Keep useful programs as <strong>parents</strong>.</p>\n</div>\n<div class=\"block visual\">\n<figure>\n<img src=\"/figures/evolutionary-cycle.svg\" style=\"width:100.0%\" alt=\"Initialize once; evaluate, select and mutate repeatedly.\" />\n<figcaption aria-hidden=\"true\">Initialize once; evaluate, select and mutate repeatedly.</figcaption>\n</figure>\n</div>\n<div class=\"answer\">\n<p><strong>Luna writes changes to the parent programs.</strong> We test each new program before deciding whether to keep it.</p>\n</div>\n",
+      "html": "<div class=\"question\">\n<p><strong>How can we improve the method that finds the packings?</strong></p>\n</div>\n<div class=\"block\">\n<p>Run programs to produce packings. <strong>Fitness:</strong> the median (middle) score of three complete, valid trials. Keep useful programs as <strong>parents</strong>.</p>\n</div>\n<div class=\"block visual\">\n<figure>\n<img src=\"/figures/evolutionary-cycle.svg\" style=\"width:100.0%\" alt=\"Initialize once; evaluate, select and mutate repeatedly.\" />\n<figcaption aria-hidden=\"true\">Initialize once; evaluate, select and mutate repeatedly.</figcaption>\n</figure>\n</div>\n<div class=\"answer\">\n<p><strong>Luna, our language model, edits parent code.</strong> Test each new program before keeping it.</p>\n</div>\n",
       "reveals": 4
     },
     {
@@ -48,7 +64,7 @@
       "title": "Classical variation",
       "seconds": 60,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>How can we vary a program without understanding why it works?</strong></p>\n</div>\n<div class=\"block\">\n<p><strong>Point mutation:</strong> change a move scale, for example <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mn>0.04</mn><mo>→</mo><mn>0.02</mn></mrow><annotation encoding=\"application/x-tex\">0.04\\rightarrow0.02</annotation></semantics></math>. <strong>Subtree replacement:</strong> replace an acceptance expression. <strong>Crossover:</strong> inherit code from two parents.</p>\n</div>\n<div class=\"block\">\n<p>These edits create hypotheses. The evaluator determines whether each resulting program still runs and improves its measured fitness.</p>\n</div>\n<div class=\"answer\">\n<p><strong>Classical variation changes structure; selection supplies direction.</strong> Small source edits can have large behavioral effects.</p>\n</div>\n",
+      "html": "<div class=\"question\">\n<p><strong>How can we change the packing program’s code?</strong></p>\n</div>\n<div class=\"block\">\n<p><strong>Point mutation:</strong> edit one constant, such as <math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mn>0.04</mn><mo>→</mo><mn>0.02</mn></mrow><annotation encoding=\"application/x-tex\">0.04\\rightarrow0.02</annotation></semantics></math> for smaller center moves. <strong>Subtree replacement:</strong> replace the condition that decides whether to keep a proposed center move.</p>\n</div>\n<div class=\"block\">\n<p><strong>Crossover:</strong> combine code from two parents, such as one program’s starting construction with another’s move acceptance rule.</p>\n</div>\n<div class=\"answer\">\n<p><strong>These edits change the program, not just one packing.</strong> Evaluate the resulting program with the same three-trial protocol before selecting it.</p>\n</div>\n",
       "reveals": 4
     },
     {
@@ -56,7 +72,7 @@
       "title": "A language model writes the mutation",
       "seconds": 60,
       "appendix": false,
-      "html": "<div class=\"question\">\n<p><strong>What can a mutator change when it reads the parent code and its results?</strong></p>\n</div>\n<div class=\"block\">\n<ol type=\"1\">\n<li>Retain the parent’s center search and radius allocator.</li>\n<li>Propose a different move scale, center subset, or acceptance schedule.</li>\n</ol>\n</div>\n<div class=\"block\">\n<ol start=\"3\" type=\"1\">\n<li>Luna returns edited <strong>Python source</strong> and a hypothesis.</li>\n<li>An isolated interpreter executes it; an independent checker evaluates the returned circles.</li>\n</ol>\n</div>\n<div class=\"answer\">\n<p><strong>Luna implements the proposed code change; Python executes it.</strong> A reasoned edit becomes evidence only after evaluation.</p>\n</div>\n",
+      "html": "<div class=\"question\">\n<p><strong>What can a mutator change when it reads the parent code and its results?</strong></p>\n</div>\n<div class=\"block\">\n<ol type=\"1\">\n<li>Retain the parent’s center search and radius allocator.</li>\n<li>Change center-move size, which centers move, or the move acceptance rule.</li>\n</ol>\n</div>\n<div class=\"block\">\n<ol start=\"3\" type=\"1\">\n<li>Luna returns edited <strong>Python source</strong> and a hypothesis.</li>\n<li>An isolated interpreter executes it; an independent checker evaluates the returned circles.</li>\n</ol>\n</div>\n<div class=\"answer\">\n<p><strong>Luna implements the proposed code change; Python executes it.</strong> A reasoned edit becomes evidence only after evaluation.</p>\n</div>\n",
       "reveals": 4
     },
     {
@@ -172,9 +188,9 @@
       "reveals": 4
     }
   ],
-  "main_frame_count": 18,
-  "main_reveals": 66,
-  "prepared_seconds": 1280,
+  "main_frame_count": 20,
+  "main_reveals": 75,
+  "prepared_seconds": 1400,
   "appendix_seconds": 155,
   "reserve_seconds": 45
 }

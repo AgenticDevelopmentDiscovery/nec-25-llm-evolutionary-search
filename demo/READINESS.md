@@ -59,11 +59,13 @@ No optimality or broad model-superiority claim is made.
 ## Presentation and remaining presenter actions
 
 The title is followed by two problem frames that explain the circle-packing
-rules and summed-radii objective before introducing the framework. Chapter
+rules and summed-radii objective, then two prerequisite frames explain numerical
+search, trials, seeds and the packing bank before introducing the framework. Chapter
 10.1–10.5 retain 2/3/2/1/2 conceptual frames. Five frames support the two demo
-sequences: 18 main frames / 66 main reveals. Three optional architecture/API
-appendix frames add 11 reveals, for 77 total.
-Main plan: 21:20 + 0:45 reserve = 22:05. Optional appendix adds 2:35, making 24:40.
+sequences: 20 main frames / 75 main reveals. Three optional architecture/API
+appendix frames add 11 reveals, for 86 total.
+Main plan: 23:20 + 0:45 reserve = 24:05. The appendix is backup material beyond
+the timed main talk; showing all of it adds 2:35, making 26:40 with reserve.
 
 Actual aloud delivery timing must still be measured by the presenter. The browser
 Rehearse aloud clock records frame/demo timings without making model requests.

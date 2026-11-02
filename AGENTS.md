@@ -1,7 +1,7 @@
 # Tutorial working instructions
 
 Read `CLAUDE.md`, `CODEX_DEMO_HANDOFF.md` and `DEMO_REDESIGN_HANDOFF.md` first.
-The active branch is `demo/concept-aligned-experiments`. The active tutorial now
+The active branch is `main`, after the user merged the demo branch. The active tutorial now
 uses the two unit-square circle-packing cases in AlphaEvolve Appendix B.12:
 26 and 32 variable-radius circles, maximizing the sum of radii.
 
@@ -9,6 +9,9 @@ Follow Chapter 10 of `notes/agentic-development-notes.pdf`. Use exactly 2 frames
 for 10.1, 3 for 10.2, 2 for 10.3, 1 for 10.4 and 2 for 10.5; title separate.
 After the title, introduce circle-packing rules and the summed-radii objective
 in two content frames before using the evolutionary framework's terminology.
+Then explain one packing program and define search step, move scale, move
+acceptance rule, trial, seed and packing bank in two prerequisite frames.
+These precede Chapter 10 without replacing its 2/3/2/1/2 conceptual allocation.
 The remaining main frames support two live demos. Keep architecture in the
 appendix, question/mechanism/answer reveals, detailed notes and Aggie Maroon.
 Keep `.prose.md` / `.concepts.md` pairs consistent.
