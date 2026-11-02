@@ -1,323 +1,302 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teaching notes · evolutionary search</title><link rel="stylesheet" href="/notes.css"><link rel="stylesheet" href="/brand.css"></head><body><nav><a href="/">Presentation hub</a> · <a href="/document.pdf">PDF notes</a> · <a href="/handout.pdf">Frame handout</a></nav><main><h1>LLM-driven evolutionary search</h1><p>The questions, mechanisms and detailed explanations share the presentation source. Course connection: Chapter 10, Definition 10.2 and Figures 10.1–10.2.</p><section id="title"><h2>1. Evolutionary search with a language-model mutator</h2><div class="question title-only">
-<p><strong>Evolving solver programs through measured feedback</strong></p>
-<p>ENGR 689 · Texas A&amp;M University · Fall 2026</p>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teaching notes · evolutionary search</title><link rel="stylesheet" href="/notes.css"><link rel="stylesheet" href="/brand.css"></head><body><nav><a href="/">Presentation hub</a> · <a href="/document.pdf">PDF notes</a> · <a href="/handout.pdf">Frame handout</a></nav><main><h1>LLM-driven evolutionary search</h1><p>The questions, mechanisms and detailed explanations share the presentation source. Course connection: Chapter 10, Definition 10.2 and Figures 10.1–10.2.</p><section id="title"><h2>1. LLM-Driven Evolutionary Search: Evolving packing programs</h2><div class="question title-only">
+<p><strong>How can a language model improve a search algorithm through measured feedback?</strong></p>
+<p>ENGR 689 · Chapter 10 · Texas A&amp;M University</p>
 </div>
-</section><section id="optimization"><h2>2. Optimization as search</h2><div class="question">
-<p><strong>When the best candidate is unknown, what can we do?</strong></p>
-</div>
-<div class="block">
-<p>Define a candidate space <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝒜</mi><annotation encoding="application/x-tex">\mathcal A</annotation></semantics></math> and a measurable objective <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>. Seek</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>a</mi><mo>*</mo></msup><mo>∈</mo><mo>arg</mo><munder><mo>max</mo><mrow><mi>a</mi><mo>∈</mo><mi>𝒜</mi></mrow></munder><mi>F</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">a^*\in\arg\max_{a\in\mathcal A}F(a).</annotation></semantics></math></p>
+<p>Today we will build the Chapter 10 evolutionary loop around a concrete mathematical task. We evolve programs that search for circle packings. The circles are the programs’ outputs; they provide evidence about program quality. We will use both unit-square examples from AlphaEvolve, with 26 and 32 circles. Their mathematical problems are reproduced; our short, local Luna experiment is a classroom implementation of the discovery loop, not the unpublished AlphaEvolve engine or a claim to reproduce its reported records.</p>
+</section><section id="evolution"><h2>2. An external evolutionary loop</h2><div class="question">
+<p><strong>What must survive between calls for the next attempt to build on the previous one?</strong></p>
 </div>
 <div class="block">
-<p>Generate candidates → measure them → spend the next trial where the evidence suggests it may help.</p>
-</div>
-<div class="answer">
-<p><strong>Optimization is an evidence-guided search.</strong> An evolutionary algorithm adds a population, inherited variation and selection.</p>
-</div>
-<p>The candidate may be a parameter vector, a program or a design. An optimizer does not need to enumerate the whole space, but it needs an operational definition of quality. A candidate that sounds plausible is not a measured result. Our objective can be computed automatically, which lets repeated search use the same external check.</p>
-<p>Begin with evolutionary computation itself. Language models are introduced later as one possible variation mechanism. This ordering separates the optimization framework from the technology used to propose a change. It also makes a numerical-only baseline meaningful: the framework does not require a language model to define or evaluate a candidate.</p>
-</section><section id="population"><h2>3. Population and fitness</h2><div class="question">
-<p><strong>Why keep several candidates instead of only the current champion?</strong></p>
-</div>
-<div class="block">
-<p>Fitness measures how well a candidate performs now. A different candidate may offer changes that the champion’s structure does not readily suggest.</p>
-</div>
-<div class="block">
-<p>Hypothetical example, equal mutation budgets:</p>
-<p>A: current fitness <strong>7</strong> → best tested child <strong>8</strong>.<br />
-B: current fitness <strong>6</strong> → best tested child <strong>9</strong>.</p>
-</div>
-<div class="answer">
-<p><strong>Keep promising alternatives because a lower-scoring parent can lead to a better descendant.</strong> Multiple parents preserve several paths for future search.</p>
-</div>
-<p>Pause after the question and let students argue for keeping only the champion: it has the highest measured fitness, so why spend effort elsewhere? The missing information is how good the candidates’ descendants could be. Current fitness evaluates a candidate under a declared protocol; it does not evaluate every possible mutation of that candidate or of its competitors.</p>
-<p>The numbers are a hypothetical maximization example, not Max-Cut measurements or predictions. Suppose A and B have different structures, and we give each the same mutation and evaluation budget. A currently scores 7 and its best tested child scores 8; B currently scores 6 and its best tested child scores 9. Keeping only A would discard B as a direct starting point before discovering that child. B’s lower current score therefore does not make it useless for future search. The mechanism is that inherited structure affects which changes are available or likely under the variation operator. A search from A might eventually rediscover B’s structure; retaining B keeps that route directly available.</p>
-<p>A population reduces dependence on descendants of a single parent, but it costs evaluations and does not guarantee improvement. Several nearly identical programs may offer little useful variety. The benefit depends on their behavioral differences, the variation operator, selection and the available budget. This example motivates retaining promising alternatives; it does not justify retaining every weak candidate.</p>
-<p>In the classroom controller the population contains solver programs, with a cap of three complete evaluated survivors and deterministic fitness ranking. Up to three survivors enter Luna’s context as potential parents; a later execution of a solver produces a separate solution witness. There is no reserved diversity slot, island migration or tournament sampling. The controller preserves highly ranked alternatives when available, but it does not explicitly enforce structural or behavioral diversity, and a potentially useful lower-ranked program can still be discarded.</p>
-</section><section id="evolution"><h2>4. Variation, evaluation and selection</h2><div class="question">
-<p><strong>What turns repeated candidate generation into an evolutionary algorithm?</strong></p>
+<p>Keep executable candidates, their measured results, and the changes already tried. Select survivors before proposing their descendants.</p>
 </div>
 <div class="block visual">
 <figure>
-<img src="/figures/evolutionary-cycle.svg" style="width:100.0%" alt="Seed once; derive children from survivors; evaluate and select again." />
-<figcaption aria-hidden="true">Seed once; derive children from survivors; evaluate and select again.</figcaption>
+<img src="/figures/evolutionary-cycle.svg" style="width:100.0%" alt="Initialize once; evaluate, select and mutate repeatedly." />
+<figcaption aria-hidden="true">Initialize once; evaluate, select and mutate repeatedly.</figcaption>
 </figure>
 </div>
+<div class="answer">
+<p><strong>Evolution gives the next proposal ancestry and external memory.</strong> Repeated independent generation does not inherit the survivors.</p>
+</div>
+<p>Chapter 10.1 distinguishes an evolutionary loop from the generate–evaluate–select loop of Chapter 9: mutation consumes the survivors. Initialization happens once. Later rounds preserve an artifact and vary its structure instead of asking for an unrelated answer every time. The outside controller stores programs and measurements; this memory persists even though the language model’s weights stay fixed. An external evaluator supplies evidence beyond a model’s verbal self-assessment.</p>
+<p>A survivor is a program. Executing it produces a circle arrangement. Keeping a successful arrangement can also provide a numerical starting point for later programs, but that is separate from inheriting program source. Our default demonstration exposes both: program ancestry and a frozen bank of the previous best packings.</p>
+</section><section id="framework"><h2>3. Five choices define the search</h2><div class="question">
+<p><strong>Which choices turn “try to improve this” into a reproducible procedure?</strong></p>
+</div>
 <div class="block">
-<p>Mutation can perturb a parameter, replace a component or compose stages. Selection compares parents and children using the same fitness protocol.</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒜</mi><mo>,</mo><mi>f</mi><mo>,</mo><mi>μ</mi><mo>,</mo><mi>σ</mi><mo>,</mo><msub><mi>P</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\mathcal A,f,\mu,\sigma,P_0)</annotation></semantics></math>: program space, fitness, mutation, selection, and initial population.</p>
+</div>
+<div class="block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>σ</mi><mspace width="-0.167em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo>∪</mo><mo stretchy="false" form="prefix">{</mo><mi>μ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:</mo><mi>a</mi><mo>∈</mo><mi>σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">}</mo><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">P_{t+1}=\sigma\!\left(P_t\cup\{\mu(a):a\in\sigma(P_t)\}\right).</annotation></semantics></math></p>
+<p>Choose parents → mutate → pool parents and children → select survivors.</p>
 </div>
 <div class="answer">
-<p><strong>Useful structure is inherited, varied and tested.</strong> Elitism retains measured parents when a mutation is worse.</p>
+<p><strong>The inner selection chooses parents; the outer selection forms the next generation.</strong> Every component is a design choice.</p>
 </div>
-<p>A classical variation operator can make random parameter edits, replace a subtree in a program or combine material from parents. Variation does not have to improve fitness. The evaluator supplies evidence and selection decides which structures remain. Carrying parents into the enlarged pool prevents an unsuccessful child from automatically erasing the incumbent.</p>
-<p>Chapter 10 distinguishes initial generation from survivor-conditioned mutation. Its recurrence selects parents, generates variants, pools parents and children, then selects again. Here the controller retains prior measured scores, so elitism protects the observed leaderboard under the fixed protocol. That is not a theorem about expected quality on new trials or eventual global convergence.</p>
-</section><section id="exploration"><h2>5. Exploration and exploitation</h2><div class="question">
-<p><strong>Should the next mutation refine a strong candidate or try a different mechanism?</strong></p>
-</div>
-<div class="block">
-<p><strong>Exploit:</strong> adjust a promising parameter or refine an existing composition. <strong>Explore:</strong> replace a stage or try another algorithm family.</p>
+<p>This is Chapter 10, Definition 10.2 and Equation 10.1. The course minimizes fitness f. For our maximization problem, use negative median verified sum of radii. The artifact space consists of Python packing programs with a fixed function interface and bounded execution. Mutation is a Luna request containing actual selected parent source. Selection retains at most three complete programs. Checkboxes choose the initial population; they do not restrict the source changes Luna may propose.</p>
+<p>The displayed recurrence is the chapter’s conceptual definition. Our controller sends up to three selected parents in one request and asks for one child, rather than making one request for every parent. It then evaluates that child and selects from parents plus child. This is a declared classroom choice, not a hidden implementation of every feature of AlphaEvolve. The chapter’s fixed fitness f corresponds directly to our fixed-start control. Default iterative refinement uses conditional fitness f(a | B_t), where the incoming packing bank is explicit evaluation state. Re-evaluating parents makes each round comparable; it does not make medians from different banks stationary program quality.</p>
+</section><section id="classical-mutation"><h2>4. Classical variation</h2><div class="question">
+<p><strong>How can we vary a program without understanding why it works?</strong></p>
 </div>
 <div class="block">
-<p>Too little variation can collapse the population. Too much unconstrained variation can waste evaluations on poor candidates.</p>
+<p><strong>Point mutation:</strong> change a move scale, for example <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.04</mn><mo>→</mo><mn>0.02</mn></mrow><annotation encoding="application/x-tex">0.04\rightarrow0.02</annotation></semantics></math>. <strong>Subtree replacement:</strong> replace an acceptance expression. <strong>Crossover:</strong> inherit code from two parents.</p>
+</div>
+<div class="block">
+<p>These edits create hypotheses. The evaluator determines whether each resulting program still runs and improves its measured fitness.</p>
 </div>
 <div class="answer">
-<p><strong>Variation and selection must balance inheritance with discovery.</strong> Better starting material may help; a weak start does not imply permanent failure.</p>
+<p><strong>Classical variation changes structure; selection supplies direction.</strong> Small source edits can have large behavioral effects.</p>
 </div>
-<p>The search neighborhood is defined by the representation and mutation rules. An operator limited to small parameter changes explores a different neighborhood from one allowed to replace a kernel. Strong selection can remove useful alternatives; weak selection can spend resources on low-quality programs. The controller exposes complete-trial ranking and exact-duplicate rejection but does not implement a general diversity guarantee.</p>
-<p>The distinction matters for the initialization experiment. Checkboxes choose the initial population only. They do not remove unchecked kernels from the artifact space. A language-model mutator may therefore recover a useful algorithm absent from the initial suite. Claiming that a poor suite can never reach the reference would contradict that permitted search space.</p>
-</section><section id="llm-mutation"><h2>6. The language-model mutator</h2><div class="question">
-<p><strong>What changes if the variation operator can read programs and measured feedback?</strong></p>
+<p>Chapter 10.2.1 introduces point mutation, subtree mutation and crossover using expression trees. Translate that vocabulary to the code students will see. A literal change is a point edit. Replacing an acceptance rule changes a component of the computation. Combining one parent’s constructor with another parent’s search schedule is inheritance from multiple programs. These are conceptual examples, not claims that our controller implements a classical genetic-programming engine.</p>
+<p>A move scale controls the distance of a proposed center displacement. Changing it does not by itself say whether a program is better. A smaller scale can help refine a packing but may impede escape from a basin. The complete program must be run and checked under the same trial conditions. This sets up the difference between blind variation and a mutator that reads numerical feedback.</p>
+</section><section id="llm-mutation"><h2>5. A language model writes the mutation</h2><div class="question">
+<p><strong>What can a mutator change when it reads the parent code and its results?</strong></p>
 </div>
 <div class="block">
 <ol type="1">
-<li><strong>Retain vector optimization:</strong> adjust one vector per vertex to improve a continuous cut objective.</li>
-<li><strong>Round:</strong> convert the optimized vectors into a two-group partition.</li>
+<li>Retain the parent’s center search and radius allocator.</li>
+<li>Propose a different move scale, center subset, or acceptance schedule.</li>
 </ol>
 </div>
 <div class="block">
 <ol start="3" type="1">
-<li><strong>Luna proposes an extension:</strong> append local search, starting from that partition.</li>
-<li><strong>Evaluate the child:</strong> compare it with the parent using identical trials and the same total time limit per trial.</li>
+<li>Luna returns edited <strong>Python source</strong> and a hypothesis.</li>
+<li>An isolated interpreter executes it; an independent checker evaluates the returned circles.</li>
 </ol>
 </div>
 <div class="answer">
-<p><strong>The child inherits vector optimization and adds local search.</strong> Whether the extension helps is a hypothesis tested by numerical evaluation.</p>
+<p><strong>Luna implements the proposed code change; Python executes it.</strong> A reasoned edit becomes evidence only after evaluation.</p>
 </div>
-<p>Present the numbered example as a hypothetical mutation, not a claim about a particular recorded Luna response. The candidate being changed is a solver program. Its execution produces a partition, which the evaluator uses to measure the program’s quality.</p>
-<p>Step 1 retains the parent’s vector method. Instead of immediately choosing one of two groups for each vertex, the Burer–Monteiro method optimizes continuously adjustable vectors using an objective related to the cut value. Our implementation uses two-dimensional unit vectors. This is a numerical search over a continuous surrogate; it does not certify the global Max-Cut optimum.</p>
-<p>Step 2 rounds the vectors into a feasible partition. A direction through the vector space determines which side each vector falls on, assigning each graph vertex to one of two groups. Vector optimization and rounding are internal operations of the existing Burer–Monteiro kernel, not two independently editable strategy stages.</p>
-<p>Step 3 is the proposed program mutation. Luna reads selected parent programs, measured trial results and the allowed edits, then may propose appending a trusted local-search kernel. That kernel receives the partition produced by the first stage and explores changes such as moving vertices between groups. The parent recipe is vector optimization followed by rounding. The child recipe retains both operations and adds local search. The numerical kernels execute these operations after the proposal has passed validation.</p>
-<p>Step 4 tests the complete child program against the parent under the declared evaluation protocol: the same graph, seeds, raw starting partitions and numerical limits. Each program has the same total time allowance per trial; the child shares its allowance across its stages. Appending local search does not grant extra evaluation time. The evaluator independently rescores the original graph and aggregates complete trials into fitness. The added stage might help, offer no improvement, or reduce performance within the fixed allowance. The proposal is a hypothesis because those outcomes must be measured rather than inferred from a plausible explanation.</p>
-<p>The model replaces one part of the evolutionary algorithm: the variation operator. It does not replace the artifact representation, objective, evaluator, selection rule or external population memory. Between calls, the controller changes the context; it does not update model weights. The same selected structure and failure record can make the next proposal more informed than an independent guess.</p>
-<p>Chapter 10 connects context engineering to mutation and evaluation to fitness. FunSearch is a primary program-search example <span class="citation" data-cites="funsearch2024">(Romera-Paredes et al. 2024)</span>. The classroom system uses a narrower interpreter over existing numerical kernels. Its proposals can change configurations and compositions but cannot invent arbitrary executable Python or modify the objective. Better proposals are possible, never guaranteed.</p>
-</section><section id="problem"><h2>7. Signed Max-Cut</h2><div class="question">
-<p><strong>Can every edge preference be satisfied at once?</strong></p>
+<p>Chapter 10.2.2 replaces blind variation with knowledge-guided variation. For example, a parent may perturb one center at a time and stop improving. The mutator can hypothesize that coordinated moves or a restart schedule will escape that basin. It writes the new function; the local Python interpreter does not translate the prose hypothesis into an algorithm.</p>
+<p>Our response contains round_id, parent_ids, hypothesis and source. The source defines solve(initial, seed, steps). NumPy, math, a fixed-center radius allocator and a progress reporter are supplied. A source diff exposes what was retained and changed. The geometry checker and survivor rule are outside the editable source. Bubblewrap isolates generated code from credentials, private repository files and the host network. The model has no execution tools during its proposal call.</p>
+<p>AlphaEvolve evolves code and evaluates it externally <span class="citation" data-cites="alphaevolve2025">(AlphaEvolve team 2025)</span>. We use the published circle-packing tasks with our own small controller and TAMU Luna. The public results repository does not release the original discovery engine. Do not describe our initial numerical methods as the algorithms AlphaEvolve discovered.</p>
+</section><section id="context"><h2>6. Context joins the two course spines</h2><div class="question">
+<p><strong>Which evidence should the next mutation see?</strong></p>
 </div>
 <div class="block">
-<p>Illustrative triangle: <strong>A–B = +3; A–C = −2; B–C = −2.</strong></p>
-<p>Positive weights reward separation. Negative weights penalize separation.</p>
+<p>Parent source <strong>and scores</strong>; successful and failed attempts; task constraints and useful domain knowledge; population similarity and remaining budget.</p>
 </div>
 <div class="block">
+<p><strong>Evaluation becomes fitness. Context engineering drives mutation.</strong> The next request carries the previous round’s actual results.</p>
+</div>
+<div class="answer">
+<p><strong>External memory makes the next proposal informed.</strong> A plausible explanation does not replace a measured trial.</p>
+</div>
+<p>These are the four context ingredients in Chapter 10.2.3 and the convergence of the two spines in Figure 10.2. Our domain knowledge includes the nonoverlap constraints and the fact that radius allocation is a linear program once centers are fixed. Source, scores, failures and tried IDs expose what the search already knows. The context labels the current packing bank, so scores from different starting conditions are not silently mixed.</p>
+<p>The server’s request panel shows the actual provider payload; the response panel shows the public stream. Authorization is added separately inside the model worker. Hidden reasoning is neither requested as teaching evidence nor displayed. Numerical seeds control starting packings and numerical moves. They do not determine Luna’s wording. The optional structure-only control withholds scores and history, but a rigorous context comparison must additionally freeze identical parent programs and histories across the two conditions.</p>
+</section><section id="elitism"><h2>7. Elitism protects measured progress</h2><div class="question">
+<p><strong>If a mutation is worse, must the current champion disappear?</strong></p>
+</div>
+<div class="block">
+<p>Pool parents with the new child. Retain the best complete programs under the declared fitness rule.</p>
+</div>
+<div class="block">
+<p>For a maximized quality, elitism makes the observed best stay level or improve <strong>under comparable evaluation conditions</strong>.</p>
+</div>
+<div class="answer">
+<p><strong>A failed mutation need not erase a useful parent.</strong> Preserve the best valid packing separately from program fitness.</p>
+</div>
+<p>Chapter 10.3.1 describes carrying elite candidates forward. The lower-is-better course fitness is monotonically non-increasing when the same deterministic measured fitness is used. Equivalently, maximized observed quality is non-decreasing. This is a property of retaining a measured incumbent, not a theorem of global convergence or future quality on new instances.</p>
+<p>Our default uses inherited packing banks. At each round, freeze the same incoming packings for the parents and the child, re-evaluate the parents, and select within that bank. An old program median from a different bank is not directly comparable. The cumulative best valid construction is a separate monotone curve because its verified geometry is retained. A valid progress packing can survive in that archive even when a program later times out and receives no eligible fitness.</p>
+</section><section id="selection"><h2>8. Selection pressure and population collapse</h2><div class="question">
+<p><strong>Why can keeping only the highest scores make search stagnate?</strong></p>
+</div>
+<div class="block">
+<p><strong>Top-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>:</strong> rank everyone and retain the best <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>. <strong>Tournament:</strong> sample a group and retain its best; smaller tournaments can preserve more alternatives.</p>
+</div>
+<div class="block">
+<p>Collapse: several survivors become small rewrites of the same search. Current fitness does not reveal every parent’s future descendants.</p>
+</div>
+<div class="answer">
+<p><strong>Strong selection exploits evidence but can discard useful routes.</strong> Our top-three rule does not guarantee diversity.</p>
+</div>
+<p>Chapter 10.3.2 compares top-k and tournament selection; 10.3.3 identifies population collapse. Our implemented rule is deterministic: all three trials must complete and pass geometry checks; then rank by median sum of radii, minimum sum, and stable source identity. A child below the champion may still survive if it belongs among the three best programs. Do not teach elitism as a rule that rejects every nonchampion.</p>
+<p>Programs with different IDs may have nearly identical behavior. Normalizing syntax prevents comments alone from creating another genome, but it is not a semantic diversity measure. Several schedules differing only in a constant can still explore the same region. The guide names our three initial mechanisms so students can inspect their differences before deciding whether the population is varied enough. Tournament selection is explained here but is not implemented as a hidden classroom feature.</p>
+</section><section id="fitness"><h2>9. Feasibility comes before fitness</h2><div class="question">
+<p><strong>Could a flawed scorer reward an invalid packing?</strong></p>
+</div>
+<div class="block">
+<p><strong>Flawed scorer:</strong> sum radii without checking overlap. A valid pair scores <strong>0.50</strong>; an overlapping pair scores <strong>0.60</strong> and incorrectly wins.</p>
+</div>
+<div class="block">
+<p><strong>Corrected evaluator:</strong> check every wall and pair, then score. Reject invalid or incomplete trials.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∣</mo><msub><mi>B</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><msub><mo>median</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn></mrow></msub><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>;</mo><msub><mi>z</mi><mrow><mi>t</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">f(a\mid B_t)=-\operatorname{median}_{j=1,2,3}S(a;z_{t,j}).</annotation></semantics></math></p>
+<p>Compare programs within one frozen packing bank <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding="application/x-tex">B_t</annotation></semantics></math>.</p>
+</div>
+<div class="answer">
+<p><strong>Close the scoring loophole; then test frozen programs on unseen starts.</strong> Feasibility and transfer are separate checks.</p>
+</div>
+<p>Chapter 10.4 treats the evaluator as the fitness function and warns that persistent optimization finds weaknesses in it. Here we explicitly compare a flawed scorer with the corrected evaluator, rather than merely presenting an invalid output. The flawed scorer returns the sum of radii and omits pair checks. It ranks two circles of radius 0.30 at centers (0.30, 0.50) and (0.70, 0.50) above two radius-0.25 circles at (0.25, 0.50) and (0.75, 0.50). The claimed gain is 0.10, but the first pair overlaps by 0.20. An optimizer rewarded by that flawed rule has an incentive to enlarge overlapping circles. The correct geometry checker rejects the apparent winner. These are instructor-made, numerically checked toy examples, not Luna outputs. The algorithm guide contains a revealable scorer illustration.</p>
+<p>A production witness must contain exactly the required number of finite circle triples. Radii must be nonnegative, circles must fit inside the square, and every pair must avoid overlap. The server independently recomputes both geometry and summed radii; it ignores a program’s claimed score. Numerical tolerance is 1e-9 in unit-square units. A common radius-allocation construction margin of 1e-8 is applied before a final witness is returned and scored. No invalid output is silently repaired during evaluation.</p>
+<p>Fitness is the negative median quality of three complete trials on the same bank. A failed trial is not quietly dropped from the average; it makes the program ineligible for selection. A valid intermediate packing is still a separate useful construction. This distinction is essential for anytime numerical search.</p>
+<p>Feasibility checking does not establish algorithm transfer. Freeze program source before evaluating fresh numerical starts, exclude those validation results from mutation prompts and survivor decisions, and report them separately. The original runs used seeds 3, 4 and 5. A separate numerical-only check uses previously unused seeds 101, 102 and 103, common fixed starts, the same requested work and the same hard trial limit. The selection rule was fixed before seeing validation scores: compare the best initial program with the highest-ranked surviving new Luna program. The guide shows the actual results and source identities. This is a small post-search check, not a broad generalization study or a second live evolution.</p>
+<p>Returning a fixed valid construction can be a legitimate solution to a fixed packing problem; a hard-coded layout alone is not proof of reward gaming. The loophole here is accepting infeasible geometry. Overfitting claims concern performance outside the observed starts or problem instances and require a separate evaluation contract. Multiobjective quality and cost are developed in the exploration frame and guide. The changing center positions define a nonconvex landscape; the fixed-center radius linear program does not solve that whole problem.</p>
+</section><section id="islands"><h2>10. Preserve different search behaviors</h2><div class="question">
+<p><strong>How can useful alternatives survive beside the current champion?</strong></p>
+</div>
+<div class="block">
+<p><strong>Islands:</strong> evolve separate populations, with occasional migration. <strong>MAP-Elites:</strong> retain the best program in each behavior bin, such as one-center versus coordinated moves.</p>
+</div>
+<div class="block">
+<p><strong>Novelty search:</strong> favor behaviors unlike those already seen. Different source text alone does not establish different search behavior.</p>
+</div>
+<div class="answer">
+<p><strong>Preserve several ways to search.</strong> These are possible extensions; our top-three controller does not implement a diversity archive.</p>
+</div>
+<p>Chapter 10.5.1 motivates preserving several search histories. An island owns a population and mutation history. Occasional migration shares programs; overly frequent migration can make the islands alike, while too little sharing can leave each stalled. Three evaluation seeds are not three islands, and the two circle counts are different problems rather than populations exchanging discoveries.</p>
+<p>The Multi-dimensional Archive of Phenotypic Elites (MAP-Elites) organizes candidates by chosen behavior descriptors and keeps a high-quality representative in each bin <span class="citation" data-cites="mapelites2015">(Mouret and Clune 2015)</span>. For a packing-program archive, illustrative descriptors could measure the typical number of centers moved per proposal and the frequency of restarts. A one-center local search and a coordinated-move search could occupy different bins even if one currently has a lower verified sum. Their quality would still need comparable evaluation conditions. Those descriptors would require instrumentation; the present worker does not record them as a ready-made archive.</p>
+<p>Novelty search instead scores behavioral difference from previously observed behaviors <span class="citation" data-cites="novelty2011">(Lehman and Stanley 2011)</span>. A possible descriptor distance could use normalized numerical search statistics. It is not a measure of how unusual a program’s variable names sound, and novelty alone does not certify packing quality. These are alternative selection designs whose performance depends on the task and descriptors.</p>
+<p>Our controller retains the top three complete programs and rejects exact syntax duplicates. It has no islands, behavioral bins or novelty score. The guide works through the conceptual archive example so students can recognize both its purpose and its absence from the bounded demo.</p>
+</section><section id="exploration"><h2>11. Exploration, exploitation and cost</h2><div class="question">
+<p><strong>When should we refine, explore—or stop spending?</strong></p>
+</div>
+<div class="block">
+<p><strong>Exploit:</strong> refine. <strong>Explore:</strong> change methods. <strong>Stop:</strong> respect the cap.</p>
+</div>
+<div class="block">
+<p><strong>Hypothetical policies</strong>, same test conditions:</p>
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Partition</th>
-<th style="text-align: left;">Crossing contributions</th>
-<th style="text-align: right;">Cut value</th>
+<th style="text-align: left;">Policy</th>
+<th style="text-align: right;">Median sum</th>
+<th style="text-align: right;">Numerical seconds</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">A, B, C together</td>
-<td style="text-align: left;">None</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">2.40</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">A alone; B with C</td>
-<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo><mn>3</mn><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">+3-2</annotation></semantics></math></td>
-<td style="text-align: right;"><strong>1</strong></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">C alone; A with B</td>
-<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2-2</annotation></semantics></math></td>
-<td style="text-align: right;">−4</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">2.41</td>
+<td style="text-align: right;">5</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="answer">
-<p><strong>Edge preferences can conflict. Maximize their total crossing weight.</strong> Separating A and B forces at least one negative edge to cross.</p>
+<p><strong>Illustrative utility <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>−</mo><mn>0.01</mn><mi>t</mi></mrow><annotation encoding="application/x-tex">S-0.01t</annotation></semantics></math> favors A: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2.39</mn><mo>&gt;</mo><mn>2.36</mn></mrow><annotation encoding="application/x-tex">2.39&gt;2.36</annotation></semantics></math>.</strong> Our demo reports costs separately.</p>
 </div>
-<p>The purpose of this frame is to establish a conflict that requires a global tradeoff before introducing the objective’s notation. This three-vertex triangle is a hypothetical teaching example, not an instance measurement from the live demonstration. There is an edge between every pair: A–B has weight +3, and A–C and B–C each have weight −2. A partition assigns every vertex to one of two groups; a group may be empty.</p>
-<p>Show the question, pause, and invite students to try satisfying all three preferences. The positive edge asks for A and B to be separated. Both negative edges ask for C to remain with their respective endpoints. C cannot be in the same group as both A and B while those two vertices are separated. Individual edge preferences therefore cannot all be satisfied at once.</p>
-<p>Reveal the table and compute each row aloud. Keeping all three vertices together cuts no edges, giving 0. Separating A while keeping B and C together cuts A–B and A–C: +3 minus 2 equals 1. Separating C while keeping A and B together cuts both negative edges: −2 minus 2 equals −4. Separating B gives the symmetric score 1. Together with exchanging the two group names, these exhaust the possible partitions, so 1 is the optimum for this small illustrative triangle. That direct enumeration does not certify either live benchmark’s reference value.</p>
-<p>Conclude: a solver must account for the whole graph because a single vertex’s placement affects several edges. A crossing contributes its signed weight; an uncut edge contributes zero. Keeping a negative edge uncut avoids a penalty rather than earning an extra positive reward. Maximizing the total crossing weight balances the incompatible preferences.</p>
-<p>For the formal definition, encode the two group memberships by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub><mo>∈</mo><mo stretchy="false" form="prefix">{</mo><mo>−</mo><mn>1</mn><mo>,</mo><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">s_i\in\{-1,+1\}</annotation></semantics></math>. Equal labels have product <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub><msub><mi>s</mi><mi>j</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">s_i s_j=1</annotation></semantics></math>, so the crossing indicator <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mi>s</mi><mi>i</mi></msub><msub><mi>s</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">(1-s_i s_j)/2</annotation></semantics></math> is 0. Opposite labels have product −1, so the indicator is 1. Thus</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mi>G</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>s</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munder><mo>∑</mo><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><mi>E</mi></mrow></munder><msub><mi>w</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mfrac><mrow><mn>1</mn><mo>−</mo><msub><mi>s</mi><mi>i</mi></msub><msub><mi>s</mi><mi>j</mi></msub></mrow><mn>2</mn></mfrac><mo>,</mo><mspace width="2.0em"></mspace><munder><mo>max</mo><mrow><mi>s</mi><mo>∈</mo><mo stretchy="false" form="prefix">{</mo><mo>−</mo><mn>1</mn><mo>,</mo><mo>+</mo><mn>1</mn><msup><mo stretchy="false" form="postfix">}</mo><mrow><mo stretchy="true" form="prefix">|</mo><mi>V</mi><mo stretchy="true" form="postfix">|</mo></mrow></msup></mrow></munder><msub><mi>C</mi><mi>G</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>s</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">C_G(s)=\sum_{(i,j)\in E}w_{ij}\frac{1-s_i s_j}{2},\qquad \max_{s\in\{-1,+1\}^{|V|}}C_G(s).</annotation></semantics></math></p>
-<p>Complementing every sign exchanges the group names without changing the cut value. The demonstration evaluates each solver’s returned partition by independently summing the original graph’s edge contributions. This gives external numerical feedback for evolving solver programs. Graph size, trial conditions and unproven reference values are introduced with the experiment setup, after students understand what a score means.</p>
-</section><section id="move"><h2>8. Local moves and feasible witnesses</h2><div class="question">
-<p><strong>Can the search move to a worse state while keeping a better result?</strong></p>
+<p>Chapter 10.5.2 frames the explore–exploit tension. Exploitation refines useful inherited structure; exploration tests a different search mechanism. Internal numerical exploration, such as accepting temporary losses, is different from an outer mutation changing the program. Neither a large source edit nor a fluent hypothesis guarantees an improvement.</p>
+<p>The table is invented to explain a decision, not measured Luna performance. Both policies must first be valid and evaluated comparably. B offers 0.01 more quality but takes four more numerical seconds. Neither dominates: A is faster and B has higher quality. A quality–time Pareto view therefore keeps both as options. If we explicitly choose a value of 0.01 quality units per second, maximizing utility U=S−0.01t gives A=2.39 and B=2.36. The price is a teaching assumption, not a measured API tariff or universal preference. A smaller price could reverse the decision.</p>
+<p>Chapter 10.8 expresses the corresponding minimization form as cost-adjusted fitness. Cost may mean marginal API dollars or a declared resource measure, with a coefficient that converts units. Generation cost belongs to the path that produced a program; it is not an intrinsic property of source code. Avoid double-counting shared preparation and distinguish per-program evaluation time from all model calls and numerical effort spent finding it. Source length is not automatically a good proxy for either runtime or algorithm quality.</p>
+<p>The implemented demo keeps quality primary and reports numerical effort and model usage separately. It does not apply the illustrative price, a complexity penalty or a Pareto archive. Three model calls, 35 seconds per call, eight seconds per trial and a 240-second run deadline bound work. An optional predeclared plateau stopping rule could save further requests; it is not the current automatic policy. The current run can continue its planned rounds after a plateau so students can inspect the mechanism.</p>
+<p>No number of calls is universally optimal. Three calls per demonstration are a teaching budget: the first child, a proposal informed by its evaluation, and another chance to inspect adaptation or plateau. This budget is far smaller than the research-scale searches in the AlphaEvolve report. A flat or failed run remains useful evidence. Do not add artificial motion or repeated requests to force a desired trajectory.</p>
+</section><section id="packing-26"><h2>12. Demo 1: the 26-circle problem</h2><div class="question">
+<p><strong>What exactly makes a packing valid, and what does “better” mean?</strong></p>
 </div>
 <div class="block">
-<p>Flip one sign, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub><mo>←</mo><mo>−</mo><msub><mi>s</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">s_i\leftarrow-s_i</annotation></semantics></math>, with exact gain</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Δ</mi><mi>i</mi></msub><mo>=</mo><msub><mi>s</mi><mi>i</mi></msub><munder><mo>∑</mo><mrow><mi>j</mi><mo>:</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><mi>E</mi></mrow></munder><msub><mi>w</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mi>s</mi><mi>j</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">\Delta_i=s_i\sum_{j:(i,j)\in E}w_{ij}s_j.</annotation></semantics></math></p>
-</div>
-<div class="block">
-<p>The exploratory assignment may worsen. A separate best-so-far copy preserves the strongest valid witness seen during that execution.</p>
+<p>Place <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>26</mn></mrow><annotation encoding="application/x-tex">N=26</annotation></semantics></math> variable-radius circles in the unit square and maximize <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∑</mo><mi>i</mi></msub><msub><mi>r</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\sum_i r_i</annotation></semantics></math>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub><mo>≥</mo><mn>0</mn><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>r</mi><mi>i</mi></msub><mo>≤</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>i</mi></msub><mo>≤</mo><mn>1</mn><mo>−</mo><msub><mi>r</mi><mi>i</mi></msub><mo>,</mo><mspace width="1.0em"></mspace><mo stretchy="false" form="postfix">∥</mo><msub><mi>c</mi><mi>i</mi></msub><mo>−</mo><msub><mi>c</mi><mi>j</mi></msub><msub><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msub><mo>≥</mo><msub><mi>r</mi><mi>i</mi></msub><mo>+</mo><msub><mi>r</mi><mi>j</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">r_i\ge0,\quad r_i\le x_i,y_i\le1-r_i,\quad \|c_i-c_j\|_2\ge r_i+r_j.</annotation></semantics></math></p>
 </div>
 <div class="answer">
-<p><strong>Separate the moving state, best witness and strategy fitness.</strong> Only a complete evaluation makes a strategy eligible for ranking.</p>
+<p><strong>These are AlphaEvolve’s published constraints and objective.</strong> We search live with Luna; the paper’s reported construction is a separate research result.</p>
 </div>
-<p>Only terms incident to the flipped vertex change; their differences sum to the stated gain. Cached gains make local moves inexpensive. Numerical methods can accept neutral or worsening moves to escape a basin while retaining the best feasible assignment separately.</p>
-<p>This distinguishes three levels. The strategy is a program. Executing it produces a sign vector. The evaluator recomputes that vector’s objective and summarizes three trials into strategy fitness. A witness from a censored trial may be valid even though the program is ineligible for complete-trial selection. A zero-cut partition is legal; a vector of zero-valued signs is not.</p>
-</section><section id="program"><h2>9. Solver programs</h2><div class="question">
-<p><strong>What can Luna edit if the assignment itself is not the evolving artifact?</strong></p>
-</div>
-<div class="block">
-<p>A program has one to three stages: algorithm, configuration, work cap and start rule.</p>
-<pre class="text"><code>bm(max_sweeps=20, rounding_count=8); retained
-→ bls(max_work=9000); retained</code></pre>
+<p>Appendix B.12 of the AlphaEvolve report gives this unit-square, sum-of-radii problem for 26 and 32 circles <span class="citation" data-cites="alphaevolve2025">(AlphaEvolve team 2025)</span>. This is variable-radius packing; it is not equal-radius packing and not maximization of covered area. Tangency and zero radii are allowed under our stated contract; zero-radius count remains visible. The paper reports historical construction scores, not certificates of optimality, and they are not hidden inputs to our search.</p>
+<p>Start the first demo with 26 selected in the instance control. Show the three initial Python programs in the guide: perturbed grid construction, greedy local center search, and simulated annealing of centers. The fixed-center radius allocator is common. The constructor intentionally spends less effort; compare actual numerical costs as well as quality. All programs in a round receive copies of the same packing bank for seeds 3, 4 and 5.</p>
+</section><section id="demo-circle-a"><h2>13. Demo 1: follow three mutations</h2><div class="question">
+<p><strong>Which part of the parent survives, and does the changed program earn its place?</strong></p>
 </div>
 <div class="block">
-<p>Execute a program → obtain signs → recompute the original cut → summarize three trials → rank the program.</p>
-<p>Retained <strong>Tabu Search → Burer–Monteiro</strong> lifts and perturbs the incoming partition before vector refinement.</p>
+<p>Evaluate the initial population → inspect parent source and context → send Luna round 1 → read the actual code diff and verified packing.</p>
+</div>
+<div class="block">
+<p>Repeat for rounds 2 and 3. Inspect inherited packing-bank IDs, complete trial scores, failures and survivor decisions.</p>
 </div>
 <div class="answer">
-<p><strong>Evolve the solver; evaluate its witness.</strong> Trusted kernels execute the stages. Unchecked algorithms remain available to the mutator.</p>
+<p><strong>Follow the real chain: source → execution → checked geometry → fitness → selection → next context.</strong></p>
 </div>
-<p>The identifiers bm and bls denote the rank-two Burer–Monteiro method and Breakout Local Search. The displayed composition was proposed in the earlier genuine dense-graph rehearsal. Each schema stage contains backend, config, max_work and fresh. Missing defaults are normalized before hashing so equivalent encodings cannot receive separate evaluations merely by omitting a default.</p>
-<p>A retained stage receives a copy of the best witness from preceding work in the same trial. A fresh stage uses a seeded random exploratory start; the interpreter retains an older better witness if the new stage is worse. Remaining numerical time is allocated among remaining stages, with unused time carried forward. The model supplies data describing this bounded interpreter, not shell commands or arbitrary source code.</p>
-<p>Distinguish replacement from composition. A child containing only Tabu Search replaces a Burer–Monteiro parent as a program and starts from the same raw trial labels as its competitors. It does not consume that previously evaluated parent’s final partition. A child containing Burer–Monteiro followed by retained Tabu Search passes the best partition between its own stages. In the reverse retained order, the classroom adapter embeds the incoming Tabu partition as vector angles 0 or pi, adds seeded uniform offsets in [-0.35, 0.35] radians, optimizes those vectors, then rounds and polishes. It keeps the incoming partition if the new result is worse. This changes the complete solver recipe; it does not rewrite Tabu Search’s internal algorithm. First-stage and fresh Burer–Monteiro stages keep their original independent vector search. Older recorded replays preserve their original execution behavior and do not demonstrate this new downstream refinement.</p>
-</section><section id="kernels"><h2>10. Four numerical algorithms</h2><div class="question">
-<p><strong>Which mechanism changes when we choose a different solver stage?</strong></p>
-</div>
-<div class="block">
-<p><strong>Tabu Search:</strong> best admissible flips, temporary reversal bans and aspiration. <strong>Simulated Annealing:</strong> temperature-dependent acceptance of random flips.</p>
+<p>Open the integrated demo from this frame. Select LIVE LLM, 26 circles, three calls, mutation, evidence-rich context and inherited packings. Check the selected initial programs and evaluate them. This starts numerical work only; every model call waits at an explicit gate.</p>
+<p>At the first gate, point to the incoming packing bank: it contains the best valid construction found for each seed. Parents are re-evaluated from that bank before their scores enter the context. When sending a round, identify the actual provider request, public response and source string. Show who implemented the proposal: Luna wrote the Python; the isolated interpreter executes that exact admitted source. A live intermediate packing is independently verified, but it is not yet complete program fitness.</p>
+<p>After evaluation, compare all three trials and the actual top-three decision. Before sending the next call, show that the latest results have entered the context and the packing bank has been updated. Keep failures or plateaus visible. Use the remaining teaching time for questions and inspection if computation finishes early; no artificial delay is inserted. A genuine recording may be used when needed, with a persistent RECORDED REPLAY label.</p>
+</section><section id="packing-evidence-a"><h2>14. Read the first run’s evidence</h2><div class="question">
+<p><strong>What improved: one packing, the program’s measured fitness, or both?</strong></p>
 </div>
 <div class="block">
-<p><strong>Breakout Local Search:</strong> improving descent followed by adaptive perturbations. <strong>Rank-two Burer–Monteiro:</strong> unit-vector refinement, projection to signs and polish.</p>
+<p>A witness proves one feasible construction. Three complete trials rank a program on one declared bank. A source diff explains what changed; it does not prove an improvement.</p>
 </div>
 <div class="answer">
-<p><strong>Acceptance, memory, escape and representation are different design levers.</strong> Full examples and parameter meanings are available in the algorithm guide.</p>
+<p><strong>Keep construction progress and program comparison separate.</strong> Report the actual outcome, calls and numerical effort.</p>
 </div>
-<p>Tabu Search maintains current signs, one-flip gains, tabu expiry and a separate best witness. It flips the highest-gain admissible vertex even when the gain is nonpositive. Seeded ties are reproducible. A flip at iteration t sets expiry to t+tenure+1; aspiration admits an otherwise prohibited flip if it would beat the global incumbent. restart_after=0 disables a stagnation restart. The work cap is 20000 iterations.</p>
-<p>Simulated Annealing proposes a uniformly selected vertex and accepts a gain Δ with probability min(1,exp(Δ/T)). Temperature falls geometrically over the proposal budget. A logarithmic comparison avoids unstable exponentiation; optional bounded improving-flip polish shares the trial clock. The cap is 200000 proposals.</p>
-<p>Breakout Local Search alternates steepest improving descent and perturbation. Repeating the same local optimum can increase jump magnitude. Its adaptive mechanism chooses directed tabu single/pair moves or random perturbation. The controls jump, stagnation, p_min, q and tenure_min/max govern that choice; the cap is 12000 individual flips. These work units are not interchangeable with tabu iterations or annealing proposals.</p>
-<p>The Burer–Monteiro-style implementation uses two-dimensional unit vectors, coordinate refinement, projection directions and discrete polish. It allows one solve with at most 60 sweeps and 16 directions. An encountered nonconvex relaxed value is not a certified Max-Cut upper bound. Warm signs participate in the preserved extended path and remain eligible for retention. All 133 hashed reference files stay unchanged; classroom adaptations live outside the vendor snapshot.</p>
-</section><section id="initialization"><h2>11. Initial population and fair starts</h2><div class="question">
-<p><strong>Do the solver checkboxes change the initial population or the whole search space?</strong></p>
+<p>Ask students to point to the record supporting each claim. The circle view includes program identity, seed, validity and summed radii. The table includes complete or failed trials, medians and current-bank selection. The cumulative construction curve retains valid witnesses; it must not be mislabeled as a fixed-protocol program-fitness curve when banks change.</p>
+<p>Do not substitute expected improvements for measured outcomes. If an eligible child is worse than the champion, it can still enter another slot. If a trial fails, the program has no eligible median. Matching a historical literature score would still not prove optimality. A three-call classroom run cannot establish broad model or algorithm superiority. The guide’s separate numerical validation illustrates how to test frozen programs beyond the evolution starts, rather than treating geometric feasibility as proof of transfer.</p>
+</section><section id="packing-32"><h2>15. Demo 2: the 32-circle problem</h2><div class="question">
+<p><strong>Does the same program-evolution mechanism still work when the number of circles changes?</strong></p>
 </div>
 <div class="block">
-<p>Checkboxes choose <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding="application/x-tex">P_0</annotation></semantics></math>. Every selected program and proposed child receives copies of the same raw starts for seeds 3, 4 and 5.</p>
-</div>
-<div class="block">
-<p>All four trusted kernels remain available to Luna. Both current graphs allow 8 numerical seconds per trial. The selected seed programs produce distinct initial fitness on the 1,000-vertex graph.</p>
+<p>Use <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>32</mn></mrow><annotation encoding="application/x-tex">N=32</annotation></semantics></math>, the second unit-square case in AlphaEvolve Appendix B.12. Keep the objective, checker, trial seeds, source interface and numerical limits declared.</p>
 </div>
 <div class="answer">
-<p><strong>Change initialization deliberately and hold the comparison protocol fixed.</strong> A missing seed algorithm can still appear in a later mutation.</p>
+<p><strong>Change the problem instance, then inspect adaptation.</strong> A higher raw sum for 32 circles is not evidence of a better algorithm than the 26-circle run.</p>
 </div>
-<p>The first two scenarios hold the 1,000-vertex signed graph, raw starts, seeds, per-trial allowance, kernel catalog, selection and model-call cap constant. Only the seed suite differs. A numerical screen with the same initial programs measured medians 921 for Simulated Annealing, 975 for Tabu Search, 992 for Breakout Local Search and 1012 for Burer–Monteiro. The reference is 1098. These are program-and-budget measurements, not universal rankings of algorithm families. The limited suite contains Tabu Search and Simulated Annealing. The informed suite contains Tabu Search, Breakout Local Search and rank-two Burer–Monteiro. Initial configurations for a given kernel are identical across scenarios; no hidden weak variant is substituted.</p>
-<p>The initial configurations are disclosed: tabu tenure 5 with 800 iterations; annealing temperature 2 to 0.01, 6000 proposals and polish; Breakout Local Search 700 flips; Burer–Monteiro 20 sweeps and 8 directions. More seed programs mean more initial evaluations, so numerical effort must be reported alongside calls and wall time. Researcher design effort before the run is not measured by the run clock.</p>
-</section><section id="experiment-design"><h2>12. Designing the three experiments</h2><div class="question">
-<p><strong>Which differences can our initialization comparison actually explain?</strong></p>
-</div>
-<div class="block">
-<p>Demos 1 and 2: same signed graph, seeds, trial allowance, mutation catalog and call cap. Change only the initial solver suite.</p>
+<p>Reset and select 32 circles. The problem fingerprint changes, as do the number of wall and pair constraints. The method signatures accept n=len(initial), so a program must not assume 26 rows. This is a second published mathematical problem, not an arbitrary graph substitution. Its score scale is different; do not compare raw sums between the two circle counts as though they measured the same instance.</p>
+<p>Use the same three disclosed initial methods and seeds so students can recognize the mechanism, but do not call this a controlled test of generalization. The programs are evolved with access to each task. The point is to observe the same Chapter 10 components operating on a changed instance. A separate withheld-size evaluation would be required for a transfer claim. A separate fixed-start check of already-frozen programs is now available in the algorithm guide. It used new seeds 101–103, zero additional model calls and no feedback into evolution. The initial baseline and a surviving new program were selected before inspecting those results. This small check concerns fresh starts at the same N; it is not an unseen-size transfer study.</p>
+</section><section id="demo-circle-b"><h2>16. Demo 2: inspect adaptation and limits</h2><div class="question">
+<p><strong>Does Luna change its search after seeing the 32-circle trial evidence?</strong></p>
 </div>
 <div class="block">
-<p>Report initial median, calls and time to the median target, all-trial robustness, numerical effort and total teaching-run time.</p>
+<p>Evaluate 32-circle parents → send three gated requests → inspect actual source edits, verified packings and the feedback entering each next request.</p>
+</div>
+<div class="block">
+<p>Keep invalid proposals, incomplete executions and repeated ideas visible. Stop cancels owned work; replay remains explicitly recorded.</p>
 </div>
 <div class="answer">
-<p><strong>Declare the success criterion before comparing runs.</strong> The third graph is a separate dense real-weight stress case.</p>
+<p><strong>The mechanism is testable even when improvement is absent.</strong> Evidence decides which proposed programs survive.</p>
 </div>
-<p>The first two experiments use the same 1,000-vertex signed graph with 5,043 edges and supplied reference 1098. The third uses a separate 100-vertex dense graph with 4,950 real-valued signed edges and supplied reference 402.5209. Neither reference is a certified optimum. Earlier torus records remain historical evidence rather than substitutes for these cases.</p>
-<p>Primary fitness is median cut across three complete trials. Matching the reference median is weaker than matching it in every trial; the latter additionally requires the minimum to meet the reference. The comparison page exposes both milestones. It reports calls and time to target separately from all calls spent in a fixed three-round teaching run.</p>
-<p>These are bounded classroom observations with a stochastic model, not repeated research estimates. Larger seed suites consume more initial numerical effort. Human prior knowledge and its development cost are not captured by the run clock. Changing graph structure and weight distribution in demo three prevents a causal speed comparison with the first two; it tests whether the same architecture still operates on a denser signed problem. Three calls are permitted by the server; the replacement rehearsal has two successful-call slots per case after two network-restricted attempts, all counted within the authorized allowance.</p>
-</section><section id="demo-limited"><h2>13. Demo 1: a limited initialization</h2><div class="block">
-<p>Use the <strong>1,000-vertex signed graph (5,043 edges)</strong>, seed 3, <strong>Tabu Search and Simulated Annealing</strong>. The initial best median is 975; reference 1098 is unproven.</p>
-</div>
-<p>Use the first named preset and confirm two checked algorithms. The server verifies graph, seed and selection metadata. Start evaluates only those programs. At each gate inspect the selected parents and explicitly send their context. A two-parent population supplies two actual parents; no manufactured copies are added to make three.</p>
-<p>The earlier BM-only torus demonstration was an algorithm-recovery control, not a recommendation to initialize every task with Burer–Monteiro. That easy graph saturated near its reference and obscured differences. The replacement screen uses unchanged seed configurations and identical raw seeds. Burer–Monteiro is actually the strongest initial program here, so excluding it from this limited suite tests whether mutation can introduce a useful absent mechanism. Recovery and reference matching are hypotheses, never scripted outcomes. The genuine replacement run completed two Luna rounds in 24.003 seconds. Its eligible median improved from 975 to 1008; its best witness was 1031. No reference match occurred. Luna refined the two existing mechanisms rather than introducing Burer–Monteiro, even though all kernels remained available.</p>
-</section><section id="demo-informed"><h2>14. Demo 2: a researcher-selected suite</h2><div class="block">
-<p>Keep graph, seeds and caps fixed. Select <strong>Tabu Search, Breakout Local Search and rank-two Burer–Monteiro</strong>.</p>
-</div>
-<p>The initial medians come from complete numerical trials on common raw starts. The four full seed-program medians are 921, 975, 992 and 1012 for Simulated Annealing, Tabu Search, Breakout Local Search and Burer–Monteiro respectively. Including the stronger relaxation and escape mechanism improves this initial population. No kernel definition or hidden work cap changes between the two scenarios.</p>
-<p>More initial programs cost more numerical evaluations and alter the context supplied to Luna. Prior researcher design effort is also a real cost even though it is absent from the run clock. Compare complete-program fitness, best-witness quality, model calls and numerical time. A fluent proposal, an incomplete high-scoring trial or a favorable single run does not establish a general advantage. The genuine replacement run made two model calls in 66.589 seconds. Burer–Monteiro followed by longer Breakout Local Search produced witnesses up to 1060, but its trials were incomplete, so the best eligible median stayed 1012. The second response referred to an ineligible parent and validation stopped the run. Replay labels this source FAILED. This is evidence of the validation and completeness rules, not a successful reference-matching run.</p>
-</section><section id="demo-harder"><h2>15. Demo 3: a dense real-weight stress case</h2><div class="block">
-<p>Use <strong>100 vertices, 4950 real-valued signed edges</strong>, all four initial solvers and supplied reference <strong>402.5209</strong>, unproven.</p>
+<p>Follow the same procedure as demo one. Make the changed n visible in the request context and in the circle count of returned witnesses. A response that hard-codes the wrong number is invalid; the interpreter does not silently fix it. A source syntax error, duplicate, invalid packing or hard timeout remains part of the outcome and does not trigger an unannounced free retry.</p>
+<p>The class should see the proposal arrive, the function execute and the resulting geometry checked. Compare the child with parents evaluated from the same incoming packing bank. Inspect the actual next request rather than asserting that the model learned. Its weights remain unchanged; its context contains the search memory. If a recorded run is used, show its source identity and recorded timing, while making clear that no new request is being made.</p>
+</section><section id="packing-evidence-b"><h2>17. Name the framework we observed</h2><div class="question">
+<p><strong>Can you identify every Chapter 10 component in the live record?</strong></p>
 </div>
 <div class="block">
-<p>Eight numerical seconds per trial; three Luna calls maximum. Inspect composition, rejection, completeness and the actual surviving programs.</p>
-</div>
-</section><section id="harder-evidence"><h2>16. Reading solver evidence</h2><div class="question">
-<p><strong>Which record proves that a solver improved: the graph, the hypothesis or the completed trials?</strong></p>
-</div>
-<div class="block">
-<p>Require original-order integer signs and a matching graph hash. Recompute the objective from the original signed edges with two scoring paths.</p>
-</div>
-<div class="block">
-<p>Rank complete programs by median, minimum, fewer stages and stable genome ID. Retain a valid best witness separately, including one from a censored trial.</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝒜</mi><annotation encoding="application/x-tex">\mathcal A</annotation></semantics></math>: Python packing programs. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>f</mi><annotation encoding="application/x-tex">f</annotation></semantics></math>: verified current-bank trial fitness. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>: Luna’s code mutation. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>: complete-program selection. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding="application/x-tex">P_0</annotation></semantics></math>: checked initial programs.</p>
 </div>
 <div class="answer">
-<p><strong>Selection follows complete measured evidence.</strong> Preserve failures, timeouts and plateaus so students can inspect the full mechanism.</p>
+<p><strong>Context proposes; external evaluation measures; selection preserves.</strong> For your research problem, define these five choices before spending search budget.</p>
 </div>
-<p>A valid witness answers a feasibility-and-quality question for one execution. A complete candidate ranking answers how its program performed across the declared trials. Neither the model’s hypothesis nor an attractive partition drawing supplies fitness. Incomplete programs receive no eligible median/minimum ranking entry, even if all returned witnesses happen to match the reference.</p>
-<p>Changing work limits can trade quality against completion risk. The exact-exchange and comparison pages expose requested programs, measured execution time, actual token usage where supplied, invalid proposals and survivor decisions. Calls after a target has already been achieved are visible as teaching continuation. No extra activity or artificial solver motion is fabricated to fill the allotted demonstration window.</p>
-</section><section id="definition"><h2>17. The agentic evolutionary framework</h2><div class="question">
-<p><strong>Can we now name the five choices we implemented?</strong></p>
-</div>
-<div class="block">
-<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒜</mi><mo>,</mo><mi>f</mi><mo>,</mo><mi>μ</mi><mo>,</mo><mi>σ</mi><mo>,</mo><msub><mi>P</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\mathcal A,f,\mu,\sigma,P_0)</annotation></semantics></math>: artifact space, fitness, mutation, selection and initial population. Checkboxes choose <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>P</mi><mn>0</mn></msub><annotation encoding="application/x-tex">P_0</annotation></semantics></math>; they do not change <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝒜</mi><annotation encoding="application/x-tex">\mathcal A</annotation></semantics></math>.</p>
-</div>
-<div class="block">
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Q</mi><mi>t</mi></msub><mo>∼</mo><mi>μ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo>∣</mo><msub><mi>P</mi><mi>t</mi></msub><mo>,</mo><msub><mi>H</mi><mi>t</mi></msub><mo>,</mo><msub><mi>B</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>P</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>P</mi><mi>t</mi></msub><mo>∪</mo><mi>E</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>Q</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">Q_t\sim\mu(\cdot\mid P_t,H_t,B_t),\quad P_{t+1}=\sigma(P_t\cup E(Q_t)).</annotation></semantics></math></p>
-<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>t</mi></msub><annotation encoding="application/x-tex">H_t</annotation></semantics></math>: measured history. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding="application/x-tex">B_t</annotation></semantics></math>: remaining budget. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math>: validation and complete evaluation.</p>
-</div>
-<p>This instantiates Chapter 10, Definition 10.2, after the audience has encountered both ordinary evolutionary search and the LLM variant. The artifact space contains validated programs of one to three trusted stages. Its interpreter maps graph G and shared raw start z_j into signs under the seeded numerical protocol. Negative median cut turns maximization into the course’s lower-is-better fitness convention. The implementation supplements that primary scalar with minimum cut, stage count and stable identity tie-breaks.</p>
-<p>The chapter presents an artifact-to-artifact mutation operator. The operational notation here makes context, stochasticity and budget explicit: one tool-free call may refer to up to three selected parents and return at most two children. Q_t is the proposed set; E(Q_t) retains only admitted, completely evaluated children. Selected programs and their measured histories inform the next request. The model’s parameters remain fixed; learning during the run is carried by external context and population memory.</p>
-<p>Elitism preserves observed measured strategies under this protocol, not global optimality, diversity or unseen-instance quality. Initial population design and allowed artifact-space design are separate levers. In this tutorial all checked and unchecked trusted kernels remain available to mutation in every comparison.</p>
-</section><section id="transfer"><h2>18. Applying the framework to research</h2><div class="question">
-<p><strong>Which component would be hardest to supply honestly for your own research problem?</strong></p>
-</div>
-<div class="block">
-<p>Specify the artifact, automatic evaluator, mutation context, survivor rule and initial population. Declare budgets and a success criterion before running.</p>
-</div>
-<div class="block">
-<p>Use domain knowledge, compare strong numerical baselines, and test unseen instances before claiming generalization.</p>
-</div>
-<div class="answer">
-<p><strong>Build trustworthy measurement and inspectable data flow first.</strong> Then decide where a language-model mutator earns its cost.</p>
-</div>
-<p>Transfer the framework by replacing components deliberately. A scientific expression may be scored by prediction error and complexity; an experimental protocol still needs a definition of executable evidence. If no reliable automatic evaluation exists, measurement design is the next task. The algorithm guide and separate architecture document let a researcher inspect the system before adapting it.</p>
-<p>FunSearch supplies a prominent program-search example <span class="citation" data-cites="funsearch2024">(Romera-Paredes et al. 2024)</span>. AlphaEvolve operates at a broader algorithm-evolution scope <span class="citation" data-cites="alphaevolve2025">(AlphaEvolve team 2025)</span>, while OpenEvolve is an independent open-source implementation <span class="citation" data-cites="openevolve">(OpenEvolve contributors n.d.)</span>. This classroom interpreter evolves configurations and compositions of existing kernels. It demonstrates the mechanism without claiming new kernel synthesis, broad model superiority or global convergence. The teaching sequence follows Chapter 10, especially Definition 10.2, Figures 10.1–10.2 and its discussions of context, elitism, diversity and cost.</p>
-</section><h1 id="appendix">Appendix: architecture and API</h1><p>Optional implementation detail, outside the main presentation schedule.</p><section id="system-flow"><h2>Appendix A1. Server architecture</h2><div class="question">
-<p><strong>What coordinates the browser, numerical search and model?</strong></p>
+<p>Return to the tuple after both demos so its components are now concrete. Students should distinguish the evolving program, the numerical packing returned by execution, and fitness used to select programs. They should also be able to explain ancestry, inherited numerical starts, context feedback and evaluator independence.</p>
+<p>Chapter 10 supplies the conceptual structure. AlphaEvolve supplies the two published problem formulations and a real precedent for evolving search programs. Our bounded implementation supplies inspectable classroom evidence. The mathematical task matches the paper; the original engine, model ensemble, compute scale and reported optimized constructions are not reproduced. Those limits matter when explaining what the demonstration establishes.</p>
+</section><h1 id="appendix">Appendix: architecture and API</h1><p>Optional implementation detail, outside the main presentation schedule.</p><section id="system-flow"><h2>Appendix A1. One server coordinates the experiment</h2><div class="question">
+<p><strong>Who owns the population, execution and measurements?</strong></p>
 </div>
 <div class="block visual">
 <figure>
-<img src="/figures/architecture-overview.svg" style="width:100.0%" alt="Only the model worker contacts TAMU." />
-<figcaption aria-hidden="true">Only the model worker contacts TAMU.</figcaption>
+<img src="/figures/architecture-overview.svg" style="width:100.0%" alt="The server coordinates isolated execution and a separate provider worker." />
+<figcaption aria-hidden="true">The server coordinates isolated execution and a separate provider worker.</figcaption>
 </figure>
 </div>
+<div class="answer">
+<p><strong>The controller owns the loop.</strong> Only the model worker contacts TAMU; a separate isolated worker executes generated Python.</p>
+</div>
+<p>The same loopback server serves the presentation, demo, algorithm guide, exchange, notes and PDFs. Browser controls create a run, start numerical evaluations and explicitly release each model gate. Server-sent events expose actual progress and support reconnect without repeating work. The model worker alone receives the configured provider credential. The generated program runs inside Bubblewrap with read-only runtime code, no host network and no repository, run-log or private-home mounts. Geometry is checked again in the server outside that code.</p>
+</section><section id="api-context"><h2>Appendix A2. Request, context and source response</h2><div class="question">
+<p><strong>What crosses the model API boundary?</strong></p>
+</div>
 <div class="block">
-<p>One loopback server owns run state and workers, serves every teaching page, and streams events to the browser.</p>
+<p>Send the task, parent source, current-bank trial results, history and limits. Authorization is a separate HTTPS header.</p>
+</div>
+<div class="block">
+<p>Return JSON: <code>round_id</code>, <code>parent_ids</code>, <code>hypothesis</code>, <code>source</code>. The source defines <code>solve(initial, seed, steps)</code>.</p>
 </div>
 <div class="answer">
-<p><strong>The server orchestrates; workers execute; events explain.</strong> The API key stays in the server-side client.</p>
+<p><strong>A source string is executable code after admission.</strong> The hypothesis is an explanation, never the authoritative score.</p>
 </div>
-<p>The diagram shows responsibilities, not a collection of independently deployed services. HTTP requests use a standard-library ThreadingHTTPServer on 127.0.0.1:8766. Manager permits one active run. A Run thread owns its sequence of serial numerical trials and model calls. Numerical and model workers are bounded child subprocesses with PID/start-tick ownership. Original-edge checking happens both inside the numerical adapter and again in the controller; the scorer box is not a separate network service.</p>
-<p>The browser never directly calls TAMU. It creates a run, starts it, advances explicit round gates and subscribes to server-sent events. The same server hosts presentation, demo, guide, exact exchange, architecture and teaching notes. Switching views or reconnecting only reads existing state; it cannot start another paid request. The separate architecture document maps every route, module, message and trust boundary in more detail.</p>
-</section><section id="api-context"><h2>Appendix A2. The API request and context</h2><div class="question">
-<p><strong>What is actually sent when we press “Send parents to Luna”?</strong></p>
-</div>
-<div class="block">
-<pre class="text"><code>model: protected.gpt-5.6-luna
-messages:
-  system: instructions + response schema
-  user: serialized round context
-stream: true; tools: []</code></pre>
+<p>The TAMU transport uses protected.gpt-5.6-luna, public streaming and no tools. It sends system instructions plus a JSON response schema and serialized context. The actual body is displayed on the demo page; the key is never part of it. Source identity is normalized syntax plus executor version. An inherited proposal must name actual surviving parent IDs. An independent proposal must use an empty parent list. The controller rejects duplicates and malformed responses without silent retries.</p>
+</section><section id="api-return"><h2>Appendix A3. Execution, checking and feedback</h2><div class="question">
+<p><strong>When can a returned program become a survivor?</strong></p>
 </div>
 <div class="block">
-<p>Context: up to three genomes and trial evidence; failures and tried IDs; algorithm defaults, bounds and remaining budget. The worker adds HTTPS authorization separately.</p>
+<p>Validate source → isolated trials → verify every circle and pair → aggregate three complete scores → select within the current packing bank.</p>
+</div>
+<div class="block">
+<p>Keep exact request/response records, valid witnesses and failures. The next context carries the measured history.</p>
 </div>
 <div class="answer">
-<p><strong>The context carries measured search memory.</strong> Solution vectors, reference answers and the API key are excluded from the model’s context.</p>
+<p><strong>Execution turns a proposal into evidence.</strong> Live LLM, numerical-only and recorded replay remain distinct throughout.</p>
 </div>
-<p>At an explicit round gate, Run.propose selects the measured survivors and constructs a JSON context through proposals.context. Parent records contain normalized stages, median, minimum and three trial records, including elapsed numerical time, stage counters and completeness. The context also includes attempted genome identities, actual validation or incomplete-trial failures, initial solver selection, graph size and signedness, the raw-start rule, allowed defaults, parameter bounds, stage work caps and remaining wall time.</p>
-<p>The model receives two Chat Completions messages: a system message with instructions plus the required JSON schema, and a user message containing that context. The TAMU client sends a streamed HTTPS POST to https://chat-api.tamu.ai/api/chat/completions with the protected Luna model, max_completion_tokens=2400, low reasoning effort and no tools. Authorization is a server-side header, not part of the displayed body. The proposer is not given the assignment vectors, stored numerical preset, replay, benchmark name or reference target. The exact-exchange page displays the actual recorded request body and public return, rather than a reconstructed example.</p>
-</section><section id="api-return"><h2>Appendix A3. Response and loop closure</h2><div class="question">
-<p><strong>When does streamed text become a candidate that can survive?</strong></p>
-</div>
-<div class="block">
-<p>Public chunks → completed JSON → known parent IDs → schema, bounds and duplicate checks → admitted stage program.</p>
-</div>
-<div class="block">
-<p>Owned numerical trials → independent original-edge scores → complete-candidate ranking → new survivors and failure feedback for the next request.</p>
-</div>
-<div class="answer">
-<p><strong>Text is a proposal until validated and measured.</strong> Server-sent events expose progress; selection supplies the next mutation context.</p>
-</div>
-<p>model_worker.py projects public content and completion metadata from the provider stream, excluding hidden reasoning fields and authorization. A watcher emits actual public deltas to the browser. A completed response must be valid JSON with the required round ID, known parent IDs, hypothesis, mutation category, up to two children and any plateau reason. Each child is checked independently; invalid parameters and duplicate normalized genomes are rejected without a silent fix or free retry.</p>
-<p>Admitted children run through backend.py in owned processes. The controller checks their graph hash and independently rescored witnesses. Incomplete candidates cannot enter the survivor ranking, even when their best witness is valid. Each event is appended to an ignored run log and streamed by SSE with a sequence number. Reconnection uses an event cursor and never launches paid work. A genuine recorded replay reproduces these events, keeps a persistent replay label, and reveals its public response only when the recorded timeline reaches that response.</p>
+<p>Each numerical trial has an eight-second hard wall cap, including its isolated startup. Each model request has a 35-second cap, and the run has a 240-second deadline with bounded owned-process cleanup. Stop and Reset cancel the owned worker tree, not unrelated processes. Missing isolation or dependencies blocks execution instead of falling back to unsafe or fabricated work.</p>
+<p>The numerical-only mode evaluates disclosed initial source programs without contacting Luna. Live mode performs real requests only at explicit gates. Replay is registered only from genuine provider records with matching task, source identities, geometry and transcript provenance. It reproduces recorded events, and reveals responses only as its timeline reaches them. Replay is not a new measured result under a changed executor.</p>
 </section></main></body></html>

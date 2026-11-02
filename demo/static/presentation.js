@@ -17,14 +17,15 @@ $('frames').value=String(frameIndex);$('previous').disabled=frameIndex===start&&
 $('appendixNav').textContent=f.appendix?'← Main presentation':'Appendix →';
 const seconds=deck.frames.slice(start,frameIndex).reduce((s,x)=>s+x.seconds,0);const stamp=n=>`${Math.floor(n/60)}:${String(n%60).padStart(2,'0')}`;$('pace').textContent=`${f.appendix?'Optional':'Plan'} ${stamp(seconds)}–${stamp(seconds+f.seconds)}`;
 $('progress').firstElementChild.style.width=`${100*(before+step+1)/total}%`;
-history.replaceState(null,'',`${location.pathname}#${f.id}/${step}`);sessionStorage.setItem('maxcut-presentation',JSON.stringify({id:f.id,step}));$('openDemo').hidden=!f.id.startsWith('demo-');fit();}
+history.replaceState(null,'',`${location.pathname}#${f.id}/${step}`);sessionStorage.setItem('circle-presentation',JSON.stringify({id:f.id,step}));$('openDemo').hidden=!f.id.startsWith('demo-');fit();}
 function advance(delta){const old=frameIndex;if(delta>0){if(step<deck.frames[frameIndex].reveals-1)step++;else if(frameIndex<sectionEnd()){frameIndex++;step=0;}}else if(step>0)step--;else if(frameIndex>sectionStart()){frameIndex--;step=deck.frames[frameIndex].reveals-1;}render(old!==frameIndex);record('reveal');}
 function jumpTo(index,reveal=0){if(!deck.frames[frameIndex].appendix&&deck.frames[index].appendix)mainReturn={index:frameIndex,reveal:step};frameIndex=index;step=reveal;render();record('jump');}
 function showView(next){view=next;$('presentView').hidden=next!=='present';$('demoView').hidden=next!=='demo';$('presentTab').classList.toggle('selected',next==='present');$('demoTab').classList.toggle('selected',next==='demo');$('returnToFrame').textContent=`← Return to ${frameLabel(frameIndex)}: ${deck.frames[frameIndex].title}`;fit();record('view');}
 $('next').addEventListener('click',()=>advance(1));$('previous').addEventListener('click',()=>advance(-1));$('frames').addEventListener('change',()=>jumpTo(Number($('frames').value)));
 $('appendixNav').addEventListener('click',()=>{if(deck.frames[frameIndex].appendix){const back=mainReturn||{index:mainCount()-1,reveal:deck.frames[mainCount()-1].reveals-1};jumpTo(back.index,back.reveal);}else jumpTo(mainCount());});
-$('demoTab').addEventListener('click',()=>showView('demo'));
-$('openDemo').addEventListener('click',()=>{const scenario={'demo-limited':'contrast_limited','demo-informed':'contrast_informed','demo-harder':'harder'}[deck.frames[frameIndex].id];if(scenario)$('demoFrame').contentWindow.postMessage({type:'stage-demo-preset',scenario},location.origin);showView('demo');});
+function demoPage(path,ready){const frame=$('demoFrame');if(frame.getAttribute('src')!==path){frame.onload=()=>{frame.onload=null;ready?.();};frame.src=path;frame.title='Circle-packing program evolution';}else ready?.();showView('demo');}
+$('demoTab').addEventListener('click',()=>demoPage('/packing'));
+$('openDemo').addEventListener('click',()=>{const n=deck.frames[frameIndex].id==='demo-circle-b'?32:26;demoPage('/packing',()=>$('demoFrame').contentWindow.postMessage({type:'stage-packing-preset',n},location.origin));});
 for(const id of ['presentTab','returnToFrame'])$(id).addEventListener('click',()=>showView('present'));
 $('fullscreen').addEventListener('click',()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen());$('help').addEventListener('click',()=>$('helpDialog').showModal());$('closeHelp').addEventListener('click',()=>$('helpDialog').close());$('motion').addEventListener('change',()=>document.body.classList.toggle('motion-disabled',!$('motion').checked));
 document.addEventListener('keydown',event=>{if(event.target.closest('input,select,textarea')||$('helpDialog').open||(event.target.closest('button')&&[' ','Enter'].includes(event.key)))return;if(event.key.toLowerCase()==='d'){event.preventDefault();showView(view==='present'?'demo':'present');return;}if(view!=='present')return;if(['ArrowRight',' ','PageDown'].includes(event.key)){event.preventDefault();advance(1);}if(['ArrowLeft','PageUp'].includes(event.key)){event.preventDefault();advance(-1);}if(event.key==='Home'||event.key==='End'){event.preventDefault();const target=event.key==='Home'?sectionStart():sectionEnd();jumpTo(target,event.key==='Home'?0:deck.frames[target].reveals-1);}if(event.key.toLowerCase()==='f')$('fullscreen').click();});
@@ -91,7 +92,7 @@ async function checkSource(){
 (async()=>{
   try{
     deck=await readDeck();populateFrames();
-    if(!location.hash){try{const saved=JSON.parse(sessionStorage.getItem('maxcut-presentation'));if(saved){const n=deck.frames.findIndex(f=>f.id===saved.id);if(n>=0){frameIndex=n;step=Math.max(0,Math.min(saved.step,deck.frames[n].reveals-1));}}}catch{}}
+    if(!location.hash){try{const saved=JSON.parse(sessionStorage.getItem('circle-presentation'));if(saved){const n=deck.frames.findIndex(f=>f.id===saved.id);if(n>=0){frameIndex=n;step=Math.max(0,Math.min(saved.step,deck.frames[n].reveals-1));}}}catch{}}
     else locationState();
     render();checkSource();setInterval(checkSource,2000);
   }catch(error){showSourceNotice('Presentation unavailable. Check the server terminal and saved prose.',true);}

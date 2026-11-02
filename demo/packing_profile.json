@@ -1,0 +1,17 @@
+{
+  "task": "circle_packing",
+  "circle_counts": [26, 32],
+  "trial_seeds": [3, 4, 5],
+  "requested_steps": 80,
+  "trial_seconds": 8,
+  "population_size": 3,
+  "max_model_calls": 3,
+  "model_call_timeout_seconds": 35,
+  "max_rounds": 3,
+  "total_seconds": 240,
+  "stop_and_save_by_seconds": 250,
+  "mode_default": "numerical",
+  "starts_default": "inherited",
+  "auto_publish": false,
+  "auto_git": false
+}

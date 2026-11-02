@@ -1,0 +1,46 @@
+{
+  "offline_regression_tests": 54,
+  "reference_regression_tests": 14,
+  "vendor_files_verified": 133,
+  "real_model_calls": 6,
+  "remaining_allowance": 0,
+  "main_frames": 17,
+  "appendix_frames": 3,
+  "main_reveals": 61,
+  "total_reveals": 72,
+  "chapter_frame_counts": [
+    2,
+    3,
+    2,
+    1,
+    2
+  ],
+  "main_planned_seconds": 1205,
+  "reserve_seconds": 45,
+  "appendix_seconds": 155,
+  "browser_frames_checked": 20,
+  "browser_frame_overflows": 0,
+  "pdf_handout_pages": 20,
+  "pdf_notes_pages": 12,
+  "pdf_architecture_pages": 4,
+  "genuine_replay": {
+    "run_id": "c490fd0490424e31a30ccb99d8a40607",
+    "status": "finished",
+    "model_calls": 0,
+    "source": "8e4ad862eb9e4a64afc01e888551f894",
+    "elapsed_seconds": 109.58508631004952
+  },
+  "mode": "mixed verification; live rehearsal results are in circle_packing_rehearsal.json",
+  "limitations": [
+    "Presenter aloud timing remains a human check.",
+    "No new real-provider interruption request was spent; owned-source and local transport cancellation were tested.",
+    "Not a reproduction of the unpublished engine or reported record."
+  ],
+  "post_configuration_focused_tests": 7,
+  "active_server_port": 8766,
+  "temporary_server_stopped": true,
+  "public_files_scanned": 363,
+  "public_scan_findings": 0,
+  "private_script_ignored": true,
+  "final_launch_verified": true
+}

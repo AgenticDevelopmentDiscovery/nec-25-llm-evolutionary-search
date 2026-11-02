@@ -1,113 +1,113 @@
-# Verified local teaching status — October 28, 2026
+# Circle-packing classroom readiness — November 2, 2026
 
-Open **http://127.0.0.1:8766/** on the computer running the server. Start it from
-the repository root with `python demo/server.py --port 8766 --rounds 3` and keep
-that terminal running. This is loopback access, not a publicly deployed server.
-Port 8765 belongs to another application and has been left alone.
+The active tutorial, server teaching pages, setup, notes and PDF exports now use
+circle packing. Earlier sources and records are preserved as history, outside
+the active presentation. No commit, push, deployment or reviewer panel was run.
 
-## Current retained-stage correction
+## What was actually verified
 
-New executions use `retained-bm-refinement-v1`: a retained Burer–Monteiro stage
-after stage one embeds the incoming partition, applies fixed seeded angular
-perturbations, and optimizes/rounds while retaining the better input or output.
-Initial and fresh Burer–Monteiro behavior is unchanged. Existing recordings keep
-their original semantics; no new live Luna rehearsal was performed for this fix.
+- 54 offline regression tests passed, including six packing contract/isolation/
+  numerical tests and the current HTTP route/token/reconnect check.
+- 14 preserved reference regression tests passed; all 133 manifest files match.
+- Seven focused packing/HTTP checks passed again after configuration separation.
+- Both N=26 and N=32 execute the three disclosed initial Python programs with
+  complete, distinct measured fitness on common seeded starts.
+- Default inherited-bank rounds re-evaluate parents and compare the child on
+  exactly the same frozen bank. All six real rounds were checked for this.
+- The actual isolated source worker passed private-file/environment isolation
+  checks and owned-process Stop. Local provider-transport cancellation is covered
+  by regression tests. No new real-provider interruption request was spent.
+- All 20 browser frames were advanced through their reveals and fit 1600×900;
+  final text contrast and the demo/return transition were inspected.
+- Browser frames and notes, 20-page final-state handout, 72-slide reveal PDF,
+  13-page teaching document, four-page architecture and static site were built.
+  Rendered handout/document/architecture pages were visually inspected.
+- A complete genuine 26-circle replay finished in 109.585 seconds with zero new
+  model calls. Provider/transcript, source identities, geometry and fitness
+  summaries are verified before a source can register as a replay.
+- The current student numerical rehearsal command completed N=32 in 4.920 seconds
+  with zero model calls. Actual durations vary by machine and workload.
+- The public-file/history scanner checked 370 prospective files and five commits with zero findings. No key was displayed.
 
-All 40 offline regression tests passed, including five handoff/retention/deadline
-checks. Twelve bounded numerical worker trials on the 1,000-vertex graph with
-seeds 3/4/5 completed and independently rescored: original Tabu Search median 975,
-original Burer–Monteiro median 1012, Burer–Monteiro → Tabu Search median 1033,
-and Tabu Search → Burer–Monteiro median 1027. These fixed-seed checks establish
-operation of the handoff, not general superiority. The isolated browser check
-showed incoming/retained scores for all three warm refinements and zero model
-calls. See `evidence/bm_handoff_verification.json`. All 133 vendor hashes match.
+See evidence/circle_packing_verification.json and circle_packing_rehearsal.json
+for structured summaries. Raw source-run files and exact provider exchanges stay
+under ignored runs/packing/ and are available through the local server.
 
-## Current teaching materials
+## Actual live rehearsals — six calls spent, zero remaining
 
-- 19 main frames / 73 reveals: title, evolutionary algorithms, LLM mutation,
-  solver mechanisms, three demos and the formal tuple. Three architecture/API
-  frames / 12 reveals follow in an optional appendix.
-- 21:40 main content plus 0:45 reserve; optional appendix adds 2:35. Demo windows are 3, 3 and 4 minutes, including
-  discussion and inspection. No artificial computation fills those windows.
-- Aggie Maroon, dark body/code text on white, white navigation/title text and
-  legible disabled controls. All 85 rendered states passed fit, image and answer
-  overlap checks. The measured minimum text contrast was 7.68:1.
-- One server hosts presentation, mounted demo, algorithm examples, exact exchange,
-  architecture, notes, a 22-page handout and 85-page optional reveal PDF.
-- The separate architecture PDF explains module ownership, routes, request
-  construction, actual context, validation, scoring, selection and cancellation.
+| Case | Initial best feasible sum | Final best feasible sum | Calls | Elapsed |
+| --- | ---: | ---: | ---: | ---: |
+| 26 circles | 2.10704211 | 2.21141037 | 3 | 109.463 s |
+| 32 circles | 2.56745365 | 2.64347602 | 3 | 134.484 s |
 
-## Replacement comparison and actual evidence
+Each run completed 45 numerical trials, including initial evaluation and parent
+re-evaluation on inherited banks. The model was TAMU protected.gpt-5.6-luna.
+All six calls returned genuine admitted source and all child trials completed.
+The 26-circle third child was not selected; its current-bank median was below
+the three-program cutoff. This is a real unsuccessful mutation, not a failure
+hidden from the demonstration. The 32-circle final child entered the population,
+while another earlier child’s continuation found the best individual packing.
 
-The default is `rand_pm_1000_s23.txt`: 1000 vertices, 5043 signed edges, reference
-1098 (unproven). It replaces the easy torus's ceiling effect. Explicitly normalized
-classroom seed programs, common raw starts and seeds 3/4/5 give medians:
+These are construction-progress numbers. Because the incoming bank changes,
+they do not isolate an improvement in algorithm quality on fixed starts. Current
+program medians are comparable only within their bank. The mathematical problems
+match AlphaEvolve Appendix B.12; this small controller, initial methods, Luna
+model and budget do not reproduce its unpublished engine or reported records.
+No optimality or broad model-superiority claim is made.
 
-| Solver | Median |
-| --- | ---: |
-| Simulated Annealing | 921 |
-| Tabu Search | 975 |
-| Breakout Local Search | 992 |
-| Rank-two Burer–Monteiro | 1012 |
+## Presentation and remaining presenter actions
 
-Burer–Monteiro is strongest here. The earlier BM-only torus control was not a
-universal initialization recommendation. The limited preset now checks Tabu
-Search and Simulated Annealing. The informed preset checks Tabu Search, Breakout
-Local Search and Burer–Monteiro. All four kernels remain available to Luna.
+Chapter 10.1–10.5 use exactly 2/3/2/1/2 conceptual frames, plus a separate title
+and six frames for two demo sequences: 17 main frames / 61 main reveals.
+Three optional architecture/API appendix frames add 11 reveals, for 72 total.
+Main plan: 20:35 + 0:45 reserve = 21:20. Optional appendix adds 2:35.
 
-| Genuine source | Initial / final eligible median | Best witness | Calls | Time | Outcome |
-| --- | --- | ---: | ---: | ---: | --- |
-| Limited: `674ece0b…` | 975 / 1008 | 1031 | 2 | 24.003s | Finished, reference not reached |
-| Informed: `52948263…` | 1012 / 1012 | 1060 | 2 | 66.589s | Failed after ineligible parent reference |
-| Dense: `166aa16a…` | 402.3824 / 402.5209 | 402.5209 | 3 | 56.602s | Reference matched after one call |
+Actual aloud delivery timing must still be measured by the presenter. The browser
+Rehearse aloud clock records frame/demo timings without making model requests.
+A private script is available under ignored rehearsal/; voice/video generation
+remains deferred. An old private video is not served as the current tutorial.
 
-The informed run's high-scoring children were incomplete and could not rank. Its
-second public response named an ineligible parent; validation stopped the run.
-The stronger start did not establish a faster or more effective full search.
-Neither replacement run reached 1098. Do not present an inevitable efficient-win
-narrative. Failed replay sources remain visibly FAILED; transport-only failures
-cannot qualify as genuine recordings.
+The six-call allowance is exhausted. A future agent must not rerun either live
+rehearsal merely because the key is configured. Numerical-only verification and
+recorded replay need no extra model allowance.
 
-The dense real-weight case has 100 vertices and 4950 edges, reference 402.5209
-(unproven). It matched all three trials at 16.091s after one call. Similar edge
-counts with different density, degree and weights make this a separate transfer
-test; no universal difficulty ordering is asserted.
+## Access
 
-## Budgets, provenance and verification
+The updated server is running at http://127.0.0.1:8766/. Use /packing for the
+demo, /algorithms for mechanisms, /architecture for data flow and /notes for notes.
+The identified previous idle backend was stopped before this server took its port;
+no active run or unrelated listener was terminated. The temporary test server on 8767 has been stopped. Source and genuine records
+remain available on the current server.
 
-All nine original revision calls and six additional attempts are used. Two of the
-six failed at sandbox DNS before provider contact and are preserved. Four real
-replacement calls then completed. No unused allowance remains; there are no
-silent retries, numerical fallbacks or altered recorded responses.
+For a new terminal: source demo/.venv/bin/activate; python demo/server.py --port 8766.
+Use --check for zero-request preflight. Saved prose previews automatically;
+Python backend changes require restarting your identified server.
 
-The server permits up to three calls, 35s each, two children and three stages;
-8s per current numerical trial, 240s run deadline and cleanup by 250s. Guided gates
-consume that deadline. The older torus keeps its own 1.5s protocol and records.
+## Teaching refinements after the scope clarification
 
-The earlier approved real-provider Stop test remains valid: source `7d038c3c…`,
-real public stream opened, owned client stopped with exit -15 at 9.952s, no
-completed result and no remaining owned-process marker. This does not prove
-immediate remote billing cancellation.
+The user reports that the instructor suggested circle packing and that the old
+demo prescription is flexible. No lineage survey is required. The agreed
+2/3/2/1/2 conceptual frames, two packing demos and three calls per demo remain.
 
-Prior core offline suite: 29 tests passed. All 14 preserved Burer–Monteiro tests and
-all 133 source hashes passed. Prospective public files and existing history were
-scanned without credential findings. Updated PDFs were rendered and visually
-reviewed; architecture and notes passed text-margin checks. Browser checks cover
-preset counts 2/3/4, shared initial results, genuine failed replay, exact return
-frame, read-only exchange and contrast. The prior core checks are in `evidence/replacement25-verification.json`; current appendix/navigation checks are in `evidence/appendix_revision_verification.json`.
+Existing frames now include a flawed-scorer counterexample, MAP-Elites/novelty
+as extensions, and a worked quality–time trade-off. The guide includes a native
+reveal of the scorer result and separately recorded validation of frozen source
+on previously unused seeds 101–103. All 12 numerical validation trials completed:
 
-Raw witnesses, transcripts and practice aids stay ignored. No commit, push,
-deployment, assignment-solution import or reviewer panel was performed. Old
-critique rounds and original vendor files remain unchanged.
+| Case | Initial baseline median | Surviving new program median |
+| --- | ---: | ---: |
+| 26 circles | 2.136466 | 2.145302 |
+| 32 circles | 2.567394 | 2.581377 |
 
-## Remaining presenter and voice actions
+Those checks used zero model calls and common fixed raw starts. They are not
+new live evolution, not the inherited-bank curve and not broad generalization
+evidence. Source choice was frozen before scores were inspected. Reports and
+source hashes are in evidence/packing_heldout_validation.json and
+evidence/packing_validation_sources.json. `validate_frozen_programs.py` reproduces
+the checks from the included frozen source without a key.
 
-The **human aloud rehearsal** is still a presenter action. Use Rehearse aloud,
-teach the whole sequence and save its timing JSON under ignored demo/rehearsal/.
-A clock or generated voice cannot certify the presenter's delivery.
-
-The private script is complete at `/rehearsal`, with a Markdown download at
-`/rehearsal-script`. It includes 85 reveal segments, question pauses, exact view
-transitions, actual replay outcomes and adaptable live wording. Voice and video
-generation are **deferred at the user's request**; no OpenAI speech request was
-made. Earlier 15-minute private aids remain historical and unchanged.
+The three changed browser frames fit 1600×900 and their PDF pages were rendered
+and inspected. Current exports retain 17 main / 3 appendix frames and 72 reveal
+slides. Main timing including reserve is 21:20; the optional appendix makes 23:55.
+The production survivor rule, model transport and original six genuine requests are
+unchanged. The original six calls remain spent, with zero remaining allowance.

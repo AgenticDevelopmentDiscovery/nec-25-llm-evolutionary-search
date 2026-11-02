@@ -14,7 +14,7 @@ import urllib.request
 import urllib.error
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from server import DemoServer
+from legacy_server import DemoServer
 from controller import Manager
 from evolution_common import owned_process
 from portfolio_external import process_tick, process_live
@@ -123,7 +123,7 @@ class TeachingRouteTests(HTTPTests):
         self.assertEqual(self.request('/api/instance?instance=../../secret')[0],400)
 
     def test_duplicate_launch_reuses_same_repository_without_traceback(self):
-        result=subprocess.run([sys.executable,str(Path(__file__).resolve().parents[1]/'server.py'),
+        result=subprocess.run([sys.executable,str(Path(__file__).resolve().parents[1]/'legacy_server.py'),
                                '--port',str(self.server.server_address[1])],capture_output=True,text=True,timeout=10)
         self.assertEqual(result.returncode,0,result.stderr)
         self.assertIn('Already running:',result.stdout)
@@ -132,8 +132,8 @@ class TeachingRouteTests(HTTPTests):
         self.assertEqual(self.manager.runs,{})
 
     def test_other_workspace_is_not_reused_or_stopped(self):
-        with patch('server.WORKSPACE','different-repository'):
-            result=subprocess.run([sys.executable,str(Path(__file__).resolve().parents[1]/'server.py'),
+        with patch('legacy_server.WORKSPACE','different-repository'):
+            result=subprocess.run([sys.executable,str(Path(__file__).resolve().parents[1]/'legacy_server.py'),
                                    '--port',str(self.server.server_address[1])],capture_output=True,text=True,timeout=10)
         self.assertEqual(result.returncode,2)
         self.assertIn('No process was stopped',result.stderr)

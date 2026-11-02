@@ -1,0 +1,282 @@
+{
+  "kind": "genuine bounded circle-packing rehearsals",
+  "authorized_model_calls": 6,
+  "spent_model_calls": 6,
+  "runs": [
+    {
+      "mode": "live",
+      "provider": "tamu_chat_completions",
+      "model": "protected.gpt-5.6-luna",
+      "run_id": "8e4ad862eb9e4a64afc01e888551f894",
+      "n": 26,
+      "task_version": "circle-source-v2",
+      "status": "finished",
+      "elapsed_seconds": 109.46294692496303,
+      "model_calls": 3,
+      "initialization_best_sum": 2.1070421118054123,
+      "best_verified_sum": 2.211410369546541,
+      "source_sha256": "fa3ea5b111f178722e6662e00f6e5dfe0b0f8f5ab15f2421101be8bbe03f8072",
+      "trial_seeds": [
+        3,
+        4,
+        5
+      ],
+      "initialization": [
+        {
+          "name": "Perturbed grid constructor",
+          "id": "52aceba788bd74c7",
+          "median": 2.0366278066229087,
+          "minimum": 2.023631890755742,
+          "bank_id": "1caf33a35e15"
+        },
+        {
+          "name": "Greedy local center search",
+          "id": "fb222085fbc31e19",
+          "median": 2.0950150055771504,
+          "minimum": 2.0947858611294454,
+          "bank_id": "1caf33a35e15"
+        },
+        {
+          "name": "Simulated annealing of centers",
+          "id": "88274025bdd39724",
+          "median": 2.08415688762444,
+          "minimum": 2.041041357052941,
+          "bank_id": "1caf33a35e15"
+        }
+      ],
+      "rounds": [
+        {
+          "round_id": 1,
+          "id": "692f84a9f165aa3b",
+          "parent_ids": [
+            "fb222085fbc31e19"
+          ],
+          "bank_id": "371092c6bc88",
+          "hypothesis": "Retain the strong monotone coordinate-ascent behavior while using a broader early search and finer late perturbations; occasionally move two centers together to escape grid-local configurations, but always return the best fixed-center LP solution found.",
+          "complete": true,
+          "median": 2.1307555709562647,
+          "minimum": 2.1202540636018368,
+          "selected_final": true
+        },
+        {
+          "round_id": 2,
+          "id": "12ff36c49d502a18",
+          "parent_ids": [
+            "692f84a9f165aa3b"
+          ],
+          "bank_id": "6720e6c7a348",
+          "hypothesis": "A bounded simulated-annealing walk with mostly single-center moves, occasional pair moves, and a slower reduction in displacement should escape local arrangements while preserving the strong monotone-search behavior of the best parent.",
+          "complete": true,
+          "median": 2.15716720618863,
+          "minimum": 2.1344400118072278,
+          "selected_final": true
+        },
+        {
+          "round_id": 3,
+          "id": "9a875a9fcfee8e86",
+          "parent_ids": [
+            "692f84a9f165aa3b",
+            "12ff36c49d502a18"
+          ],
+          "bank_id": "f01cbb96b09d",
+          "hypothesis": "Combine the stronger two-center exploration with annealed acceptance and occasional three-center moves, while retaining the best fixed-center LP witness to improve robustness across seeds.",
+          "complete": true,
+          "median": 2.1757825850907655,
+          "minimum": 2.151923029740979,
+          "selected_final": false
+        }
+      ],
+      "final_population": [
+        {
+          "id": "692f84a9f165aa3b",
+          "name": "Luna child 1 (bank 2) (bank 3)",
+          "bank_id": "f01cbb96b09d",
+          "median": 2.1999284007799123,
+          "minimum": 2.1541203109384788
+        },
+        {
+          "id": "fb222085fbc31e19",
+          "name": "Greedy local center search (bank 1) (bank 2) (bank 3)",
+          "bank_id": "f01cbb96b09d",
+          "median": 2.1888562983323157,
+          "minimum": 2.14876143663179
+        },
+        {
+          "id": "12ff36c49d502a18",
+          "name": "Luna child 2 (bank 3)",
+          "bank_id": "f01cbb96b09d",
+          "median": 2.1774266543714202,
+          "minimum": 2.14765891198201
+        }
+      ],
+      "request_usage": [
+        {
+          "round_id": 1,
+          "usage": {
+            "input_tokens": 2375,
+            "output_tokens": 682,
+            "total_tokens": 3057
+          }
+        },
+        {
+          "round_id": 2,
+          "usage": {
+            "input_tokens": 2957,
+            "output_tokens": 754,
+            "total_tokens": 3711
+          }
+        },
+        {
+          "round_id": 3,
+          "usage": {
+            "input_tokens": 3423,
+            "output_tokens": 729,
+            "total_tokens": 4152
+          }
+        }
+      ],
+      "numerical_seconds": 31.9569177236408,
+      "complete_numerical_trials": 45,
+      "failures": [],
+      "scope": "A short source-evolution classroom run with inherited packing banks; not fixed-bank algorithm improvement, a record, or a general superiority claim."
+    },
+    {
+      "mode": "live",
+      "provider": "tamu_chat_completions",
+      "model": "protected.gpt-5.6-luna",
+      "run_id": "d59faeb94cce415f8677b0c7ea39190d",
+      "n": 32,
+      "task_version": "circle-source-v2",
+      "status": "finished",
+      "elapsed_seconds": 134.48361032200046,
+      "model_calls": 3,
+      "initialization_best_sum": 2.567453645419545,
+      "best_verified_sum": 2.6434760244737308,
+      "source_sha256": "d6c10ff7f3a97c862e1b3bed8ef58902c7b7e723817e2790c6efc85607697511",
+      "trial_seeds": [
+        3,
+        4,
+        5
+      ],
+      "initialization": [
+        {
+          "name": "Perturbed grid constructor",
+          "id": "52aceba788bd74c7",
+          "median": 2.512425829855218,
+          "minimum": 2.473309154649587,
+          "bank_id": "2b73ad923927"
+        },
+        {
+          "name": "Greedy local center search",
+          "id": "fb222085fbc31e19",
+          "median": 2.558285474613894,
+          "minimum": 2.5490290311349417,
+          "bank_id": "2b73ad923927"
+        },
+        {
+          "name": "Simulated annealing of centers",
+          "id": "88274025bdd39724",
+          "median": 2.513814708240044,
+          "minimum": 2.4878628981520765,
+          "bank_id": "2b73ad923927"
+        }
+      ],
+      "rounds": [
+        {
+          "round_id": 1,
+          "id": "c275cc4023da7be5",
+          "parent_ids": [
+            "fb222085fbc31e19"
+          ],
+          "bank_id": "76011442e632",
+          "hypothesis": "A reheated coordinate-wise stochastic search with occasional two-center moves should preserve the strong monotone baseline while escaping local arrangements more reliably across the limited 80 radius solves.",
+          "complete": true,
+          "median": 2.5711975163243928,
+          "minimum": 2.5593836420332363,
+          "selected_final": false
+        },
+        {
+          "round_id": 2,
+          "id": "322a2bde034f929b",
+          "parent_ids": [
+            "fb222085fbc31e19",
+            "c275cc4023da7be5"
+          ],
+          "bank_id": "0c472d3e57c2",
+          "hypothesis": "A two-candidate adaptive annealing search should improve robustness: use mostly single-center moves for fine optimization, occasional coordinated pair moves to escape local arrangements, and preserve the best LP-evaluated geometry independently of the annealed incumbent.",
+          "complete": true,
+          "median": 2.605284466942833,
+          "minimum": 2.57601175060879,
+          "selected_final": true
+        },
+        {
+          "round_id": 3,
+          "id": "f959b5f7af459a2d",
+          "parent_ids": [
+            "322a2bde034f929b",
+            "fb222085fbc31e19"
+          ],
+          "bank_id": "30dc13ea7c4f",
+          "hypothesis": "A two-scale annealed search with mostly single-center moves, occasional coordinated moves, and explicit retention of the best fixed-center LP solution should improve robustness while preserving useful exploratory escapes.",
+          "complete": true,
+          "median": 2.614389538095057,
+          "minimum": 2.6060422729548183,
+          "selected_final": true
+        }
+      ],
+      "final_population": [
+        {
+          "id": "fb222085fbc31e19",
+          "name": "Greedy local center search (bank 1) (bank 2) (bank 3)",
+          "bank_id": "30dc13ea7c4f",
+          "median": 2.6188361683229515,
+          "minimum": 2.5844246553570795
+        },
+        {
+          "id": "322a2bde034f929b",
+          "name": "Luna child 2 (bank 3)",
+          "bank_id": "30dc13ea7c4f",
+          "median": 2.6164184841285834,
+          "minimum": 2.591059277174203
+        },
+        {
+          "id": "f959b5f7af459a2d",
+          "name": "Luna child 3",
+          "bank_id": "30dc13ea7c4f",
+          "median": 2.614389538095057,
+          "minimum": 2.6060422729548183
+        }
+      ],
+      "request_usage": [
+        {
+          "round_id": 1,
+          "usage": {
+            "input_tokens": 2360,
+            "output_tokens": 602,
+            "total_tokens": 2962
+          }
+        },
+        {
+          "round_id": 2,
+          "usage": {
+            "input_tokens": 2735,
+            "output_tokens": 748,
+            "total_tokens": 3483
+          }
+        },
+        {
+          "round_id": 3,
+          "usage": {
+            "input_tokens": 3442,
+            "output_tokens": 713,
+            "total_tokens": 4155
+          }
+        }
+      ],
+      "numerical_seconds": 31.77667724667117,
+      "complete_numerical_trials": 45,
+      "failures": [],
+      "scope": "A short source-evolution classroom run with inherited packing banks; not fixed-bank algorithm improvement, a record, or a general superiority claim."
+    }
+  ]
+}

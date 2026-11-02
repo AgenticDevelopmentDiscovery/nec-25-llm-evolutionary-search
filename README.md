@@ -1,119 +1,36 @@
-## Local classroom presentation
-
-Start with **[Student and agent setup](STUDENT_SETUP.md)** for clone commands,
-dependencies, private TAMU keys, numerical-only verification, and an agent prompt.
-
-For an already configured checkout, activate `demo/.venv` and run
-`python demo/server.py --port 8766 --rounds 3`, then open
-[the presentation hub](http://127.0.0.1:8766/) on this computer. Keep the terminal
-running. The same server hosts the solver demo, algorithm examples, exact Luna
-exchange, detailed notes and derived handout. Student key setup is in
-[demo/README.md](demo/README.md); only the blank environment template is public.
-
 # Tutorial 25: LLM-driven evolutionary search
 
-The current 20–25-minute tutorial uses a signed Max-Cut strategy-search demo.
-See [demo/README.md](demo/README.md) for the local server, private API-key setup,
-mode provenance and checks, and [demo/READINESS.md](demo/READINESS.md) for verified status.
-Students copy the blank `demo/.env.example` to ignored `demo/.env` and add their own key locally.
-No credential belongs in this public repository.
+A 20–25-minute Chapter 10 tutorial with two live circle-packing demonstrations:
+26 and 32 variable-radius circles in the unit square, maximizing summed radii,
+as in AlphaEvolve Appendix B.12. Luna evolves actual Python search programs;
+an isolated interpreter executes them and an independent checker scores geometry.
 
-The original document-method instructions follow.
+Start with [Student and agent setup](STUDENT_SETUP.md). After installing
+`demo/requirements.txt` and Bubblewrap on Linux/WSL, run:
 
-A template for **evolving a document by critique**: one artifact, one Markdown
-source, three outputs, improved one round at a time by a panel of independent
-reviewers whose findings are reconciled into a single ranked docket.
-
-Clone it, replace the content in `sections/`, and run `/round`.
-
-> **[CLAUDE.md](CLAUDE.md) is the method.** How a round works, why the reviewers
-> are independent, what the two registers of a section are for, and the
-> guardrails — all of it lives there, in one file. This README only covers
-> getting the toolchain running and starting a project.
-
----
-
-## What you get
-
-```
-sections/           the source — one pair of files per section
-personas/           the reviewer panel, plus the aggregator
-rounds/             committed critique history: one folder per round
-site/               the website's template and stylesheet
-figures/            figures, referenced from the prose
-topic.md            the proposal — what this tutorial is and promises
-metadata.yaml       title, authors, and the declared audience
-justfile            every build recipe
+```bash
+python demo/server.py --port 8766
 ```
 
-| | Command | Output |
-| --- | --- | --- |
-| Document | `just doc` | `output/document.pdf` |
-| Presentation | `just slides` | `output/slides.pdf` |
-| Website | `just site` | `_site/index.html` |
+Open http://127.0.0.1:8766/ for the presentation or /packing for the demo.
+`just demo 8767` selects another port. The server hosts frames, live demonstration,
+algorithm examples, exact public Luna exchange, notes, architecture and PDFs.
+Numerical-only mode needs no API key. For live mode, each student puts their own
+TAMU key in ignored demo/.env; only the blank example is public.
 
-`just build` makes all three. `just serve` previews the site locally.
+The mathematical problems match the paper. This bounded Luna implementation is
+not the unpublished AlphaEvolve engine or a reproduction of its reported record.
+See [demo/README.md](demo/README.md), [architecture](demo/ARCHITECTURE.md),
+[presentation plan](demo/PRESENTATION_PLAN.md), and [actual readiness](demo/READINESS.md).
 
-## Setup
+## Editing and building
 
-Install the toolchain. On macOS:
+Read [CLAUDE.md](CLAUDE.md) for the document method. Each sections/*.prose.md
+has a matching concepts sidecar. Saved prose updates browser frames and notes;
+`just build` regenerates document, final-state handout and site. `just overlays`
+exports every reveal. Keep architecture/API detail in the optional appendix.
 
-```
-brew install pandoc just librsvg
-brew install --cask mactex-no-gui
-```
-
-On Debian or Ubuntu:
-
-```
-sudo apt-get install -y pandoc just texlive-xetex texlive-latex-extra \
-                        texlive-fonts-recommended librsvg2-bin
-```
-
-Then confirm it works before changing anything:
-
-```
-just build
-```
-
-The placeholder content renders, so a failure here is a toolchain problem, not
-your writing.
-
-## Start your project
-
-1. **Say what you are doing.** Fill in [topic.md](topic.md) — the proposal: what
-   the topic is, why it belongs in this course, what the reader will be able to
-   do afterwards, and what is out of scope. Every reviewer reads it, and the
-   panel judges the tutorial against it.
-2. **Declare your reader.** Edit [metadata.yaml](metadata.yaml) — the title, the
-   authors, and especially `audience`. The pedagogy reviewer judges the document
-   against whatever you write there, so a vague audience buys you a vague review.
-3. **Write.** Replace the placeholders in `sections/`. Each section is a pair:
-   `<name>.prose.md` ships, `<name>.concepts.md` holds the spine behind it.
-   Section order is the numeric filename prefix — add a section by adding a
-   numbered pair.
-4. **Check it renders.** `just build`.
-5. **Run a round.** `/round` in Claude Code. It produces a ranked docket at
-   `rounds/round-NNN/SYNTHESIS.md` and stops; you decide what to act on.
-
-## Publishing
-
-The site deploys to GitHub Pages on demand — never automatically on push.
-
-One-time, in the repository settings: **Settings -> Pages -> Source: GitHub
-Actions**. Then:
-
-```
-git push
-just deploy
-```
-
-CI installs the toolchain and runs `just build`, so it publishes exactly what
-`just serve` showed you. Nothing generated is stored in git.
-
-## Derived from
-
-The `nel-operator` engine, reduced to its teaching core. The section-pair
-convention, the reviewer-panel critic, and the never-reverted single manuscript
-come from there; the compile and metrics gates, the archive, the scaffolder, and
-the unattended loop deliberately do not.
+Chapter 10.1–10.5 use 2/3/2/1/2 conceptual frames, plus title and two demo sequences.
+Past teaching sources, critiques, evidence and the hashed reference snapshot are
+preserved as history. Do not commit, push, deploy or invoke the reviewer panel
+without an explicit instruction. For a new session, read [the handoff](DEMO_REDESIGN_HANDOFF.md).

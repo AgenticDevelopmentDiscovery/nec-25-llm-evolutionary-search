@@ -1,0 +1,52 @@
+{
+  "mode": "numerical_only",
+  "selection_rule": "Best initial program by original ranking, and highest-ranked surviving new Luna program; selected before seeing validation scores.",
+  "validation_seeds": [
+    101,
+    102,
+    103
+  ],
+  "starts": "common fixed raw seeded starts; no inherited optimization bank",
+  "cases": [
+    {
+      "n": 26,
+      "source_run": "8e4ad862eb9e4a64afc01e888551f894",
+      "programs": [
+        {
+          "role": "initial_baseline",
+          "id": "fb222085fbc31e19",
+          "name": "Greedy local center search",
+          "file": "evidence/packing-programs/n26-initial_baseline.py",
+          "sha256": "00111fe1cf595c30c565b65f204c66c4a9c98ab60df4e9ece89e43edde9cab03"
+        },
+        {
+          "role": "surviving_luna_program",
+          "id": "692f84a9f165aa3b",
+          "name": "Luna child 1 (bank 2) (bank 3)",
+          "file": "evidence/packing-programs/n26-surviving_luna_program.py",
+          "sha256": "44f33202712d64b09a77ec8a90e84d75c878021dd53944c1bba3730a87194f84"
+        }
+      ]
+    },
+    {
+      "n": 32,
+      "source_run": "d59faeb94cce415f8677b0c7ea39190d",
+      "programs": [
+        {
+          "role": "initial_baseline",
+          "id": "fb222085fbc31e19",
+          "name": "Greedy local center search",
+          "file": "evidence/packing-programs/n32-initial_baseline.py",
+          "sha256": "ce38eae8f0b4b5f47e637896f6cd34b56364234fb63be32c367155fb4d4ffb39"
+        },
+        {
+          "role": "surviving_luna_program",
+          "id": "322a2bde034f929b",
+          "name": "Luna child 2 (bank 3)",
+          "file": "evidence/packing-programs/n32-surviving_luna_program.py",
+          "sha256": "172ee80e449d855daabf06445c9610f9fcc24f1e1bc2d39ad2f4a2d550064250"
+        }
+      ]
+    }
+  ]
+}
