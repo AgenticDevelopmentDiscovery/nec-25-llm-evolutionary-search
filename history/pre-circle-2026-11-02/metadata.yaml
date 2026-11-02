@@ -1,0 +1,40 @@
+# Shared project metadata. Every output reads this file (`--metadata-file`), so
+# it is the one place the title and authors are written down.
+
+title: "Tutorial 25 — LLM-Driven Evolutionary Search"
+subtitle: "A bounded signed Max-Cut classroom demonstration"
+author:
+  - ENGR 689 Tutorial Team
+date: \today
+
+# Where `--citeproc` puts the reference list. Without this the bibliography is
+# appended to the last section with no heading — and, in the slides, becomes an
+# untitled final slide.
+reference-section-title: References
+
+# --- Read by the reviewer panel, not by pandoc -------------------------------
+#
+# `audience` is the standard the pedagogy reviewer judges against. It is the
+# highest-leverage field in this file: a vague audience produces vague review,
+# because the reviewer has nothing to hold the document to.
+#
+# Be specific. "Second-year undergraduates who have had one statistics course
+# but have never written code" is useful. "Technical readers" is not.
+
+audience: >-
+  ENGR 689 students who know Python, elementary optimization and evaluation
+  harnesses. In 20–25 minutes they should distinguish strategy programs, solution
+  vectors and verified fitness; trace LLM proposal, numerical evaluation and
+  survivor selection; explain the four solver mechanisms; inspect exact Luna
+  exchanges; and identify live, numerical-only and recorded modes.
+
+# --- Presentation only -------------------------------------------------------
+# Any beamer theme in TeX Live. Metropolis is clean and projects well.
+theme: metropolis
+aspectratio: 169
+
+# --- PDF outputs only --------------------------------------------------------
+# Link colouring. The website takes its link colours from `site/style.css`.
+colorlinks: true
+linkcolor: Maroon
+urlcolor: Maroon

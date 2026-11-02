@@ -110,13 +110,13 @@ clean:
 # Local interactive demo: auto-preview saved prose; reuse this repo’s running server.
 # Static-site serving remains `just serve`.
 demo port="8766":
-    python3 demo/server.py --port {{port}}
+    python3 demo/launch.py --port {{port}}
 
 # Canonical browser frames and long-form teaching notes, from the same prose.
 presentation:
     python3 demo/build_presentation.py
 
-# Optional offline PDF: four overlay slides per teaching frame.
+# Optional offline PDF: every reveal state of each teaching frame.
 overlays:
     mkdir -p {{outdir}}
     {{pandoc}} sections/*.prose.md {{common}} --pdf-engine={{engine}} \
@@ -129,8 +129,8 @@ demo-test:
     PYTHONPATH=demo/vendor/maxcut python3 -m unittest discover -s demo/vendor/maxcut/tests -p 'test_bm_solver.py' -v
 
 # One bounded rehearsal; no retries or hidden mode fallback.
-demo-rehearse mode="numerical" seed="3":
-    python3 demo/rehearse.py --mode {{mode}} --seed {{seed}}
+demo-rehearse mode="numerical" seed="3" circles="26":
+    python3 demo/rehearse.py --mode {{mode}} --seed {{seed}} --n {{circles}}
 
 # Separate architecture and data-flow document.
 architecture:

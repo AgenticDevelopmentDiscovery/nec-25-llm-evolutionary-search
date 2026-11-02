@@ -13,13 +13,17 @@ import sys
 import threading
 from urllib.parse import urlsplit, parse_qs
 
-import backend as b
-from controller import Manager, HERE, PROFILE, live_access, TERMINAL
-from experiments import SCENARIOS
+from controller import HERE, live_access, TERMINAL
 from preview import PresentationPreview
+from packing_controller import PackingManager, PROFILE
+import packing
+from packing_sandbox import availability as packing_availability
 
-SERVICE = 'engr689-maxcut-demo'
+SERVICE = 'engr689-circle-demo'
 WORKSPACE = hashlib.sha256(str(HERE.parent.resolve()).encode()).hexdigest()
+BACKEND_SHA256 = hashlib.sha256(b''.join((HERE/name).read_bytes() for name in (
+    'server.py','packing.py','packing_controller.py','packing_sandbox.py',
+    'packing_worker.py','packing_profile.json','model_worker.py','settings.py'))).hexdigest()
 
 
 def existing_server(port):
@@ -45,17 +49,8 @@ def verify_snapshot():
         path = root / item['destination']
         if hashlib.sha256(path.read_bytes()).hexdigest() != item['sha256']:
             raise ValueError('vendored snapshot changed: ' + item['destination'])
-    b.score_labels(b.seed_labels(3))
     return len(manifest['files'])
 
-
-def instance(name=None):
-    spec = b.instance_spec(name)
-    graph = b.load_graph(spec['path'])
-    return {'name':spec['name'], 'nodes':spec['nodes'], 'side':spec['side'], 'kind':spec['kind'],
-            'edges':graph.edges.tolist() if hasattr(graph.edges, 'tolist') else graph.edges,
-            'graph_sha256':spec['sha256'], 'reference':spec['reference'], 'proof_status':'unproven',
-            'layout':f"{spec['side']}x{spec['side']} indexing; "+('strongest 80 edges displayed; all edges scored' if spec['kind']!='torus' else 'torus wrap edges split at borders')}
 
 
 class DemoServer(ThreadingHTTPServer):
@@ -63,7 +58,8 @@ class DemoServer(ThreadingHTTPServer):
     def __init__(self, address=('127.0.0.1', 8766), manager=None, preview=None):
         if address[0] != '127.0.0.1': raise ValueError('only 127.0.0.1 is supported')
         super().__init__(address, Handler)
-        self.manager = manager or Manager(instance=PROFILE['instance'])
+        self.packing = manager or PackingManager()
+        self.manager = self.packing
         self.preview = preview or PresentationPreview()
         self.bootstrap = secrets.token_urlsafe(32)
         self.tokens = {}
@@ -103,47 +99,43 @@ class Handler(BaseHTTPRequestHandler):
             url = urlsplit(self.path)
             path = url.path
             if path == '/api/server-info':
-                return self.reply({'service':SERVICE,'workspace':WORKSPACE,'pid':os.getpid(),'rounds':PROFILE['max_rounds'],'auto_rebuild':self.server.preview.available,'execution_version':b.EXECUTION_VERSION})
+                return self.reply({'service':SERVICE,'workspace':WORKSPACE,'pid':os.getpid(),'rounds':PROFILE['max_rounds'],'auto_rebuild':self.server.preview.available,'execution_version':packing.VERSION,'circle_packing':packing.VERSION,'backend_sha256':BACKEND_SHA256,'active_run_id':self.server.packing.active.id if self.server.packing.active else None})
             if path == '/api/presentation': return self.reply(self.server.preview.ensure())
+            if path in ('/api/packing/status','/api/status'):
+                return self.reply({'write_token': self.server.bootstrap, 'task': packing.specification(), 'cases': list(packing.CASES),
+                    'sandbox': packing_availability(), 'live': live_access(),
+                    'programs': packing.initial_programs(),
+                    'recordings': [{'id':identity, **{k:v for k,v in r.items() if k!='events'}}
+                                   for identity,r in self.server.packing.recordings().items()]})
             if path in ('/presentation.json','/notes'): self.server.preview.ensure()
-            if path == '/api/instance': return self.reply(instance(parse_qs(url.query).get('instance', [self.server.manager.instance])[0]))
-            if path == '/api/comparisons': return self.reply(self.server.manager.comparisons())
-            if path == '/api/activity': return self.reply(self.server.manager.activity())
-            if path == '/api/status':
-                recordings = self.server.manager.recordings()
-                return self.reply({'write_token': self.server.bootstrap, 'live': live_access(), 'profile': PROFILE,
-                    'default_instance':self.server.manager.instance, 'scenarios':SCENARIOS,
-                    'initial_solver_catalog':[{'id':s['stages'][0]['backend'],'name':n,'strategy':b.normalized_strategy(s)} for n,s in b.INITIAL_SOLVERS],
-                    'recordings': [{'id': identity, **{k:v for k,v in r.items() if k != 'events'}} for identity,r in recordings.items()]})
             parts = path.strip('/').split('/')
-            if len(parts)==5 and parts[:2]==['api','runs'] and parts[3]=='exchange':
-                return self.reply(self.server.manager.exchange(parts[2], int(parts[4])))
-            if len(parts) in (3, 4) and parts[:2] == ['api', 'runs']:
-                run = self.server.manager.get(parts[2])
-                if len(parts) == 3: return self.reply(run.snapshot())
-                if parts[3] == 'events':
-                    after = self.headers.get('Last-Event-ID') or parse_qs(url.query).get('after', ['0'])[0]
-                    after = int(after)
+            if len(parts) in (4,5,6) and parts[:3] == ['api','packing','runs']:
+                run = self.server.packing.get(parts[3])
+                if len(parts)==4: return self.reply(run.snapshot())
+                if len(parts)==5 and parts[4]=='events':
+                    after = int(self.headers.get('Last-Event-ID') or parse_qs(url.query).get('after',['0'])[0])
                     if not 0 <= after <= len(run.events): raise ValueError('invalid event cursor')
                     return self.events(run, after)
+                if len(parts)==6 and parts[4]=='exchange':
+                    return self.reply(self.server.packing.exchange(parts[3],int(parts[5])))
             # Explicit teaching routes only; never expose .env, runs or repository files.
             static = {
                 '/': ('presentation.html', 'text/html'), '/present': ('presentation.html', 'text/html'),
-                '/demo': ('index.html', 'text/html'), '/app.js': ('app.js', 'text/javascript'), '/style.css': ('style.css', 'text/css'),
+                '/packing': ('packing.html','text/html'), '/packing.js':('packing.js','text/javascript'),
+                '/packing.css':('packing.css','text/css'), '/packing-guide':('packing-guide.html','text/html'),
+                '/demo': ('packing.html', 'text/html'),
                 '/presentation.js': ('presentation.js', 'text/javascript'), '/presentation.css': ('presentation.css', 'text/css'),
                 '/presentation.json': ('presentation.json', 'application/json'), '/notes': ('teaching-notes.html', 'text/html'),
                 '/notes.css': ('notes.css', 'text/css'), '/brand.css':('brand.css','text/css'), '/architecture':('architecture.html','text/html'), '/architecture.pdf':('architecture.pdf','application/pdf'),
-                '/algorithms': ('algorithms.html','text/html'), '/algorithms.js':('algorithms.js','text/javascript'),
-                '/exchange':('exchange.html','text/html'), '/exchange.js':('exchange.js','text/javascript'),
+                '/algorithms': ('packing-guide.html','text/html'),
+                '/exchange':('packing.html','text/html'),
                 '/exchange.css':('exchange.css','text/css'),
                 '/handout.pdf': ('handout.pdf', 'application/pdf'),
                 '/document.pdf': ('document.pdf', 'application/pdf'),
                 '/rehearsal': ('../rehearsal/index.html', 'text/html'),
-                '/rehearsal.mp4': ('../rehearsal/presentation-rehearsal.mp4', 'video/mp4'),
-                '/rehearsal.vtt': ('../rehearsal/captions.vtt', 'text/vtt'),
                 '/rehearsal-script': ('../rehearsal/script.md','text/plain'),
             }
-            for figure in ('weak-parent.svg', 'signed-four-vertex.svg', 'classroom-partition.svg', 'luna-trace.svg', 'solver-trace.svg','evolutionary-cycle.svg','architecture-overview.svg','system-architecture.svg','request-data-flow.svg'):
+            for figure in ('evolutionary-cycle.svg','architecture-overview.svg','system-architecture.svg','request-data-flow.svg'):
                 static['/figures/' + figure] = ('../../figures/' + figure, 'image/svg+xml')
             if path not in static: return self.reply({'error': 'not found'}, 404)
             filename, mime = static[path]
@@ -211,22 +203,18 @@ class Handler(BaseHTTPRequestHandler):
             parts = urlsplit(self.path).path.strip('/').split('/')
             token = self.headers.get('X-Demo-Token', '')
             with self.server.route_lock:
-                if parts in (['api', 'runs'], ['api', 'reset']):
-                    if not secrets.compare_digest(token, self.server.bootstrap): raise PermissionError('write token required')
-                    run = self.server.manager.reset(body) if parts[-1] == 'reset' else self.server.manager.create(body)
-                    if parts[-1] == 'reset': self.server.tokens.clear()
-                    return self.reply(self.server.register(run), 201)
-                if len(parts) == 4 and parts[:2] == ['api', 'runs'] and parts[-1] in ('start', 'stop', 'continue'):
-                    run = self.server.manager.get(parts[2])
-                    if not secrets.compare_digest(token, self.server.tokens.get(run.id, 'invalid')): raise PermissionError('run write token required')
-                    if body != {}: raise ValueError('start/stop require an empty object')
-                    if parts[-1] == 'continue':
-                        return self.reply({'continued':run.continue_round(), 'run_id':run.id})
-                    if parts[-1] == 'start':
-                        started = self.server.manager.start(run)
-                        return self.reply({'started': started, 'run_id': run.id})
-                    run.stop()
-                    return self.reply(run.snapshot())
+                if parts in (['api','packing','runs'], ['api','packing','reset']):
+                    if not secrets.compare_digest(token,self.server.bootstrap): raise PermissionError('write token required')
+                    run = self.server.packing.reset(body) if parts[-1]=='reset' else self.server.packing.create(body)
+                    return self.reply(self.server.register(run),201)
+                if len(parts)==5 and parts[:3]==['api','packing','runs'] and parts[-1] in ('start','stop','continue'):
+                    run = self.server.packing.get(parts[3])
+                    if not secrets.compare_digest(token,self.server.tokens.get(run.id,'invalid')): raise PermissionError('run write token required')
+                    if body != {}: raise ValueError('run actions require an empty object')
+                    if parts[-1]=='continue': return self.reply({'continued':run.continue_round()})
+                    if parts[-1]=='start':
+                        return self.reply({'started':self.server.packing.start(run)})
+                    run.stop(); return self.reply(run.snapshot())
             self.reply({'error': 'not found'}, 404)
         except (BrokenPipeError, ConnectionResetError): pass
         except PermissionError as error: self.reply({'error': str(error)}, 403)
@@ -247,7 +235,8 @@ def main():
     PROFILE['max_model_calls'] = args.rounds
     verified = verify_snapshot()
     if args.check:
-        print(json.dumps({'vendored_files_verified': verified, 'live': live_access(), 'recursive_agent_calls': False})); return
+        print(json.dumps({'vendored_files_verified': verified, 'live': live_access(),
+            'packing':packing.specification(),'execution':packing_availability(),'recursive_agent_calls': False})); return
     url = f'http://127.0.0.1:{args.port}/'
     try:
         server = DemoServer(('127.0.0.1', args.port))
@@ -258,6 +247,10 @@ def main():
             print(f'Already running: {url} (PID {info["pid"]}). Open or refresh that page; no second server started.')
             print('The existing Python environment and server settings remain in use.')
             if info.get('auto_rebuild'): print('Save prose to update open presentation tabs automatically.')
+            if info.get('backend_sha256') != BACKEND_SHA256:
+                print('Backend files changed since that server started. Stop it in its terminal and relaunch, or use another port. Refreshing alone reloads static content, not Python.')
+            if info.get('circle_packing') != packing.VERSION:
+                print('That older server does not include the circle-packing backend. Stop its terminal and relaunch, or use: just demo 8767')
             if info.get('rounds') != args.rounds:
                 print(f'Existing server uses {info["rounds"]} rounds. Stop it first to change that setting.')
             return 0
@@ -273,11 +266,11 @@ def main():
     def shutdown(*_):
         threading.Thread(target=server.shutdown, daemon=True).start()
     signal.signal(signal.SIGINT, shutdown); signal.signal(signal.SIGTERM, shutdown)
-    print(f'Max-Cut demo: http://127.0.0.1:{server.server_address[1]} (local only)', flush=True)
+    print(f'Tutorial: http://127.0.0.1:{server.server_address[1]} · Circle packing: /packing (local only)', flush=True)
     print('Save sections/*.prose.md to update browser frames automatically. PDFs: just build.' if preview['auto_rebuild'] else 'Serving bundled frames. Install Pandoc to rebuild edited prose.',flush=True)
     try: server.serve_forever(poll_interval=0.1)
     finally:
-        server.manager.close(); server.server_close()
+        server.packing.close(); server.server_close()
 
 
 if __name__ == '__main__': raise SystemExit(main())
