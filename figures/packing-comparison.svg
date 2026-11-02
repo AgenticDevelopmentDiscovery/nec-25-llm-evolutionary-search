@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="330" viewBox="0 0 960 330" role="img" aria-labelledby="title desc">
+  <title id="title">Two valid packings of four circles</title>
+  <desc id="desc">Both unit squares use centers (0.25,0.25), (0.75,0.25), (0.25,0.75), and (0.75,0.75). Arrangement A has radius 0.15 for every circle and sum 0.60. Arrangement B has radius 0.25 for every circle and sum 1.00. B's circles touch their neighbors and the square, without overlap.</desc>
+  <rect width="960" height="330" fill="white"/>
+  <g font-family="DejaVu Sans,sans-serif" text-anchor="middle" fill="#500000" font-weight="bold" font-size="28">
+    <text x="220" y="26">A</text><text x="740" y="26">B</text>
+  </g>
+  <g fill="#f4e5e5" stroke="#500000" stroke-width="2.5">
+    <circle cx="165" cy="93" r="33"/><circle cx="275" cy="93" r="33"/>
+    <circle cx="165" cy="203" r="33"/><circle cx="275" cy="203" r="33"/>
+    <circle cx="685" cy="93" r="55"/><circle cx="795" cy="93" r="55"/>
+    <circle cx="685" cy="203" r="55"/><circle cx="795" cy="203" r="55"/>
+  </g>
+  <g fill="none" stroke="#171717" stroke-width="2.5">
+    <rect x="110" y="38" width="220" height="220"/>
+    <rect x="630" y="38" width="220" height="220"/>
+  </g>
+  <g font-family="DejaVu Sans,sans-serif" text-anchor="middle" fill="#171717" font-size="25">
+    <text x="220" y="289">Each radius = 0.15</text><text x="740" y="289">Each radius = 0.25</text>
+  </g>
+  <g font-family="DejaVu Sans,sans-serif" text-anchor="middle" fill="#500000" font-size="28" font-weight="bold">
+    <text x="220" y="323">S = 4 × 0.15 = 0.60</text><text x="740" y="323">S = 4 × 0.25 = 1.00</text>
+  </g>
+</svg>

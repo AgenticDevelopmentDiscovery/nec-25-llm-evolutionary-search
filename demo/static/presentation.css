@@ -4,7 +4,10 @@
 
 #sourceNotice{position:fixed;right:24px;bottom:75px;z-index:5;max-width:min(600px,90vw);max-height:35vh;overflow:auto;white-space:pre-wrap;padding:12px 16px;border:2px solid #500000;border-radius:5px;background:#fff;color:#171717;font-size:14px;line-height:1.45;box-shadow:0 4px 20px #0002}#sourceNotice[data-error="true"]{border-color:#873600;background:#fff8ef}
 
-/* Keep the opening score example readable at presentation scale. */
-#frame[data-frame="packing-goal"] table{border-collapse:collapse;width:85%;margin-top:16px}
-#frame[data-frame="packing-goal"] th,#frame[data-frame="packing-goal"] td{font-size:inherit;color:inherit;padding:10px 18px;border-bottom:1px solid var(--line);text-align:right}
-#frame[data-frame="packing-goal"] th:first-child,#frame[data-frame="packing-goal"] td:first-child{text-align:left}
+/* Exact packing diagrams retain the existing type size and reveal order. */
+#frame[data-frame="packing-26"] .columns{display:flex;gap:4%;align-items:center}
+#frame[data-frame="packing-26"] .column{min-width:0}
+#frame[data-frame="packing-26"] .column:first-child{flex:0 0 58%}
+#frame[data-frame="packing-26"] .column:last-child{flex:0 0 38%}
+#frame[data-frame="packing-26"] img{height:280px}
+#frame[data-frame="packing-goal"] img{height:310px}

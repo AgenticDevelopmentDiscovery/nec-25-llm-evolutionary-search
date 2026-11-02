@@ -7,7 +7,16 @@
 <p><strong>What are we trying to arrange?</strong></p>
 </div>
 <div class="block">
+<div class="columns">
+<div class="column" style="width:58%;">
 <p>Place <strong>26 or 32 circles</strong> inside a square with side length 1. Choose each circle’s <strong>center</strong> (its location) and <strong>radius</strong> (half its width). The radii may differ.</p>
+</div><div class="column" style="width:38%;">
+<figure>
+<img src="/figures/packing-rules.svg" style="width:100.0%" alt="Four circles illustrate the rules." />
+<figcaption aria-hidden="true">Four circles illustrate the rules.</figcaption>
+</figure>
+</div>
+</div>
 </div>
 <div class="block">
 <p>Every circle must stay inside the square. Circles may touch each other and the boundary, but they must <strong>not overlap</strong>.</p>
@@ -16,49 +25,32 @@
 <p><strong>A valid packing satisfies these rules for every circle.</strong> The number of circles stays fixed within each problem.</p>
 </div>
 <p>Begin with the geometry before introducing an algorithm. A center is the point in the middle of a circle. A radius is the distance from that center to its edge, so the diameter is twice the radius. A unit square has side length one. In each problem the number of circles is fixed: 26 for Demo 1 and 32 for Demo 2. Their sizes can differ. We choose both their centers and their radii.</p>
+<p>The picture shows four circles so the rules are easy to see. It is an illustration, not the 26- or 32-circle demo output. The dot marks one center and the segment labeled r runs from that center to the circle’s edge. Its plotted center/radius triples are (0.22,0.22,0.22), (0.74,0.22,0.18), (0.25,0.72,0.18), and (0.72,0.72,0.25). All circles fit inside the square and their interiors are disjoint.</p>
 <p>A packing is valid only if every circle lies entirely inside the square and no two circle interiors overlap. Touching is allowed. For a center <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mi>i</mi></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_i=(x_i,y_i)</annotation></semantics></math> and radius <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>i</mi></msub><annotation encoding="application/x-tex">r_i</annotation></semantics></math>, these rules are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">r_i\ge0</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub><mo>≤</mo><msub><mi>x</mi><mi>i</mi></msub><mo>≤</mo><mn>1</mn><mo>−</mo><msub><mi>r</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">r_i\le x_i\le1-r_i</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub><mo>≤</mo><msub><mi>y</mi><mi>i</mi></msub><mo>≤</mo><mn>1</mn><mo>−</mo><msub><mi>r</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">r_i\le y_i\le1-r_i</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="postfix">∥</mo><msub><mi>c</mi><mi>i</mi></msub><mo>−</mo><msub><mi>c</mi><mi>j</mi></msub><msub><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msub><mo>≥</mo><msub><mi>r</mi><mi>i</mi></msub><mo>+</mo><msub><mi>r</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\|c_i-c_j\|_2\ge r_i+r_j</annotation></semantics></math> for each distinct pair. Zero radii are allowed under the demonstration’s contract and remain visible in its reports. The next frame introduces the score, separately from these validity rules.</p>
 <p>The two cases use the mathematical formulation in AlphaEvolve Appendix B.12 <span class="citation" data-cites="alphaevolve2025">(AlphaEvolve team 2025)</span>. The local initial methods, controller, Luna model and compute budget are our classroom implementation. No published answer coordinates are hidden in the initial arrangements.</p>
 </section><section id="packing-goal"><h2>3. Circle packing: the goal</h2><div class="question">
 <p><strong>Which valid packing is better?</strong></p>
 </div>
 <div class="block">
-<p>Maximize the <strong>sum of the radii</strong>: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><msub><mi>r</mi><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>r</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">S=r_1+\cdots+r_N</annotation></semantics></math>, where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> is the number of circles. Compare packings with the same <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>.</p>
+<p><strong>Packing score:</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><msub><mi>r</mi><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>r</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">S=r_1+\cdots+r_N</annotation></semantics></math>, the sum of all radii. <strong>Larger is better.</strong></p>
 </div>
-<div class="block">
-<p>Four-circle illustration, with both arrangements valid:</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Arrangement</th>
-<th style="text-align: right;">Radius of each circle</th>
-<th style="text-align: right;">Sum of radii</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">A</td>
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.60</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;"><strong>1.00</strong></td>
-</tr>
-</tbody>
-</table>
+<div class="block visual">
+<figure>
+<img src="/figures/packing-comparison.svg" style="width:85.0%" alt="Same four centers, different radii. Both packings are valid." />
+<figcaption aria-hidden="true">Same four centers, different radii. Both packings are valid.</figcaption>
+</figure>
 </div>
 <div class="answer">
 <p><strong>B has the larger score.</strong> Circle positions limit how large the radii can be. We need a strategy to search for better packings.</p>
 </div>
-<p>Ask students to add the radii before revealing the table’s conclusion. Four times 0.15 is 0.60. Four times 0.25 is 1.00. Both examples can use centers (0.25,0.25), (0.75,0.25), (0.25,0.75) and (0.75,0.75). Arrangement B touches the boundary and neighboring circles, which the rules allow. This is a small teaching illustration, not a measured result from either demonstration or a claim about the best possible four-circle packing.</p>
+<p>Ask students to add the radii before revealing the conclusion. Point to the visible space around A’s circles and then to the touching circles in B. Four times 0.15 is 0.60. Four times 0.25 is 1.00. Both drawings use centers (0.25,0.25), (0.75,0.25), (0.25,0.75) and (0.75,0.75). Arrangement B touches the boundary and neighboring circles, which the rules allow. These exact-coordinate drawings are teaching illustrations, not measured results from either demonstration or a claim about the best possible four-circle packing.</p>
 <p>The score is the sum of radii. Covered area would use π times the sum of squared radii, which is a different objective. We also keep the number of circles fixed when comparing scores. A raw sum for 32 circles cannot establish improvement over a run with 26 circles.</p>
 <p>This simple example improves by increasing radii at fixed centers. In a crowded arrangement, further changes can require moving centers: making room for one circle can reduce the room available for others. Finding a good arrangement therefore involves interacting choices. We will use an evolutionary framework to improve the Python programs that search for packings. A program is the method; a packing is the arrangement it produces. We check and score the arrangement to evaluate the method. This strategy can find better constructions without certifying a global optimum.</p>
 </section><section id="evolution"><h2>4. Our strategy: evolve packing programs</h2><div class="question">
 <p><strong>How can we improve the method that finds the packings?</strong></p>
 </div>
 <div class="block">
-<p>Run several Python programs to produce packings. Check their circles and record their scores. Keep useful programs as <strong>parents</strong>.</p>
+<p>Run programs to produce packings. <strong>Fitness:</strong> the median (middle) score of three complete, valid trials. Keep useful programs as <strong>parents</strong>.</p>
 </div>
 <div class="block visual">
 <figure>
@@ -164,23 +156,25 @@
 </div>
 <p>Chapter 10.3.2 compares top-k and tournament selection; 10.3.3 identifies population collapse. Our implemented rule is deterministic: all three trials must complete and pass geometry checks; then rank by median sum of radii, minimum sum, and stable source identity. A child below the champion may still survive if it belongs among the three best programs. Do not teach elitism as a rule that rejects every nonchampion.</p>
 <p>Programs with different IDs may have nearly identical behavior. Normalizing syntax prevents comments alone from creating another genome, but it is not a semantic diversity measure. Several schedules differing only in a constant can still explore the same region. The guide names our three initial mechanisms so students can inspect their differences before deciding whether the population is varied enough. Tournament selection is explained here but is not implemented as a hidden classroom feature.</p>
-</section><section id="fitness"><h2>11. Feasibility comes before fitness</h2><div class="question">
-<p><strong>Could a flawed scorer reward an invalid packing?</strong></p>
+</section><section id="fitness"><h2>11. Packing score and program fitness</h2><div class="question">
+<p><strong>How do we turn packing scores into a program’s fitness?</strong></p>
 </div>
 <div class="block">
-<p><strong>Flawed scorer:</strong> sum radii without checking overlap. A valid pair scores <strong>0.50</strong>; an overlapping pair scores <strong>0.60</strong> and incorrectly wins.</p>
+<p><strong>Packing score:</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><msub><mo>∑</mo><mi>i</mi></msub><msub><mi>r</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">S=\sum_i r_i</annotation></semantics></math>, after checking the geometry. A scorer that ignores overlap can reward invalid packings.</p>
 </div>
 <div class="block">
-<p><strong>Corrected evaluator:</strong> check every wall and pair, then score. Reject invalid or incomplete trials.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∣</mo><msub><mi>B</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><msub><mo>median</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn></mrow></msub><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>;</mo><msub><mi>z</mi><mrow><mi>t</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">f(a\mid B_t)=-\operatorname{median}_{j=1,2,3}S(a;z_{t,j}).</annotation></semantics></math></p>
-<p>Compare programs within one frozen packing bank <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding="application/x-tex">B_t</annotation></semantics></math>.</p>
+<p><strong>Program fitness:</strong> run three complete, valid trials with the same starting packings and numerical limits for every program.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo>=</mo><mo>median</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>S</mi><mn>1</mn></msub><mo>,</mo><msub><mi>S</mi><mn>2</mn></msub><mo>,</mo><msub><mi>S</mi><mn>3</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">F=\operatorname{median}(S_1,S_2,S_3).</annotation></semantics></math></p>
+<p>Example scores <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.90</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>2.10</mn><mo>,</mo><mspace width="0.222em"></mspace><mn>2.00</mn></mrow><annotation encoding="application/x-tex">1.90,\ 2.10,\ 2.00</annotation></semantics></math> give <strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo>=</mo><mn>2.00</mn></mrow><annotation encoding="application/x-tex">F=2.00</annotation></semantics></math></strong>.</p>
 </div>
 <div class="answer">
-<p><strong>Close the scoring loophole; then test frozen programs on unseen starts.</strong> Feasibility and transfer are separate checks.</p>
+<p><strong>The demo maximizes <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math>.</strong> Chapter 10 minimizes <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mo>−</mo><mi>F</mi></mrow><annotation encoding="application/x-tex">f=-F</annotation></semantics></math>. Any invalid or incomplete trial makes the program ineligible.</p>
 </div>
 <p>Chapter 10.4 treats the evaluator as the fitness function and warns that persistent optimization finds weaknesses in it. Here we explicitly compare a flawed scorer with the corrected evaluator, rather than merely presenting an invalid output. The flawed scorer returns the sum of radii and omits pair checks. It ranks two circles of radius 0.30 at centers (0.30, 0.50) and (0.70, 0.50) above two radius-0.25 circles at (0.25, 0.50) and (0.75, 0.50). The claimed gain is 0.10, but the first pair overlaps by 0.20. An optimizer rewarded by that flawed rule has an incentive to enlarge overlapping circles. The correct geometry checker rejects the apparent winner. These are instructor-made, numerically checked toy examples, not Luna outputs. The algorithm guide contains a revealable scorer illustration.</p>
 <p>A production witness must contain exactly the required number of finite circle triples. Radii must be nonnegative, circles must fit inside the square, and every pair must avoid overlap. The server independently recomputes both geometry and summed radii; it ignores a program’s claimed score. Numerical tolerance is 1e-9 in unit-square units. A common radius-allocation construction margin of 1e-8 is applied before a final witness is returned and scored. No invalid output is silently repaired during evaluation.</p>
-<p>Fitness is the negative median quality of three complete trials on the same bank. A failed trial is not quietly dropped from the average; it makes the program ineligible for selection. A valid intermediate packing is still a separate useful construction. This distinction is essential for anytime numerical search.</p>
+<p>Separate the two levels explicitly. One execution returns a packing. After independently checking its geometry, add its radii to obtain that trial’s score <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>S</mi><mi>j</mi></msub><annotation encoding="application/x-tex">S_j</annotation></semantics></math>. A program receives three trials, using the same starting packings, trial seeds and numerical limits as its competitors. Its primary ranking value is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo>=</mo><mo>median</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>S</mi><mn>1</mn></msub><mo>,</mo><msub><mi>S</mi><mn>2</mn></msub><mo>,</mo><msub><mi>S</mi><mn>3</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">F=\operatorname{median}(S_1,S_2,S_3)</annotation></semantics></math>, which the demonstration maximizes and displays as a positive median. Sort the illustrative scores 1.90, 2.10 and 2.00 into 1.90, 2.00 and 2.10. The middle score is 2.00, so <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo>=</mo><mn>2.00</mn></mrow><annotation encoding="application/x-tex">F=2.00</annotation></semantics></math>. These numbers illustrate the calculation and are not measured demo results.</p>
+<p>Chapter 10 uses a minimization convention. Its equivalent fitness is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∣</mo><msub><mi>B</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><mi>F</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∣</mo><msub><mi>B</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><msub><mo>median</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn></mrow></msub><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>;</mo><msub><mi>z</mi><mrow><mi>t</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(a\mid B_t)=-F(a\mid B_t)=-\operatorname{median}_{j=1,2,3}S(a;z_{t,j})</annotation></semantics></math>, where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math> is a program and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding="application/x-tex">B_t</annotation></semantics></math> contains the three starting packings <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>z</mi><mrow><mi>t</mi><mo>,</mo><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">z_{t,j}</annotation></semantics></math> frozen for this round. Thus the example has <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mo>−</mo><mn>2.00</mn></mrow><annotation encoding="application/x-tex">f=-2.00</annotation></semantics></math>. A larger <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> corresponds exactly to a smaller <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>f</mi><annotation encoding="application/x-tex">f</annotation></semantics></math>. The server ranks by the positive median, then by the minimum trial score, then by stable program identity. It does not need to store the negative value to implement this ordering.</p>
+<p>A failed trial is not quietly dropped when calculating fitness. Any invalid or incomplete trial makes the whole program ineligible for selection. A valid intermediate packing remains a separate useful construction. Comparisons use one frozen bank; medians from different banks do not measure program quality under the same conditions. This distinction is essential for anytime numerical search.</p>
 <p>Feasibility checking does not establish algorithm transfer. Freeze program source before evaluating fresh numerical starts, exclude those validation results from mutation prompts and survivor decisions, and report them separately. The original runs used seeds 3, 4 and 5. A separate numerical-only check uses previously unused seeds 101, 102 and 103, common fixed starts, the same requested work and the same hard trial limit. The selection rule was fixed before seeing validation scores: compare the best initial program with the highest-ranked surviving new Luna program. The guide shows the actual results and source identities. This is a small post-search check, not a broad generalization study or a second live evolution.</p>
 <p>Returning a fixed valid construction can be a legitimate solution to a fixed packing problem; a hard-coded layout alone is not proof of reward gaming. The loophole here is accepting infeasible geometry. Overfitting claims concern performance outside the observed starts or problem instances and require a separate evaluation contract. Multiobjective quality and cost are developed in the exploration frame and guide. The changing center positions define a nonconvex landscape; the fixed-center radius linear program does not solve that whole problem.</p>
 </section><section id="islands"><h2>12. Preserve different search behaviors</h2><div class="question">

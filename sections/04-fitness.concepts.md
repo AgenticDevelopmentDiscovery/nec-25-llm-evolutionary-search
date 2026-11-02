@@ -3,7 +3,10 @@
 ## Claims
 
 - Feasibility and completion precede eligible fitness; scores are recomputed independently.
-- The primary scalar is negative median summed radii over three complete current-bank trials.
+- The chapter's minimized fitness is negative median summed radii over three complete current-bank trials.
+- Displayed quality F is the positive median and is maximized; the chapter's equivalent minimized fitness is f=-F.
+- Spell out the two levels: a packing earns one score; a program is ranked by three completed, valid trial scores.
+- The 1.90/2.10/2.00 example demonstrates the median calculation, not measured demo performance.
 - A valid partial witness is distinct from complete program fitness; costs remain separate.
 - A deliberately flawed sum-only scorer rewards an overlapping toy packing; the correct checker rejects it.
 - Frozen-source evaluation on fresh starts tests transfer separately from geometric feasibility.

@@ -14,6 +14,8 @@
 - Define center, radius, unit square, validity and score in plain language before using them.
 - Retain the published 26- and 32-circle tasks and all numerical/model protocols.
 - The small four-circle example illustrates the objective, not a demo outcome or optimality result.
+- Plot exact coordinates: different radii illustrate the rules; matched centers with radii 0.15/0.25 show the score comparison.
+- Preserve vector source and raster companions so browser frames and PDF exports show the same geometry.
 
 ## Open questions
 

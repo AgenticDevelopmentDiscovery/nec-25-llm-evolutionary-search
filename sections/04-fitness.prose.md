@@ -1,25 +1,25 @@
 # 10.4 Fitness design
 
-## Feasibility comes before fitness {#fitness data-seconds="75"}
+## Packing score and program fitness {#fitness data-seconds="75"}
 
 ::: {.question}
-**Could a flawed scorer reward an invalid packing?**
+**How do we turn packing scores into a program's fitness?**
 :::
 
 ::: {.block}
-**Flawed scorer:** sum radii without checking overlap. A valid pair scores **0.50**; an overlapping pair scores **0.60** and incorrectly wins.
+**Packing score:** $S=\sum_i r_i$, after checking the geometry. A scorer that ignores overlap can reward invalid packings.
 :::
 
 ::: {.block}
-**Corrected evaluator:** check every wall and pair, then score. Reject invalid or incomplete trials.
+**Program fitness:** run three complete, valid trials with the same starting packings and numerical limits for every program.
 
-$$f(a\mid B_t)=-\operatorname{median}_{j=1,2,3}S(a;z_{t,j}).$$
+$$F=\operatorname{median}(S_1,S_2,S_3).$$
 
-Compare programs within one frozen packing bank $B_t$.
+Example scores $1.90,\ 2.10,\ 2.00$ give **$F=2.00$**.
 :::
 
 ::: {.answer}
-**Close the scoring loophole; then test frozen programs on unseen starts.** Feasibility and transfer are separate checks.
+**The demo maximizes $F$.** Chapter 10 minimizes $f=-F$. Any invalid or incomplete trial makes the program ineligible.
 :::
 
 ::: {.notes}
@@ -27,7 +27,11 @@ Chapter 10.4 treats the evaluator as the fitness function and warns that persist
 
 A production witness must contain exactly the required number of finite circle triples. Radii must be nonnegative, circles must fit inside the square, and every pair must avoid overlap. The server independently recomputes both geometry and summed radii; it ignores a program’s claimed score. Numerical tolerance is 1e-9 in unit-square units. A common radius-allocation construction margin of 1e-8 is applied before a final witness is returned and scored. No invalid output is silently repaired during evaluation.
 
-Fitness is the negative median quality of three complete trials on the same bank. A failed trial is not quietly dropped from the average; it makes the program ineligible for selection. A valid intermediate packing is still a separate useful construction. This distinction is essential for anytime numerical search.
+Separate the two levels explicitly. One execution returns a packing. After independently checking its geometry, add its radii to obtain that trial's score $S_j$. A program receives three trials, using the same starting packings, trial seeds and numerical limits as its competitors. Its primary ranking value is $F=\operatorname{median}(S_1,S_2,S_3)$, which the demonstration maximizes and displays as a positive median. Sort the illustrative scores 1.90, 2.10 and 2.00 into 1.90, 2.00 and 2.10. The middle score is 2.00, so $F=2.00$. These numbers illustrate the calculation and are not measured demo results.
+
+Chapter 10 uses a minimization convention. Its equivalent fitness is $f(a\mid B_t)=-F(a\mid B_t)=-\operatorname{median}_{j=1,2,3}S(a;z_{t,j})$, where $a$ is a program and $B_t$ contains the three starting packings $z_{t,j}$ frozen for this round. Thus the example has $f=-2.00$. A larger $F$ corresponds exactly to a smaller $f$. The server ranks by the positive median, then by the minimum trial score, then by stable program identity. It does not need to store the negative value to implement this ordering.
+
+A failed trial is not quietly dropped when calculating fitness. Any invalid or incomplete trial makes the whole program ineligible for selection. A valid intermediate packing remains a separate useful construction. Comparisons use one frozen bank; medians from different banks do not measure program quality under the same conditions. This distinction is essential for anytime numerical search.
 
 Feasibility checking does not establish algorithm transfer. Freeze program source before evaluating fresh numerical starts, exclude those validation results from mutation prompts and survivor decisions, and report them separately. The original runs used seeds 3, 4 and 5. A separate numerical-only check uses previously unused seeds 101, 102 and 103, common fixed starts, the same requested work and the same hard trial limit. The selection rule was fixed before seeing validation scores: compare the best initial program with the highest-ranked surviving new Luna program. The guide shows the actual results and source identities. This is a small post-search check, not a broad generalization study or a second live evolution.
 

@@ -7,7 +7,14 @@
 :::
 
 ::: {.block}
+:::: {.columns}
+::: {.column width="58%"}
 Place **26 or 32 circles** inside a square with side length 1. Choose each circle's **center** (its location) and **radius** (half its width). The radii may differ.
+:::
+::: {.column width="38%"}
+![Four circles illustrate the rules.](figures/packing-rules.svg){width=100%}
+:::
+::::
 :::
 
 ::: {.block}
@@ -21,6 +28,8 @@ Every circle must stay inside the square. Circles may touch each other and the b
 ::: {.notes}
 Begin with the geometry before introducing an algorithm. A center is the point in the middle of a circle. A radius is the distance from that center to its edge, so the diameter is twice the radius. A unit square has side length one. In each problem the number of circles is fixed: 26 for Demo 1 and 32 for Demo 2. Their sizes can differ. We choose both their centers and their radii.
 
+The picture shows four circles so the rules are easy to see. It is an illustration, not the 26- or 32-circle demo output. The dot marks one center and the segment labeled r runs from that center to the circle's edge. Its plotted center/radius triples are (0.22,0.22,0.22), (0.74,0.22,0.18), (0.25,0.72,0.18), and (0.72,0.72,0.25). All circles fit inside the square and their interiors are disjoint.
+
 A packing is valid only if every circle lies entirely inside the square and no two circle interiors overlap. Touching is allowed. For a center $c_i=(x_i,y_i)$ and radius $r_i$, these rules are $r_i\ge0$, $r_i\le x_i\le1-r_i$, $r_i\le y_i\le1-r_i$, and $\|c_i-c_j\|_2\ge r_i+r_j$ for each distinct pair. Zero radii are allowed under the demonstration's contract and remain visible in its reports. The next frame introduces the score, separately from these validity rules.
 
 The two cases use the mathematical formulation in AlphaEvolve Appendix B.12 [@alphaevolve2025]. The local initial methods, controller, Luna model and compute budget are our classroom implementation. No published answer coordinates are hidden in the initial arrangements.
@@ -33,16 +42,11 @@ The two cases use the mathematical formulation in AlphaEvolve Appendix B.12 [@al
 :::
 
 ::: {.block}
-Maximize the **sum of the radii**: $S=r_1+\cdots+r_N$, where $N$ is the number of circles. Compare packings with the same $N$.
+**Packing score:** $S=r_1+\cdots+r_N$, the sum of all radii. **Larger is better.**
 :::
 
-::: {.block}
-Four-circle illustration, with both arrangements valid:
-
-| Arrangement | Radius of each circle | Sum of radii |
-|:--|--:|--:|
-| A | 0.15 | 0.60 |
-| B | 0.25 | **1.00** |
+::: {.block .visual}
+![Same four centers, different radii. Both packings are valid.](figures/packing-comparison.svg){width=85%}
 :::
 
 ::: {.answer}
@@ -50,7 +54,7 @@ Four-circle illustration, with both arrangements valid:
 :::
 
 ::: {.notes}
-Ask students to add the radii before revealing the table's conclusion. Four times 0.15 is 0.60. Four times 0.25 is 1.00. Both examples can use centers (0.25,0.25), (0.75,0.25), (0.25,0.75) and (0.75,0.75). Arrangement B touches the boundary and neighboring circles, which the rules allow. This is a small teaching illustration, not a measured result from either demonstration or a claim about the best possible four-circle packing.
+Ask students to add the radii before revealing the conclusion. Point to the visible space around A's circles and then to the touching circles in B. Four times 0.15 is 0.60. Four times 0.25 is 1.00. Both drawings use centers (0.25,0.25), (0.75,0.25), (0.25,0.75) and (0.75,0.75). Arrangement B touches the boundary and neighboring circles, which the rules allow. These exact-coordinate drawings are teaching illustrations, not measured results from either demonstration or a claim about the best possible four-circle packing.
 
 The score is the sum of radii. Covered area would use π times the sum of squared radii, which is a different objective. We also keep the number of circles fixed when comparing scores. A raw sum for 32 circles cannot establish improvement over a run with 26 circles.
 

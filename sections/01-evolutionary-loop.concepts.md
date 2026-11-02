@@ -6,6 +6,7 @@
 - Inner selection chooses parents; outer selection prunes the pooled parents and children.
 - External population/history changes between calls; model weights remain fixed.
 - Define population, parent, child, mutation, selection and fitness after the packing problem is concrete.
+- State the implemented median-of-three fitness on the first strategy frame; the fitness frame works through its calculation and sign convention.
 
 ## Decisions
 

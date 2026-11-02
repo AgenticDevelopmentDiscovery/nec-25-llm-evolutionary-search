@@ -7,7 +7,7 @@
 :::
 
 ::: {.block}
-Run several Python programs to produce packings. Check their circles and record their scores. Keep useful programs as **parents**.
+Run programs to produce packings. **Fitness:** the median (middle) score of three complete, valid trials. Keep useful programs as **parents**.
 :::
 
 ::: {.block .visual}

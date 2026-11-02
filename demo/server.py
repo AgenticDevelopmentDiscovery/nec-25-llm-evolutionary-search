@@ -135,7 +135,8 @@ class Handler(BaseHTTPRequestHandler):
                 '/rehearsal': ('../rehearsal/index.html', 'text/html'),
                 '/rehearsal-script': ('../rehearsal/script.md','text/plain'),
             }
-            for figure in ('evolutionary-cycle.svg','architecture-overview.svg','system-architecture.svg','request-data-flow.svg'):
+            for figure in ('evolutionary-cycle.svg','architecture-overview.svg','system-architecture.svg','request-data-flow.svg',
+                           'packing-rules.svg','packing-comparison.svg'):
                 static['/figures/' + figure] = ('../../figures/' + figure, 'image/svg+xml')
             if path not in static: return self.reply({'error': 'not found'}, 404)
             filename, mime = static[path]

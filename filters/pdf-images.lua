@@ -5,6 +5,9 @@ if FORMAT:match('latex') or FORMAT:match('beamer') then
     if FORMAT:match('latex') and (image.src:match('classroom%-partition') or image.src:match('signed%-four%-vertex')) then
       image.attributes.width = '40%'
     end
+    if FORMAT:match('latex') and image.src:match('packing%-rules') then
+      image.attributes.width = '38%'
+    end
     return image
   end
 end

@@ -19,8 +19,19 @@ if FORMAT:match('beamer') then
       return header
     end
   end
+  function Figure(figure)
+    local packing_image=nil
+    figure:walk({Image=function(image)
+      if image.src:match('packing%-rules%.png$') or image.src:match('packing%-comparison%.png$') then packing_image=image end
+    end})
+    if packing_image then
+      local width=packing_image.src:match('packing%-rules') and '.88' or '.80'
+      return pandoc.RawBlock('beamer','\\begin{center}\\includegraphics[width='..width..'\\linewidth]{'..packing_image.src..'}\\end{center}')
+    end
+  end
   function Div(div)
     if div.identifier=='refs' or div.classes:includes('notes') then return {} end
+    if div.classes:includes('columns') or div.classes:includes('column') then return div end
     local visible = div.classes:includes('question') or div.classes:includes('block') or div.classes:includes('answer')
     local prefix = ''
     if visible then

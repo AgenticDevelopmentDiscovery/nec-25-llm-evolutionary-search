@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="370" viewBox="0 0 520 370" role="img" aria-labelledby="title desc">
+  <title id="title">Four circles inside a unit square</title>
+  <desc id="desc">A valid illustration with different radii. The circles have centers and radii (0.22,0.22,0.22), (0.74,0.22,0.18), (0.25,0.72,0.18), and (0.72,0.72,0.25). A line marks the radius of the first circle. The square has side length one.</desc>
+  <rect width="520" height="370" fill="white"/>
+  <g fill="#f4e5e5" stroke="#500000" stroke-width="3">
+    <circle cx="166" cy="96" r="66"/>
+    <circle cx="322" cy="96" r="54"/>
+    <circle cx="175" cy="246" r="54"/>
+    <circle cx="316" cy="246" r="75"/>
+  </g>
+  <rect x="100" y="30" width="300" height="300" fill="none" stroke="#171717" stroke-width="3"/>
+  <circle cx="166" cy="96" r="4" fill="#171717"/>
+  <path d="M166 96 H232 M232 90 V102" fill="none" stroke="#171717" stroke-width="2.5"/>
+  <g font-family="DejaVu Sans,sans-serif" fill="#171717" text-anchor="middle">
+    <text x="201" y="85" font-size="24" font-style="italic">r</text>
+    <text x="250" y="360" font-size="25">Side length = 1</text>
+  </g>
+</svg>
